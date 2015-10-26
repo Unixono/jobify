@@ -1,0 +1,22 @@
+{
+  "name": "jobify",
+  "version": "0.0.1",
+  "description": "A job tracking tool",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Unixono/jobify.git"
+  },
+  "author": "Alejandro Carnero - Leandro Balmaceda",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Unixono/jobify/issues"
+  },
+  "homepage": "https://github.com/Unixono/jobify#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
