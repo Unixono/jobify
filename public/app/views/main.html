@@ -5,8 +5,19 @@
 </div>
 
 <div class="home-content center-block">
-  <button class="btn btn-primary">Login</button>
-  <br />
-  <a class="btn-link pull-right">Register</a>
+
+  <form>
+    <div class="form-group">
+      <input type="text" class="form-control" ng-model="user.name" placeholder="Username" />
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" ng-model="user.password" placeholder="Password" />
+    </div>
+    <!-- <button type="submit" class="btn btn&#45;default">Submit</button> -->
+    <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
+    <br />
+    <a class="btn-link pull-right" href="#register">Register</a>
+  </form>
+
 </div>
 </section>
