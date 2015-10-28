@@ -29,11 +29,6 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
-      .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginCtrl',
-        controllerAs: 'login'
-      })
       .when('/site-list', {
         templateUrl: 'views/site-list.html',
         controller: 'SiteListCtrl',
