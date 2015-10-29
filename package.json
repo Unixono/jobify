@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/Unixono/jobify#readme",
   "dependencies": {
-    "express": "^4.13.3"
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "passport": "^0.3.0",
+    "passport-local": "^1.0.0"
   }
 }

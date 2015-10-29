@@ -8,19 +8,31 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, ServerCommunication) {
     $scope.user = {
-      name: null,
+      username: null,
       password: null
     };
 
     $scope.login = function() {
-      if($scope.user.name && $scope.user.password) {
-        console.log($scope.user);
-      }
-      else {
-        console.log('Error');
-      }
+      ServerCommunication.loginUser($scope.user)
+      .then(
+        function(response) {
+          console.log('success from controller');
+          console.log(response);
+        },
+        function(error) {
+          console.log('error from controller');
+          console.log(error);
+        }
+      );
+
+      // if($scope.user.name && $scope.user.password) {
+      //   console.log($scope.user);
+      // }
+      // else {
+      //   console.log('Error');
+      // }
     };
 
   });
