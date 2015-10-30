@@ -6,18 +6,23 @@
 
 <div class="home-content center-block">
 
-  <form>
+  <form ng-class="{'has-error': hasError}">
     <div class="form-group">
-      <input type="text" class="form-control" ng-model="user.username" placeholder="Username" />
+      <input type="text" class="form-control" ng-model="user.username" ng-change="hasError = false;" placeholder="Username" />
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" ng-model="user.password" placeholder="Password" />
+      <input type="password" class="form-control" ng-model="user.password" ng-change="hasError = false;" placeholder="Password" />
     </div>
     <!-- <button type="submit" class="btn btn&#45;default">Submit</button> -->
     <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
     <br />
     <a class="btn-link pull-right" ng-click="registerUser()">Register</a>
   </form>
+
+  <div class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert" ng-show="hasError">
+    <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
+    <strong>Invalid</strong> username or password.
+  </div>
 
 </div>
 </section>
