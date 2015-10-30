@@ -9,6 +9,15 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+// Mongoose config.
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/jobify');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    console.log('connection successful');
+});
+
 
 // Set the path to the website files.
 app.use(express.static(__dirname + '/public/dist'));
