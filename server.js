@@ -57,6 +57,19 @@ passport.use('local-login', new LocalStrategy(
   }
 ));
 
+passport.use('local-signup', new LocalStrategy(
+  function(username, password, done) {
+      var user = {'name': username, 'pass': password};
+      console.log('created user:');
+      console.log(user);
+      // WARNING.
+      // Partial implementation!!!
+      // The registration code always returns successful.
+      return done(null, user);
+
+  }
+));
+
 passport.serializeUser(function(user, done) {
   console.log('serializeUser');
   done(null, user);
@@ -88,6 +101,24 @@ app.post('/login',
              // return res.status(200).json({text: 'success'});
            // })(req, res, next);
          });
+
+app.post('/signup', function(req, res, next) {
+  passport.authenticate('local-signup', function(err, user, info) {
+    console.log('in signup route');
+    console.log(err);
+    console.log(user);
+    console.log(info);
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (! user) {
+      return res.status(500).json({ success : false, message : 'authentication failed'  });
+    }
+    return res.status(200).json({ success : true, message : 'authentication succeeded'  });
+  })(req, res, next);
+});
+
 
 var port = 3000;
 app.listen(port);
