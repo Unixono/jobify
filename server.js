@@ -18,6 +18,15 @@ db.once('open', function (callback) {
     console.log('connection successful');
 });
 
+var userSchema = mongoose.Schema({
+  username: String,
+  password: String,
+  // email: String,
+  // isDeveloper: Boolean
+});
+
+var User = mongoose.model('User', userSchema);
+
 
 // Set the path to the website files.
 app.use(express.static(__dirname + '/public/dist'));
@@ -39,42 +48,69 @@ app.use(function(req, res, next) {
 });
 
 
+// Login Strategy.
 passport.use('local-login', new LocalStrategy(
   function(username, password, done) {
-    if( username === 'admin' && password === 'admin' ) {
-      var user = {'name': username, 'pass': password};
+    // Search for a user with thr given username and password.
+    var searchUser = {'username': username, 'password': password};
+    User.findOne(searchUser, function (err, user) {
+      if(err) {
+        return done(err);
+      }
+
+      // TODO:
+      // - detect what was wrong: username or passowrd.
+      if(!user) {
+        return done(null, false, { message: 'Incorrect user.' });
+      }
+
       return done(null, user);
-    }
-    else {
-      return done(null, false);
-    }
-
-    // User.findOne({ username: username  }, function (err, user) {
-    //   if (err) { return done(err);  }
-    //   if (!user) {
-    //     return done(null, false, { message: 'Incorrect username.'  });
-    //
-    //   }
-    //   if (!user.validPassword(password)) {
-    //     return done(null, false, { message: 'Incorrect password.'  });
-    //
-    //   }
-    //   return done(null, user);
-    //
-    // });
-
+    });
   }
 ));
 
+// Signup Strategy.
 passport.use('local-signup', new LocalStrategy(
   function(username, password, done) {
-      var user = {'name': username, 'pass': password};
-      console.log('created user:');
-      console.log(user);
-      // WARNING.
-      // Partial implementation!!!
-      // The registration code always returns successful.
-      return done(null, user);
+      // process.nextTick(function() {
+      User.findOne({ 'username' :  username }, function(err, user) {
+        console.log('SINGUP USER...');
+        console.log(err);
+        console.log(user);
+        // if there are any errors, return the error
+        if (err) {
+          console.log('error');
+          console.log(err);
+          return done(err);
+        }
+        // check to see if theres already a user with that email
+        if(user) {
+          console.log('error');
+          console.log(err);
+          // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          return done(null, false);
+        }
+        else {
+          // if there is no user with that email
+          // create the user
+          var newUser = new User();
+
+          // set the user's local credentials
+          newUser.username = username;
+          newUser.password = password;
+
+          // save the user
+          newUser.save(function(err) {
+            if (err) {
+              throw err;
+            }
+
+            return done(null, newUser);
+          });
+        }
+
+      });
+      // });
 
   }
 ));
@@ -91,25 +127,33 @@ passport.deserializeUser(function(id, done) {
   // });
 });
 
+
 // Routes
-app.post('/login',
-         passport.authenticate('local-login'),
-         function(req, res, next) {
-           var request = req.body;
-           console.log(request);
-           res.json(request);
-           // passport.authenticate('local', function(err, user, info) {
-           //   console.log(err);
-           //   console.log(user);
-           //   console.log(info);
-           //   if(err) {
-           //     return next(err);
-           //   }
-           //   console.log('success login');
-             // console.log(user);
-             // return res.status(200).json({text: 'success'});
-           // })(req, res, next);
-         });
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local-login', function(err, user, info) {
+    // console.log('in login route!');
+    // console.log(err);
+    // console.log(user);
+    // console.log(info);
+
+    if(err) {
+      return res.status(500).json({error: err});
+    }
+
+    if(!user) {
+      return res.status(401).json({error: info});
+    }
+
+    req.logIn(user, function(err) {
+      if(err) {
+        return res.status(500).json({error: 'Could not log in user'});
+      }
+
+      res.status(200).json({status: 'Login successful!'});
+    });
+
+  })(req,res,next);
+});
 
 app.post('/signup', function(req, res, next) {
   passport.authenticate('local-signup', function(err, user, info) {

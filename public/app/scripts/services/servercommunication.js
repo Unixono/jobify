@@ -16,13 +16,13 @@ angular.module('publicApp')
       var defer = $q.defer();
       console.log(user);
       $http.post(serverUrl + '/login', user ).success(function(response) {
-        // console.log('success');
-        // console.log(response);
+        console.log('success');
+        console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {
-        // console.log('error');
-        // console.log(err);
+        console.log('error');
+        console.log(err);
         defer.reject(err);
       });
 
