@@ -21,8 +21,8 @@ db.once('open', function (callback) {
 var userSchema = mongoose.Schema({
   username: String,
   password: String,
-  // email: String,
-  // isDeveloper: Boolean
+  email: String,
+  isDeveloper: Boolean
 });
 
 var User = mongoose.model('User', userSchema);
@@ -70,48 +70,52 @@ passport.use('local-login', new LocalStrategy(
 ));
 
 // Signup Strategy.
-passport.use('local-signup', new LocalStrategy(
-  function(username, password, done) {
-      // process.nextTick(function() {
-      User.findOne({ 'username' :  username }, function(err, user) {
-        console.log('SINGUP USER...');
+passport.use('local-signup', new LocalStrategy({
+  // Set this option to true in oder to pass the req object
+  // as the first argument of the strategy function.
+  passReqToCallback: true
+},
+function(req, username, password, done) {
+  User.findOne({ 'username' :  username }, function(err, user) {
+      console.log('SINGUP USER...');
+      console.log(err);
+      console.log(user);
+      console.log(req.body);
+      // if there are any errors, return the error
+      if(err) {
+        console.log('error');
         console.log(err);
-        console.log(user);
-        // if there are any errors, return the error
-        if (err) {
-          console.log('error');
-          console.log(err);
-          return done(err);
-        }
-        // check to see if theres already a user with that email
-        if(user) {
-          console.log('error');
-          console.log(err);
-          // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-          return done(null, false);
-        }
-        else {
-          // if there is no user with that email
-          // create the user
-          var newUser = new User();
+        return done(err);
+      }
+      // check to see if theres already a user with that email
+      if(user) {
+        console.log('error');
+        console.log(err);
+        // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+        return done(null, false);
+      }
+      else {
+        // if there is no user with that email
+        // create the user
+        var newUser = new User();
 
-          // set the user's local credentials
-          newUser.username = username;
-          newUser.password = password;
+        // set the user's local credentials
+        newUser.username = username;
+        newUser.password = password;
+        newUser.email = req.body.email;
+        newUser.isDeveloper = req.body.isDeveloper;
 
-          // save the user
-          newUser.save(function(err) {
-            if (err) {
-              throw err;
-            }
+        // save the user
+        newUser.save(function(err) {
+          if (err) {
+            throw err;
+          }
 
-            return done(null, newUser);
-          });
-        }
+          return done(null, newUser);
+        });
+      }
 
-      });
-      // });
-
+    });
   }
 ));
 
@@ -149,7 +153,7 @@ app.post('/login', function(req, res, next) {
         return res.status(500).json({error: 'Could not log in user'});
       }
 
-      res.status(200).json({status: 'Login successful!'});
+      res.status(200).json({status: 'Login successful!', user: user});
     });
 
   })(req,res,next);
