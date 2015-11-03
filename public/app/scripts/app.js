@@ -17,7 +17,12 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $httpProvider) {
+
+    // I have to set this flag in order to send login credentials in every http request.
+    // More info: http://blog.ionic.io/angularjs-authentication/
+    $httpProvider.defaults.withCredentials = true;
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

@@ -4,6 +4,7 @@ var app = express();
 // Tells the app how to parse the body of the request.
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 // We will use passport for authentication. http://passportjs.org/docs/overview
 var passport = require('passport');
@@ -31,19 +32,22 @@ var User = mongoose.model('User', userSchema);
 // Set the path to the website files.
 app.use(express.static(__dirname + '/public/dist'));
 
+
+app.use(bodyParser.json());
+app.use(cookieParser('jobifyKey'));
 // Passport requirements.
 // For now, we will comment the persistent session code.
-// app.use(session({ secret: 'jobifyKey', resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'jobifyKey', resave: true, saveUninitialized: true, cookie:{httpOnly: false, secure:false, maxAge: 1000 * 60 * 60 * 2} }));
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 
-app.use(bodyParser.json())
 
 // Add this to allow CORS.
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:9000');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-AUTHENTICATION, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', true);
   next();
 });
 
@@ -119,23 +123,60 @@ function(req, username, password, done) {
   }
 ));
 
+function isLoggedIn(req, res, next) {
+  console.log('isAuthenticated() in middleware');
+  console.log(req.isAuthenticated());
+  console.log(req.session);
+  console.log('Session Expiry '+req.session.cookie.expires);
+  // if user is authenticated in the session, carry on 
+  if (req.isAuthenticated())
+    return next();
+
+  // if they aren't redirect them to the home page
+  // res.redirect('/');
+  res.status(401).json({error: 'Unauthorized'});
+}
+
 passport.serializeUser(function(user, done) {
   console.log('serializeUser');
-  done(null, user);
+  console.log(user);
+  console.log(user._id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
   console.log('deserializeUser');
-  // User.findById(id, function(err, user) {
-  //   done(err, user);
-  // });
+  console.log(id);
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 
 // Routes
+
+app.get('/offer-list', isLoggedIn, function(req, res, next) {
+  // console.log('isAuthenticated()');
+  // console.log(req.isAuthenticated());
+  // console.log('Session Expiry '+req.session.cookie.expires);
+  // if(req.isAuthenticated()) {
+  console.log('in offer-list');
+  // console.log(req);
+  res.json({
+    'jobs':[{
+      'company': 'Google',
+      'position': 'Front-end developer',
+      'apply': false
+    }]
+  });
+  // }
+  // res.status(401).json({error: 'Unauthotized'});
+});
+
 app.post('/login', function(req, res, next) {
   passport.authenticate('local-login', function(err, user, info) {
-    // console.log('in login route!');
+    console.log('in login route!');
+    // console.log(req);
     // console.log(err);
     // console.log(user);
     // console.log(info);
@@ -148,11 +189,16 @@ app.post('/login', function(req, res, next) {
       return res.status(401).json({error: info});
     }
 
-    req.logIn(user, function(err) {
+    req.login(user, function(err) {
+      console.log('inside login function');
       if(err) {
         return res.status(500).json({error: 'Could not log in user'});
       }
 
+      console.log('isAuthenticated from login route');
+      console.log(req.isAuthenticated());
+      console.log(req.user);
+      console.log(req.session);
       res.status(200).json({status: 'Login successful!', user: user});
     });
 

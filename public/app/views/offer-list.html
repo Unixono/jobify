@@ -6,9 +6,11 @@
       <th></th>
     </thead>
     <tbody class="table-striped">
-      <td>Google</td>
-      <td>Front-end developer</td>
+    <tr ng-repeat="job in jobsList">
+      <td>{{job.company}}</td>
+      <td>{{job.position}}</td>
       <td><button class="btn btn-default" style="width: 100%">Show</button></td>
+    </tr>
     </tbody>
   </table>
 </section>

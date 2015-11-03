@@ -8,7 +8,7 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('MainCtrl', function ($scope, ServerCommunication) {
+  .controller('MainCtrl', function ($scope, $location, ServerCommunication) {
     $scope.user = {
       username: null,
       password: null
@@ -22,6 +22,7 @@ angular.module('publicApp')
         function(response) {
           console.log('success from controller');
           console.log(response);
+          $location.path('/offer-list');
         },
         function(error) {
           console.log('error from controller');
