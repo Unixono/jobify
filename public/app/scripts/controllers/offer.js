@@ -8,10 +8,8 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('OfferCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('OfferCtrl', function ($scope, $location) {
+    $scope.goToList = function() {
+      $location.path('/offer-list');
+    }
   });
