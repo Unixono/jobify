@@ -1,15 +1,25 @@
 <section>
   <table class="table">
+    <label>Applied: </label>
+    <select ng-model="appliedOption">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+      <option value="">Yes/No</option>
+    </select>
     <thead>
       <th>Company</th>
       <th>Position</th>
+      <th>Applied?</th>
       <th></th>
     </thead>
     <tbody class="table-striped">
-    <tr ng-repeat="job in jobsList">
-      <td>{{job.company}}</td>
-      <td>{{job.position}}</td>
-      <td><button class="btn btn-default" style="width: 100%">Show</button></td>
+    <tr ng-repeat="job in jobsList | filter: appliedOption">
+      <td ng-bind="job.company"></td>
+      <td ng-bind="job.position"></td>
+      <td ng-bind="job.apply | applied"></td>
+      <td>
+        <button class="btn btn-default" style="width: 100%" ng-click="showJob()">Show</button>
+      </td>
     </tr>
     </tbody>
   </table>

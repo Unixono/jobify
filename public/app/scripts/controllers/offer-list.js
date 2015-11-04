@@ -24,4 +24,8 @@ angular.module('publicApp')
         $location.path('/');
       });
 
+      $scope.showJob = function() {
+        $location.path('/offer');
+      };
+
   });
