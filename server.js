@@ -3,12 +3,6 @@ var express = require('express');
 var app = express();
 // Tells the app how to parse the body of the request.
 var bodyParser = require('body-parser');
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-
-// We will use passport for authentication. http://passportjs.org/docs/overview
-var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
 
 // Mongoose config.
 var mongoose = require('mongoose');
@@ -23,6 +17,15 @@ db.once('open', function (callback) {
 // var User = require('./models/user');
 
 app.use(bodyParser.json());
+
+// Passport required.
+
+// We will use passport for authentication. http://passportjs.org/docs/overview
+var passport = require('passport');
+
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+
 app.use(cookieParser('jobifyKey'));
 
 // Passport requirements.
