@@ -1,24 +1,50 @@
 <section>
+  <!-- <a ng&#45;init="showSearchForm = false;" ng&#45;click="showSearchForm = !showSearchForm;" class="pull&#45;right"><i class="mdi&#45;action&#45;search vertical&#45;middle"></i>Filter<i class="mdi&#45;navigation&#45;chevron&#45;right vertical&#45;middle"></i></a> -->
+  <h4 class="pull-left" style="margin-top: 0px;">Jobs Available</h4>
+  <p ng-init="showSearchForm = false;" ng-click="showSearchForm = true;" class="pull-right" ng-hide="showSearchForm"><i class="mdi-content-filter-list vertical-middle"></i></p>
+  <p ng-click="showSearchForm = false;" class="pull-right" ng-show="showSearchForm"><i class="mdi-content-clear"></i></p>
+
+
+  <!-- <form ng&#45;show="showSearchForm"> -->
+    <div ng-show="showSearchForm">
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="Developer" ng-model="filterOption.developer">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="Company name" ng-model="filterOption.company">
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="Position" ng-model="filterOption.position">
+    </div>
+    <div class="form-group">
+      <label>Applied: </label>
+      <select ng-model="appliedOption">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+        <option value="">Yes/No</option>
+      </select>
+    </div>
+  </div>
+  <!-- </form> -->
+
   <table class="table">
-    <label>Applied: </label>
-    <select ng-model="appliedOption">
-      <option value="true">Yes</option>
-      <option value="false">No</option>
-      <option value="">Yes/No</option>
-    </select>
+
     <thead>
       <th>Company</th>
       <th>Position</th>
+      <th>Added</th>
       <th>Applied?</th>
       <th></th>
     </thead>
     <tbody class="table-striped">
-    <tr ng-repeat="job in jobsList | filter: appliedOption">
+    <tr ng-repeat="job in jobsList | filter: filterOption">
       <td ng-bind="job.company"></td>
       <td ng-bind="job.position"></td>
+      <td>{{job.dateAdded | date:'dd-MM-yy'}}</td>
       <td ng-bind="job.apply | applied"></td>
       <td>
-        <button class="btn btn-default" style="width: 100%" ng-click="showJob()">Show</button>
+        <i class="mdi-navigation-chevron-right" style="cursor: pointer;" ng-click="showJob()"></i>
+        <!-- <button class="btn btn&#45;default" style="width: 100%" ng&#45;click="showJob()">Show</button> -->
       </td>
     </tr>
     </tbody>
