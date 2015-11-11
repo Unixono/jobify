@@ -85,13 +85,23 @@ app.get('/offer-list', isLoggedIn, function(req, res, next) {
   // console.log(req);
   res.json({
     'jobs':[{
+      'developer': 'Lea',
       'company': 'Google',
       'position': 'Front-end developer',
+      'dateAdded': 1288323623006,
       'apply': false
     }, {
+      'developer': 'Lea',
       'company': 'SpiderOak',
       'position': 'AngularJS developer',
+      'dateAdded': 1288323623006,
       'apply': true
+    }, {
+      'developer': 'Lea',
+      'company': 'Facebook',
+      'position': 'Front-end developer',
+      'dateAdded': 1288323623006,
+      'apply': false
     }]
   });
   // }

@@ -97,3 +97,13 @@ body {
         width: 100%;
     }
 }
+
+tr > td {
+    // td {
+        vertical-align: middle !important; 
+    // }
+}
+
+.vertical-middle {
+    vertical-align: middle;
+}
