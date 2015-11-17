@@ -66,9 +66,14 @@ angular.module('publicApp')
       return defer.promise;
     };
 
-    // return {
-    //   loginUser: loginUser,
-    //   registerUser: registerUser
-    // };
+    this.logoutUser = function(user) {
+      var defer = $q.defer();
+
+      // Call to the logout method on sever.
+      
+      defer.resolve('ok');
+
+      return defer.promise;
+    };
 
   });
