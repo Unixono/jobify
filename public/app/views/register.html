@@ -21,20 +21,15 @@
       <div class="form-row">
         <label for="name">User role</label>
       <div>
-        <p id="speedtest-rate-text1" >
-        <label class="checkbox">
-          <input id="register-role-option1" type="checkbox" name="question" ng-model="developer"/>
-          <span></span>
+        <label>
+          <input id="register-role-option1" type="radio" ng-model="role" value="developer">
+          Developer
         </label>
-        Developer
-        </p>
-        <p id="speedtest-rate-text2">
-        <label class="checkbox">
-          <input id="register-role-option2"  type="checkbox" name="question" ng-model="manager"/>
-          <span></span>
+        <br>
+        <label>
+          <input id="register-role-option2"  type="radio" ng-model="role" value="manager">
+          Manager
         </label>
-        Manager
-        </p>
       </div>
       <div class="form-row">
         <label for="password">Password</label>
@@ -69,23 +64,4 @@
       </div>
     </form>
   </div>
-  <div class="slider-box">
-  </div>
 </section>
-
-<div id="signup-loading" ng-show="showLoading" class="overlay-bg">
-</div>
-<div id="signup-loading" ng-show="showLoading" class="overlay-content loading">
-  <div class="overlay-boxes">
-    <div class="overlay-box">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <img src="images/CCLoader.gif" alt="" />
-      <h5 class="loading">Please wait</h5>
-    </div>
-  </div>
-</div>
-
