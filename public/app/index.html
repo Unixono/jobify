@@ -22,7 +22,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header">
+    <div class="header" ng-controller="HeaderCtrl">
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
@@ -48,13 +48,13 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="javascript:void(0)">Link</a></li> -->
             <li class="dropdown">
-              <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">User<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)">Action</a></li>
-                <li><a href="javascript:void(0)">Another action</a></li>
-                <li><a href="javascript:void(0)">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="javascript:void(0)">Log out</a></li>
+            <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
+              <ul class="dropdown-menu" ng-show="userName !== 'User'">
+                <!-- <li><a href="javascript:void(0)">Action</a></li> -->
+                <!-- <li><a href="javascript:void(0)">Another action</a></li> -->
+                <!-- <li><a href="javascript:void(0)">Something else here</a></li> -->
+                <!-- <li class="divider"></li> -->
+                <li><a ng-click="logoutUser()" href="">Log out</a></li>
               </ul>
             </li>
           </ul>
@@ -111,6 +111,9 @@
         <script src="scripts/controllers/register.js"></script>
         <script src="scripts/services/servercommunication.js"></script>
         <script src="scripts/filters/applied.js"></script>
+        <script src="scripts/services/userprofile.js"></script>
+        <script src="scripts/services/currentuserprofile.js"></script>
+        <script src="scripts/controllers/header.js"></script>
         <!-- endbuild -->
 </body>
 </html>
