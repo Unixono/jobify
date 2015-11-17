@@ -29,11 +29,9 @@ angular.module('publicApp')
       return defer.promise;
     };
 
-    // WARNING!! Partial implementation!!!
-    // The user variable is hardcoded. We have to pass the user as an argument to this function.
-    this.registerUser = function() {
+    this.registerUser = function(email, name, password, role) {
       var defer = $q.defer();
-      var user = {'username': 'lea', 'password': '123'};
+      var user = {'username': name, 'password': password, 'email': email, 'role': role};
       console.log(user);
       $http.post(serverUrl + '/signup', user ).success(function(response) {
         console.log('success');

@@ -1,1 +1,91 @@
-<p>This is the register view.</p>
+<section id="main-content-signup" role="main">
+
+  <div id="signup-form-div" class="form-content">
+    <form name="form" class="sign-up" novalidate>
+      <div class="form-row">
+        <label for="email">User email</label>
+        <p class="field">
+        <input type="email" name="email" id="signup-email" style="padding-right: 27px;" ng-model="user.email" ng-change="emailChanged()" required />
+        <span id="signup-email-ok" ng-show="form.email.$invalid === false" class="icon ok"></span>
+        <span id="signup-email-error" ng-show="form.email.$invalid === true" class="icon error"></span>
+        </p>
+      </div>
+      <div class="form-row">
+        <label for="name">User name</label>
+        <p class="field">
+        <input type="text" name="name" id="signup-name" style="padding-right: 27px;" ng-model="user.name" ng-change="nameChanged()" required />
+        <span id="signup-name-ok" ng-show="form.name.$invalid === false" class="icon ok"></span>
+        <span id="signup-name-error" ng-show="form.name.$invalid === true" class="icon error"></span>
+        </p>
+      </div>
+      <div class="form-row">
+        <label for="name">User role</label>
+      <div>
+        <p id="speedtest-rate-text1" >
+        <label class="checkbox">
+          <input id="register-role-option1" type="checkbox" name="question" ng-model="developer"/>
+          <span></span>
+        </label>
+        Developer
+        </p>
+        <p id="speedtest-rate-text2">
+        <label class="checkbox">
+          <input id="register-role-option2"  type="checkbox" name="question" ng-model="manager"/>
+          <span></span>
+        </label>
+        Manager
+        </p>
+      </div>
+      <div class="form-row">
+        <label for="password">Password</label>
+        <p class="field">
+        <input type="password" name="password" id="signup-password" style="padding-right: 27px;" ng-model="user.password" ng-change="passwordChange(user.password, user.cpassword)" required/>
+        <span id="signup-password-ok" ng-show="form.password.$invalid === false && !passwordHasSpaces" class="icon ok"></span>
+        <span id="signup-password-error"  ng-show="form.password.$invalid === true || passwordHasSpaces" class="icon error"></span>
+        <span id="signup-password-advice" class="message">{{ passwordAdvice }}</span>
+        </p>
+      </div>
+      <div class="form-row">
+        <label for="re-password">Retype password</label>
+        <p class="field">
+        <input type="password" name="re-password" id="signup-re-password" style="padding-right: 27px;" ng-model="user.cpassword" ng-change="retypePasswordChanged(user.password, user.cpassword)" required/>
+        <span id="signup-re-password-ok" ng-show="passwordMatches(user.password, user.cpassword) === true && !form.re-password.$invalid" class="icon ok"></span>
+        <span id="signup-re-password-error" ng-show="passwordMatches(user.password, user.cpassword) === false || form.re-password.$invalid" class="icon error"></span>
+        <span class="message">{{ retypePasswordAdvice }}</span>
+        </p>
+      </div>
+      <div class="form-row">
+        <p id="signup-credentials-error" class="form-error">{{ errorText }}</p>
+      </div>
+      <div class="form-row submit-btn" ng-init="termsAccepted = false">
+        <button id="signup-submit-form" class="btn" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked(user.email, user.name, user.password, user.cpassword)">
+          Sing up
+        </button>
+      </div>
+      <div class="form-row already-have">
+        <a id="signup-already-have-account" style="text-decoration:none; color: #77787B" href="" ng-click="backToLoginPage()">
+          {{ translate('wa_already_have_account') }}
+        </a>
+      </div>
+    </form>
+  </div>
+  <div class="slider-box">
+  </div>
+</section>
+
+<div id="signup-loading" ng-show="showLoading" class="overlay-bg">
+</div>
+<div id="signup-loading" ng-show="showLoading" class="overlay-content loading">
+  <div class="overlay-boxes">
+    <div class="overlay-box">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <img src="images/CCLoader.gif" alt="" />
+      <h5 class="loading">Please wait</h5>
+    </div>
+  </div>
+</div>
+

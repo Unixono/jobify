@@ -231,6 +231,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
+          // sourcemap: false
           sourcemap: true
         }
       }
@@ -318,9 +319,9 @@ module.exports = function (grunt) {
           src: '{,*/}*.{png,jpg,jpeg,gif}',
           dest: '<%= yeoman.dist %>/images'
         }]
+
       }
     },
-
     svgmin: {
       dist: {
         files: [{
@@ -440,6 +441,10 @@ module.exports = function (grunt) {
       }
     }
   });
+
+// added to start compass
+  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.registerTask('default', ['jshint', 'compass']);
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
