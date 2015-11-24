@@ -13,6 +13,7 @@ angular.module('publicApp')
   $scope.role = 'developer';
 
   $scope.passwordHasSpaces = false;
+  $scope.emailValid = false;
   $scope.showLoading = false;
   var userEmail;
 
@@ -65,7 +66,12 @@ angular.module('publicApp')
   };
 
   $scope.emailChanged = function() {
-    $scope.errorText = "";
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if (re.test(email)) {
+      $scope.emailValid = true;
+    } else {
+      $scope.emailValid = false;
+    }
   };
 
   // Call the applet api function to signUp user.
@@ -75,6 +81,7 @@ angular.module('publicApp')
 
     userEmail = email;
 
+    this.registerUser = function(email, name, password, role) {
     // appletInteraction._signupUser(email, password, cpassword, name, 'signUpCallback');
   };
 
