@@ -1,16 +1,14 @@
-<section id="main-content-signup" role="main">
+<section>
 
-  <div id="signup-form-div" class="form-content">
-    <form name="form" class="sign-up" novalidate>
-      <div class="form-row">
-        <label for="email">User email</label>
-        <p class="field">
-        <input type="email" name="email" id="signup-email" style="padding-right: 27px;" ng-model="user.email" ng-change="emailChanged()" required />
-        <span id="signup-email-ok" ng-show="form.email.$invalid === false" class="icon ok"></span>
-        <span id="signup-email-error" ng-show="form.email.$invalid === true" class="icon error"></span>
-        </p>
+  <div id="signup-form-div" class="home-content center-block">
+
+    <form ng-class="{'has-error': hasError}" novalidate>
+      <div class="form-group">
+        <input type="email" class="form-control" ng-model="user.email" ng-change="emailChanged()" placeholder="User e-mail" required />
+        <span class="label label-success" ng-show="emailValid" >OK</span>
+        <span class="label label-warning" ng-show="!emailValid" >Not Valid</span>
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <label for="name">User name</label>
         <p class="field">
         <input type="text" name="name" id="signup-name" style="padding-right: 27px;" ng-model="user.name" ng-change="nameChanged()" required />
@@ -18,7 +16,7 @@
         <span id="signup-name-error" ng-show="form.name.$invalid === true" class="icon error"></span>
         </p>
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <label for="name">User role</label>
       <div>
         <label>
@@ -31,7 +29,7 @@
           Manager
         </label>
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <label for="password">Password</label>
         <p class="field">
         <input type="password" name="password" id="signup-password" style="padding-right: 27px;" ng-model="user.password" ng-change="passwordChange(user.password, user.cpassword)" required/>
@@ -40,7 +38,7 @@
         <span id="signup-password-advice" class="message">{{ passwordAdvice }}</span>
         </p>
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <label for="re-password">Retype password</label>
         <p class="field">
         <input type="password" name="re-password" id="signup-re-password" style="padding-right: 27px;" ng-model="user.cpassword" ng-change="retypePasswordChanged(user.password, user.cpassword)" required/>
@@ -49,7 +47,7 @@
         <span class="message">{{ retypePasswordAdvice }}</span>
         </p>
       </div>
-      <div class="form-row">
+      <div class="form-group">
         <p id="signup-credentials-error" class="form-error">{{ errorText }}</p>
       </div>
       <div class="form-row submit-btn" ng-init="termsAccepted = false">
@@ -63,24 +61,11 @@
         </a>
       </div>
     </form>
+    <div class="alert alert-dismissible alert-info" ng-show="showLoading">
+      <img src="images/update.gif" alt="" />
+      <h5 class="loading">Please wait</h5>
+    </div>
   </div>
   <div class="slider-box">
   </div>
 </section>
-
-<div id="signup-loading" ng-show="showLoading" class="overlay-bg">
-</div>
-<div id="signup-loading" ng-show="showLoading" class="overlay-content loading">
-  <div class="overlay-boxes">
-    <div class="overlay-box">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <img src="images/CCLoader.gif" alt="" />
-      <h5 class="loading">Please wait</h5>
-    </div>
-  </div>
-</div>
-
