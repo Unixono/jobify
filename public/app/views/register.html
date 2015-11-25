@@ -9,12 +9,9 @@
         <span class="label label-warning" ng-show="!emailValid" >Not Valid</span>
       </div>
       <div class="form-group">
-        <label for="name">User name</label>
-        <p class="field">
-        <input type="text" name="name" id="signup-name" style="padding-right: 27px;" ng-model="user.name" ng-change="nameChanged()" required />
-        <span id="signup-name-ok" ng-show="form.name.$invalid === false" class="icon ok"></span>
-        <span id="signup-name-error" ng-show="form.name.$invalid === true" class="icon error"></span>
-        </p>
+        <input type="text" class="form-control" ng-model="user.name" placeholder="User Name" required />
+        <span class="label label-success" ng-show="form.name.$invalid === false" >OK</span>
+        <span class="label label-warning" ng-show="form.name.$invalid === true" >Not Valid</span>
       </div>
       <div class="form-group">
         <label for="name">User role</label>

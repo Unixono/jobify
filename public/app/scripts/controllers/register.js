@@ -14,6 +14,7 @@ angular.module('publicApp')
 
   $scope.passwordHasSpaces = false;
   $scope.emailValid = false;
+  $scope.emailInvalid = false;
   $scope.showLoading = false;
   var userEmail;
 
@@ -66,10 +67,13 @@ angular.module('publicApp')
   };
 
   $scope.emailChanged = function() {
+    console.log('email change');
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    if (re.test(email)) {
+    if (re.test($scope.user.email)) {
       $scope.emailValid = true;
+      // $scope.emailInvalid = false;
     } else {
+      // $scope.emailInvalid = true;
       $scope.emailValid = false;
     }
   };
@@ -82,10 +86,11 @@ angular.module('publicApp')
     userEmail = email;
 
     this.registerUser = function(email, name, password, role) {
-    // appletInteraction._signupUser(email, password, cpassword, name, 'signUpCallback');
+      // appletInteraction._signupUser(email, password, cpassword, name, 'signUpCallback');
+    };
   };
 
-  $window.signUpCallback = function(returnValue) {
+  // $window.signUpCallback = function(returnValue) {
     // console.log('signUpCallback');
     // var response = angular.fromJson(returnValue);
     // $scope.showLoading = false;
@@ -100,6 +105,6 @@ angular.module('publicApp')
       // }
     // }
     // $scope.$apply();
-  };
+  // };
 });
 
