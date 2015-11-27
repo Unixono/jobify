@@ -2,7 +2,7 @@
   "name": "public",
   "private": true,
   "devDependencies": {
-    "bower": "^1.6.5",
+    "bower": "^1.6.8",
     "generator-angular": "^0.14.0",
     "generator-karma": "^1.0.0",
     "grunt": "^0.4.5",
