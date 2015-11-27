@@ -18,6 +18,7 @@ angular
     'ngTouch'
   ])
   .config(function ($routeProvider, $httpProvider) {
+    $.material.init();
 
     // I have to set this flag in order to send login credentials in every http request.
     // More info: http://blog.ionic.io/angularjs-authentication/

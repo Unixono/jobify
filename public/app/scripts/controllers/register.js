@@ -14,7 +14,6 @@ angular.module('publicApp')
 
   $scope.passwordHasSpaces = false;
   $scope.emailValid = false;
-  $scope.emailInvalid = false;
   $scope.showLoading = false;
   var userEmail;
 
