@@ -29,9 +29,8 @@ angular.module('publicApp')
       return defer.promise;
     };
 
-    this.registerUser = function(email, name, password, role) {
+    this.registerUser = function(user) {
       var defer = $q.defer();
-      var user = {'username': name, 'password': password, 'email': email, 'role': role};
       console.log(user);
       $http.post(serverUrl + '/signup', user ).success(function(response) {
         console.log('success');

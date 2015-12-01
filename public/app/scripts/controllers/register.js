@@ -8,14 +8,18 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-.controller('RegisterCtrl', function ($scope, $window, $location) {
+.controller('RegisterCtrl', function ($scope, $window, $location, ServerCommunication, CurrentUserProfile) {
 
-  $scope.role = 'developer';
-
+  $scope.user = {
+    username: null,
+    password: null,
+    role: 'developer'
+  };
+  
+  $scope.hasError = false;
   $scope.passwordHasSpaces = false;
   $scope.emailValid = false;
   $scope.showLoading = false;
-  var userEmail;
 
 
   // Show the password complexity using a progress bar.
@@ -78,16 +82,25 @@ angular.module('publicApp')
   };
 
   // Call the applet api function to signUp user.
-  $scope.signUpButtonClicked = function(email, name, password, cpassword) {
+  $scope.signUpButtonClicked = function() {
 
     $scope.showLoading = true;
 
-    userEmail = email;
-
-    this.registerUser = function(email, name, password, role) {
-      // appletInteraction._signupUser(email, password, cpassword, name, 'signUpCallback');
+    ServerCommunication.registerUser($scope.user)
+      .then(
+        function(response) {
+          console.log('success from controller');
+          console.log(response);
+          CurrentUserProfile.loginUser(response.user.username);
+          $location.path('/offer-list');
+        },
+        function(error) {
+          console.log('error from cotroller');
+          console.log(error);
+          $scope.hasError = true;
+        }
+      );
     };
-  };
 
   // $window.signUpCallback = function(returnValue) {
     // console.log('signUpCallback');
