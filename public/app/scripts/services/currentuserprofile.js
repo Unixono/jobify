@@ -11,6 +11,15 @@ angular.module('publicApp')
   .service('CurrentUserProfile', function (UserProfile) {
     var currentUser = null;
 
+    var offerScreen = 'new';
+
+    this.setJob = function (job) {
+      offerScreen = job;
+    };
+ 
+    this.getJob = function () {
+      return offerScreen;
+    };
     this.loginUser = function(username) {
       currentUser = new UserProfile(username);
     };
