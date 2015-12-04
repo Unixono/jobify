@@ -1,1 +1,63 @@
-<p>This is the register view.</p>
+<section>
+
+  <div id="signup-form-div" class="home-content center-block">
+
+    <form ng-class="{'has-error': hasError}" novalidate>
+      <div class="form-group">
+        <input type="email" name="email" class="form-control" ng-model="user.email" ng-change="emailChanged()" placeholder="User e-mail" required />
+        <!-- <span class="label label&#45;success" ng&#45;show="form.email.$invalid === false" >OK</span> -->
+        <!-- <span class="label label&#45;warning" ng&#45;show="form.email.$invalid === true" >Not Valid</span> -->
+        <span class="label label-success" ng-show="emailValid">OK</span>
+        <span class="label label-warning" ng-show="!emailValid">Not Valid</span>
+      </div>
+      <div class="form-group">
+        <input type="text" name="username" class="form-control" ng-model="user.username" placeholder="User Name" required />
+        <span class="label label-success" ng-show="form.username.$invalid === false">OK</span>
+        <span class="label label-warning" ng-show="form.username.$invalid === true">Not Valid</span>
+      </div>
+      <div class="form-group">
+        <label for="role">User role</label>
+        <div class="radio radio-primary">
+          <label>
+            <input id="register-role-option1" type="radio" ng-model="user.role" value="developer">
+            Developer
+          </label>
+        </div>
+        <div class="radio radio-primary">
+          <label>
+            <input id="register-role-option2"  type="radio" ng-model="user.role" value="manager">
+            Manager
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="form-control" id="signup-password" ng-model="user.password" ng-change="passwordChange(user.password, user.cpassword)" placeholder="Password" required/>
+        <span class="label label-success" ng-show="form.password.$invalid === false && !passwordHasSpaces">OK</span>
+        <span class="label label-warning" ng-show="form.password.$invalid === true || passwordHasSpaces" >Not Valid</span>
+        <span class="label label-warning" class="message">{{ passwordAdvice }}</span>
+      </div>
+      <div class="form-group">
+        <input type="password" name="re-password" class="form-control" id="signup-re-password" ng-model="user.cpassword" ng-change="retypePasswordChanged(user.password, user.cpassword)" placeholder="Retipe Password" required/>
+        <span class="label label-success" ng-show="passwordMatches(user.password, user.cpassword) === true && !form.re-password.$invalid">OK</span>
+        <span class="label label-warning" ng-show="passwordMatches(user.password, user.cpassword) === false || form.re-password.$invalid" >Not Valid</span>
+        <span class="label label-warning" class="message">{{ retypePasswordAdvice }}</span>
+      </div>
+      <div class="form-group">
+        <p id="signup-credentials-error" class="form-error">{{ errorText }}</p>
+      </div>
+      <div class="form-row submit-btn" ng-init="termsAccepted = false">
+        <button id="signup-submit-form" class="btn btn-primary" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked()">
+          Sing up
+        </button>
+      </div>
+    </form>
+    <div class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert" ng-show="hasError">
+      <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
+      <strong>Error</strong> regitering user, please try again
+    </div>
+    <div class="alert alert-dismissible alert-info" ng-show="showLoading && !hasError">
+      <!-- <img src="images/update.gif" alt="" /> -->
+      <h5 class="loading">Please wait</h5>
+    </div>
+  </div>
+</section>

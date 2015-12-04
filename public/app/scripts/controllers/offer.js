@@ -8,8 +8,12 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('OfferCtrl', function ($scope, $location) {
-    $scope.goToList = function() {
-      $location.path('/offer-list');
-    }
-  });
+.controller('OfferCtrl', function ($scope, $location, CurrentUserProfile) {
+  $scope.goToList = function() {
+    $location.path('/offer-list');
+  }
+
+  $scope.getJob = function(job) {
+    return CurrentUserProfile.getJob() === job;
+  }
+});

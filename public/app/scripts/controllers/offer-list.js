@@ -8,7 +8,7 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('OfferListCtrl', function ($scope, $location, ServerCommunication) {
+  .controller('OfferListCtrl', function ($scope, $location, ServerCommunication, CurrentUserProfile) {
 
     $scope.jobsList = [];
 
@@ -25,7 +25,12 @@ angular.module('publicApp')
       });
 
       $scope.showJob = function() {
+        CurrentUserProfile.setJob('old');
         $location.path('/offer');
       };
 
+      $scope.newJob = function() {
+        CurrentUserProfile.setJob('new');
+        $location.path('/offer');
+      };
   });

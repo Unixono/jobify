@@ -57,4 +57,10 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .run( function( ) {
+    $.material.init();
+    $.material.ripples();
+    $.material.checkbox();
+    $.material.radio();
   });

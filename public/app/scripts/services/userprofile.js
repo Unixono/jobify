@@ -15,7 +15,7 @@ angular.module('publicApp')
       this.username = username;
       this.email = null;
       this.fullName = null;
-      this.isDeveloper = null;
+      this.role = null;
     };
 
     // Set parameters functions.
@@ -27,7 +27,7 @@ angular.module('publicApp')
 
       this.email = profileData.email || null;
       this.fullName = profileData.fullName || null;
-      this.isDeveloper = profileData.isDeveloper || null;
+      this.role = profileData.role || null;
     };
 
     // Get parameters functions. 

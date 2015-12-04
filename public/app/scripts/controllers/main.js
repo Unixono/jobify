@@ -41,7 +41,7 @@ angular.module('publicApp')
     };
 
     $scope.registerUser = function() {
-      ServerCommunication.registerUser();
+      $location.path('/register');
     };
 
   });

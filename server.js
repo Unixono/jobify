@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 // Mongoose config.
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/jobify');
+mongoose.connect('mongodb://0.0.0.0/jobify');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
@@ -46,7 +46,7 @@ app.use(passport.session());
 
 // Add this to allow CORS.
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:9000');
+  res.header('Access-Control-Allow-Origin', 'http://0.0.0.0:9000');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-AUTHENTICATION, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Credentials', true);
@@ -153,7 +153,20 @@ app.post('/signup', function(req, res, next) {
     if (! user) {
       return res.status(500).json({ success : false, message : 'authentication failed'  });
     }
-    return res.status(200).json({ success : true, message : 'authentication succeeded'  });
+
+    req.login(user, function(err) {
+      console.log('inside login function');
+      if(err) {
+        return res.status(500).json({error: 'Could not log in user'});
+      }
+
+      console.log('isAuthenticated from login route');
+      console.log(req.isAuthenticated());
+      console.log(req.user);
+      console.log(req.session);
+      res.status(200).json({succes : true, status: 'Login successful!', user: user});
+    });
+    // return res.status(200).json({ success : true, message : 'authentication succeeded', user : user  });
   })(req, res, next);
 });
 

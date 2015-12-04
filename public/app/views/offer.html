@@ -1,18 +1,108 @@
 <section>
-  <form>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Company Name:</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Position:</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <a ng-href="">Job link</a>
-    </div>
-    <button class="btn btn-success">Apply</button>
-    <button class="btn btn-danger">No Apply</button>
-    <button class="btn btn-default pull-right" ng-click="goToList()">Go Back</button>
-  </form>
+
+  <div id="signup-form-div" class="center-block">
+
+    <form ng-class="{'has-error': hasError}" novalidate>
+      <div class="form-group">
+        <input type="text" name="companyname" class="form-control" ng-model="job.company" placeholder="Company Name" required />
+        <span class="label label-success" ng-show="form.companyname.$invalid === false">OK</span>
+        <span class="label label-warning" ng-show="form.companyname.$invalid === true">Not Valid</span>
+      </div>
+      <div class="form-group">
+        <input type="text" name="jobposition" class="form-control" ng-model="job.position" placeholder="Job Position" required />
+        <span class="label label-success" ng-show="form.jobposition.$invalid === false">OK</span>
+        <span class="label label-warning" ng-show="form.jobposition.$invalid === true">Not Valid</span>
+      </div>
+      <div class="form-group">
+        <input type="url" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" ng-click="showScrappPage=!showScrappPage">Scrapp page</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" ng-click="showLinkPage=!showLinkPage">Page link</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" ng-click="showLinkPage=!showLinkPage">Cover Letter</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" ng-click="showLinkPage=!showLinkPage">Apply method</button>
+        <span class="label label-success" ng-show="form.jobposition.$invalid === false && getJob('new')"  >OK</span>
+        <span class="label label-warning" ng-show="form.jobposition.$invalid === true && getJob('new')" >Not Valid</span>
+      </div>
+      <div id="source-modal" ng-show="showLinkPage" class="modal fade in" tabindex="-1" style="display: block; padding-right: 15px;">
+        <div class="modal-content">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+              <button type="button" class="close" ng-click="showLinkPage=false;" aria-hidden="true">×</button>
+              <h4 class="modal-title">Page link</h4>
+            </div>
+            <div class="modal-body">
+              <textarea class="form-control" rows="1" id="textArea4" ng-model=scrappPage></textarea>
+              <span class="help-block">Advice url</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-raised btn-sm btn-primary" ng-click="showLinkPage=false;">Save</button>
+              <button type="button" class="btn btn-raised btn-sm btn-default" ng-click="showLinkPage=false;">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-dialog" ng-show="showScrappPage">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" ng-click="showScrappPage=false;" aria-hidden="true">×</button>
+            <h4 class="modal-title">Scrapp Page</h4>
+          </div>
+          <div class="modal-body">
+            <textarea class="form-control" rows="7" id="textArea4" ng-model=scrappPage></textarea>
+            <span class="help-block">Please Paste the advice text to scrapp</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-raised btn-sm btn-primary" ng-click="showScrappPage=false;">Scrapp</button>
+            <button type="button" class="btn btn-raised btn-sm btn-default" ng-click="showScrappPage=false;">Close</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Skills <small>(Clicks: 1 Required in Green, 2 Desired in Blue)</small></h3>
+        </div>
+        <div class="panel-body">
+          <div class="btn-toolbar">
+            <a class="btn btn-sm btn-raised" ng-click="varAux = jsRequired; jsRequired = (!jsDesired && !jsRequired); jsDesired = (varAux && !jsDesired);" 
+              ng-class="{'btn-info': jsDesired, 'btn-primary': jsRequired}" href>JS</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = angularRequired; angularRequired = (!angularDesired && !angularRequired); angularDesired = (varAux && !angularDesired);" 
+              ng-class="{'btn-info': angularDesired, 'btn-primary': angularRequired}" href>Angular</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = reactRequired; reactRequired = (!reactDesired && !reactRequired); reactDesired = (varAux && !reactDesired);" 
+              ng-class="{'btn-info': reactDesired, 'btn-primary': reactRequired}" href>React</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = nodeRequired; nodeRequired = (!nodeDesired && !nodeRequired); nodeDesired = (varAux && !nodeDesired);" 
+              ng-class="{'btn-info': nodeDesired, 'btn-primary': nodeRequired}" href>Node</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = meanRequired; meanRequired = (!meanDesired && !meanRequired); meanDesired = (varAux && !meanDesired);" 
+              ng-class="{'btn-info': meanDesired, 'btn-primary': meanRequired}" href>Mean</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = pythonRequired; pythonRequired = (!pythonDesired && !pythonRequired); pythonDesired = (varAux && !pythonDesired);" 
+              ng-class="{'btn-info': pythonDesired, 'btn-primary': pythonRequired}" href>Python</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = djangoRequired; djangoRequired = (!djangoDesired && !djangoRequired); djangoDesired = (varAux && !djangoDesired);" 
+              ng-class="{'btn-info': djangoDesired, 'btn-primary': djangoRequired}" href>Django</a>
+            <a class="btn btn-sm btn-raised" ng-click="varAux = cssRequired; cssRequired = (!cssDesired && !cssRequired); cssDesired = (varAux && !cssDesired);" 
+              ng-class="{'btn-info': cssDesired, 'btn-primary': cssRequired}" href>Css</a>
+          </div>
+          <input type="text" name="otherSkillsReq" class="form-control" ng-model="otherSkillsRequired" placeholder="Other skills required (separated with ',')" required />
+          <input type="text" name="otherSkillsDes" class="form-control" ng-model="otherSkillsDesired" placeholder="Other skills desired (separated with ',')" required />
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Notes</h3>
+        </div>
+        <div class="panel-body">
+          <textarea class="form-control" rows="3" id="textArea1" ng-model="managerNotes"></textarea>
+          <span class="help-block">Manager Notes</span>
+          <textarea class="form-control" rows="3" id="textArea2" ng-show="getJob('old')" ng-model="developerNotes"></textarea>
+          <span class="help-block" ng-show="getJob('old')">Developer Notes</span>
+          <textarea class="form-control" rows="3" id="textArea3" ng-show="getJob('old')" ng-model=applicationResult></textarea>
+          <span class="help-block" ng-show="getJob('old')">Application result</span>
+        </div>
+      </div>
+      <button class="btn btn-success btn-raised" ng-show="getJob('new')" >Save</button>
+      <button class="btn btn-info btn-raised" ng-show="resolved" >Resolve</button>
+      <button class="btn btn-info btn-raised" ng-show="getJob('new')">Save and New</button>
+      <button class="btn btn-success btn-raised" ng-show="getJob('old')">Applyed</button>
+      <button class="btn btn-danger btn-raised" ng-show="getJob('old')">Rejected</button>
+      <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="getJob('old')">Remove</button>
+      <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
+    </form>
+  </div>
 </section>
