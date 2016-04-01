@@ -24,19 +24,25 @@ module.exports = function(passport) {
   passport.use('local-login', new LocalStrategy(
     function(username, password, done) {
       // Search for a user with thr given username and password.
-      var searchUser = {'username': username, 'password': password};
+      var searchUser = {'username': username};
+      var loginUser = {'username': username, 'password': password};
       User.findOne(searchUser, function (err, user) {
         if(err) {
           return done(err);
         }
-
-        // TODO:
-        // - detect what was wrong: username or passowrd.
         if(!user) {
-          return done(null, false, { message: 'Incorrect user.' });
+          return done(null, false, { message: 'Incorrect user name' });
         }
 
-        return done(null, user);
+        User.findOne(loginUser, function (err, user) {
+          if(err) {
+            return done(err);
+          }
+          if(!user) {
+            return done(null, false, { message: 'Incorrect user password' });
+          }
+          return done(null, user);
+        });
       });
     }
   ));
