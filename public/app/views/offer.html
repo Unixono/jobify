@@ -3,6 +3,21 @@
   <div id="signup-form-div" class="center-block">
 
     <form ng-class="{'has-error': hasError}" novalidate>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Assigned developers</h3>
+        </div>
+        <div class="panel-body">
+          <div class="btn-toolbar">
+            <a class="btn btn-sm btn-raised" ng-click="Required = !Required);" ng-class="{'btn-info': Required" href>Ale</a>
+            <a class="btn btn-sm btn-raised" ng-click="Required = !Required);" ng-class="{'btn-info': Required" href>Lea</a>
+            <a class="btn btn-sm btn-raised" ng-click="Required = !Required);" ng-class="{'btn-info': Required" href>Ivan</a>
+            <a class="btn btn-sm btn-raised" ng-click="Required = !Required);" ng-class="{'btn-info': Required" href>Turi</a>
+            <a class="btn btn-sm btn-raised" ng-click="Required = !Required);" ng-class="{'btn-info': Required" href>Jipi</a>
+          </div>
+        </div>
+      </div>
+      
       <div class="form-group">
         <input type="text" name="companyname" class="form-control" ng-model="job.company" placeholder="Company Name" required />
         <span class="label label-success" ng-show="form.companyname.$invalid === false">OK</span>
@@ -15,46 +30,12 @@
       </div>
       <div class="form-group">
         <input type="url" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" ng-click="showScrappPage=!showScrappPage">Scrapp page</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" ng-click="showLinkPage=!showLinkPage">Page link</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" ng-click="showLinkPage=!showLinkPage">Cover Letter</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" ng-click="showLinkPage=!showLinkPage">Apply method</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" data-toggle="modal" data-target="#modal-scrapp">Scrapp page</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-url">Page link</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-method">Apply method</button>
         <span class="label label-success" ng-show="form.jobposition.$invalid === false && getJob('new')"  >OK</span>
         <span class="label label-warning" ng-show="form.jobposition.$invalid === true && getJob('new')" >Not Valid</span>
-      </div>
-      <div id="source-modal" ng-show="showLinkPage" class="modal fade in" tabindex="-1" style="display: block; padding-right: 15px;">
-        <div class="modal-content">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-header">
-              <button type="button" class="close" ng-click="showLinkPage=false;" aria-hidden="true">×</button>
-              <h4 class="modal-title">Page link</h4>
-            </div>
-            <div class="modal-body">
-              <textarea class="form-control" rows="1" id="textArea4" ng-model=scrappPage></textarea>
-              <span class="help-block">Advice url</span>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-raised btn-sm btn-primary" ng-click="showLinkPage=false;">Save</button>
-              <button type="button" class="btn btn-raised btn-sm btn-default" ng-click="showLinkPage=false;">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-dialog" ng-show="showScrappPage">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" ng-click="showScrappPage=false;" aria-hidden="true">×</button>
-            <h4 class="modal-title">Scrapp Page</h4>
-          </div>
-          <div class="modal-body">
-            <textarea class="form-control" rows="7" id="textArea4" ng-model=scrappPage></textarea>
-            <span class="help-block">Please Paste the advice text to scrapp</span>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-raised btn-sm btn-primary" ng-click="showScrappPage=false;">Scrapp</button>
-            <button type="button" class="btn btn-raised btn-sm btn-default" ng-click="showScrappPage=false;">Close</button>
-          </div>
-        </div>
       </div>
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -88,11 +69,11 @@
           <h3 class="panel-title">Notes</h3>
         </div>
         <div class="panel-body">
-          <textarea class="form-control" rows="3" id="textArea1" ng-model="managerNotes"></textarea>
+          <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block">Manager Notes</span>
-          <textarea class="form-control" rows="3" id="textArea2" ng-show="getJob('old')" ng-model="developerNotes"></textarea>
+          <textarea class="form-control" rows="3" id="textArea2" ng-show="getJob('old')" ng-model="job.developerNotes"></textarea>
           <span class="help-block" ng-show="getJob('old')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="getJob('old')" ng-model=applicationResult></textarea>
+          <textarea class="form-control" rows="3" id="textArea3" ng-show="getJob('old')" ng-model=job.applicationResult></textarea>
           <span class="help-block" ng-show="getJob('old')">Application result</span>
         </div>
       </div>
@@ -106,3 +87,88 @@
     </form>
   </div>
 </section>
+<!--modal section  -->
+<div id="modal-url" class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Page link</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="1" ng-model="job.url"></textarea>
+        <span class="help-block">Advice url</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Save</button>
+        <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal-method" class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Application Method</h4>
+      </div>
+      <div class="modal-body">
+        <div class="radio radio-primary">
+          <label>
+            <input id="method-option1" type="radio" ng-model="method" value="form">
+            Form
+          </label>
+        </div>
+        <div class="radio radio-primary">
+          <label>
+            <input id="method-option2"  type="radio" ng-model="method" ng-click="" value="email">
+            Email
+          </label>
+        </div>
+        <textarea id="emailInput" ng-disabled="method==='form'" class="form-control" rows="1" ng-model="emailText"></textarea>
+        <span class="help-block">email</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Save</button>
+        <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal-letter" class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Cover Letter</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="7" ng-model="letterText"></textarea>
+        <span class="help-block">Please Paste the letter used for presentation</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Scrappe</button>
+        <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modal-scrapp" class="modal fade in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Scrapp Page</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="7" ng-model="scrappText"></textarea>
+        <span class="help-block">Please Paste the advice text to scrapp</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Scrapp</button>
+        <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
