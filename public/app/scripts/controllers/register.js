@@ -87,36 +87,19 @@ angular.module('publicApp')
     $scope.showLoading = true;
 
     ServerCommunication.registerUser($scope.user)
-      .then(
-        function(response) {
-          console.log('success from controller');
-          console.log(response);
-          CurrentUserProfile.loginUser(response.user.username);
-          $location.path('/offer-list');
-        },
-        function(error) {
-          console.log('error from cotroller');
-          console.log(error);
-          $scope.hasError = true;
-        }
-      );
-    };
-
-  // $window.signUpCallback = function(returnValue) {
-    // console.log('signUpCallback');
-    // var response = angular.fromJson(returnValue);
-    // $scope.showLoading = false;
-    // var error = errorHandler.checkCriticalError(response);
-    // if(error === false) {
-      // if( response.severity !== null ) {
-        // If there was an error, print the error message.
-        // $scope.errorText = 'Error registering user';
-      // }
-      // else {
-        // $location.path('/offer-list');
-      // }
-    // }
-    // $scope.$apply();
-  // };
+    .then(
+      function(response) {
+        console.log('success from controller');
+        console.log(response);
+        CurrentUserProfile.loginUser(response.user.username);
+        $location.path('/offer-list');
+      },
+      function(error) {
+        console.log('error from cotroller');
+        console.log(error);
+        $scope.hasError = true;
+      }
+    );
+  };
 });
 

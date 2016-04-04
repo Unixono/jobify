@@ -14,7 +14,7 @@ angular.module('publicApp')
       password: null
     };
 
-    $scope.hasError = false;
+    $scope.hasError = "";
 
     $scope.login = function() {
       ServerCommunication.loginUser($scope.user)
@@ -28,7 +28,8 @@ angular.module('publicApp')
         function(error) {
           console.log('error from controller');
           console.log(error);
-          $scope.hasError = true;
+          $scope.user.password = '';
+          $scope.hasError = error.error.message;
         }
       );
 
