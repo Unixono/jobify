@@ -9,18 +9,32 @@
  */
 angular.module('publicApp')
   .controller('HeaderCtrl', function ($scope, $location, ServerCommunication, CurrentUserProfile) {
-    $scope.userName = CurrentUserProfile.getUserUsername() || 'User';
+    $scope.userName = CurrentUserProfile.getUserUsername() || '';
 
     $scope.logoutUser = function() {
-      ServerCommunication.logoutUser($scope.userName).then(
+      ServerCommunication.logoutUser()
+      .then(
         function(response) {
+          console.log('success from controller');
+          // console.log(response);
           CurrentUserProfile.logoutCurrentUser();
+          $scope.userName= '';
           $location.path('/');
         },
         function(error) {
           console.log(error);
+          $location.path('/');
         }
       );
+    };
+
+    $scope.goHome = function () {
+      if ($scope.userName == '') {
+        $location.path('/');
+      }
+      else {
+        $location.path('/offer-list');
+      }
     };
 
     $scope.$watch(

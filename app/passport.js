@@ -47,6 +47,13 @@ module.exports = function(passport) {
     }
   ));
 
+  // Logout strategy
+  passport.use('local-logout', new LocalStrategy(
+    function(done) {
+      return done(null);
+    }
+  ));
+
   // Signup Strategy.
   passport.use('local-signup', new LocalStrategy({
     // Set this option to true in oder to pass the req object

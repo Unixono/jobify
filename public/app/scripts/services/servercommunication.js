@@ -63,14 +63,21 @@ angular.module('publicApp')
       return defer.promise;
     };
 
-    this.logoutUser = function(user) {
+    this.logoutUser = function() {
       var defer = $q.defer();
 
       // Call to the logout method on sever.
-      
-      defer.resolve('ok');
-
+      console.log('log out');
+      $http.post(serverUrl + '/logout').success(function(response) {
+        console.log('success');
+        // console.log(response);
+        defer.resolve('ok');
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
       return defer.promise;
     };
-
   });

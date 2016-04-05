@@ -140,12 +140,27 @@ app.post('/login', function(req, res, next) {
   })(req,res,next);
 });
 
+app.post('/logout', function(req, res){
+  passport.authenticate('local-logout', function(err, user, info) {
+    console.log('in logout route!');
+    // console.log(req);
+    // console.log(err);
+    // console.log(user);
+    // console.log(info);
+    if(err) {
+      return res.status(500).json({error: err});
+    }
+    req.logout();
+    res.status(200).json({status: 'Logout successful!', user: null});
+  })(req,res);
+});
+
 app.post('/signup', function(req, res, next) {
   passport.authenticate('local-signup', function(err, user, info) {
     console.log('in signup route');
-    console.log(err);
-    console.log(user);
-    console.log(info);
+    // console.log(err);
+    // console.log(user);
+    // console.log(info);
     if (err) {
       return next(err); // will generate a 500 error
     }
