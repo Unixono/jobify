@@ -113,4 +113,22 @@ angular.module('publicApp')
       });
       return defer.promise;
     };
+
+    this.removeUser = function(user) {
+      var defer = $q.defer();
+
+      // Call to the logout method on sever.
+      console.log('remove user');
+      $http.put(serverUrl + '/removeuser', user ).success(function(response) {
+        console.log('success');
+        // console.log(response);
+        defer.resolve('ok');
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
   });
