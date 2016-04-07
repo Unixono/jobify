@@ -25,7 +25,6 @@ angular.module('publicApp')
       function(response) {
         console.log('success from controller');
         console.log(response);
-        debugger;
         $scope.user.username = response.user.username;
         $scope.user.password = response.user.password;
         $scope.user.role = response.user.role;
@@ -124,6 +123,27 @@ angular.module('publicApp')
     $scope.showLoading = true;
 
     ServerCommunication.registerUser($scope.user)
+    .then(
+      function(response) {
+        console.log('success from controller');
+        console.log(response);
+        CurrentUserProfile.loginUser(response.user.username);
+        $location.path('/offer-list');
+      },
+      function(error) {
+        console.log('error from cotroller');
+        console.log(error);
+        $scope.hasError = true;
+      }
+    );
+  };
+
+  // Call the applet api function to signUp user.
+  $scope.updateUserButtonClicked = function() {
+
+    $scope.showLoading = true;
+
+    ServerCommunication.updateUser($scope.user)
     .then(
       function(response) {
         console.log('success from controller');

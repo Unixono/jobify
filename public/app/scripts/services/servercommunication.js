@@ -62,6 +62,23 @@ angular.module('publicApp')
       return defer.promise;
     };
 
+    this.updateUser = function(user) {
+      var defer = $q.defer();
+      console.log(user);
+      $http.put(serverUrl + '/updateuser', user ).success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+
+      return defer.promise;
+    };
+
     this.getJobsList = function() {
       var defer = $q.defer();
 
