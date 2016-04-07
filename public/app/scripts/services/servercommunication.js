@@ -29,6 +29,22 @@ angular.module('publicApp')
       return defer.promise;
     };
 
+    this.getLoggedUser = function() {
+      var defer = $q.defer();
+      $http.get(serverUrl + '/getuser').success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+
+      return defer.promise;
+    };
+
     this.registerUser = function(user) {
       var defer = $q.defer();
       console.log(user);

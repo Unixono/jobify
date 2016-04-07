@@ -108,6 +108,11 @@ app.get('/offer-list', isLoggedIn, function(req, res, next) {
   // res.status(401).json({error: 'Unauthotized'});
 });
 
+app.get('/getuser', isLoggedIn, function(req, res, next) {
+    console.log('in getuser');
+    res.status(200).json({status: 'Get User Successfull!', user: req.user});
+});
+
 app.post('/login', function(req, res, next) {
   passport.authenticate('local-login', function(err, user, info) {
     console.log('in login route!');
