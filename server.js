@@ -108,6 +108,11 @@ app.get('/offer-list', isLoggedIn, function(req, res, next) {
   // res.status(401).json({error: 'Unauthotized'});
 });
 
+app.get('/getuser', isLoggedIn, function(req, res, next) {
+    console.log('in getuser');
+    res.status(200).json({status: 'Get User Successfull!', user: req.user});
+});
+
 app.post('/login', function(req, res, next) {
   passport.authenticate('local-login', function(err, user, info) {
     console.log('in login route!');
@@ -185,6 +190,35 @@ app.post('/signup', function(req, res, next) {
   })(req, res, next);
 });
 
+app.put('/updateuser', function(req, res, next) {
+  passport.authenticate('local-updateuser', function(err, user, info) {
+    console.log('in updateuser route');
+    // console.log(err);
+    // console.log(user);
+    // console.log(info);
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (! user) {
+      return res.status(500).json({ success : false, message : 'authentication failed'  });
+    }
+
+    req.login(user, function(err) {
+      console.log('inside login function');
+      if(err) {
+        return res.status(500).json({error: 'Could not log in user'});
+      }
+
+      console.log('isAuthenticated from login route');
+      console.log(req.isAuthenticated());
+      console.log(req.user);
+      console.log(req.session);
+      res.status(200).json({succes : true, status: 'Login successful!', user: user});
+    });
+    // return res.status(200).json({ success : true, message : 'authentication succeeded', user : user  });
+  })(req, res, next);
+});
 
 var port = 3000;
 app.listen(port);

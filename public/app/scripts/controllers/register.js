@@ -12,10 +12,46 @@ angular.module('publicApp')
 
   $scope.user = {
     username: null,
+    email: null,
     password: null,
     role: 'developer'
   };
-  
+  $scope.updateUser = false;
+
+  if (CurrentUserProfile.getUserUsername() != '') {
+    $scope.updateUser = true;
+    ServerCommunication.getLoggedUser()
+    .then(
+      function(response) {
+        console.log('success from controller');
+        console.log(response);
+        $scope.user.username = response.user.username;
+        $scope.user.password = response.user.password;
+        $scope.user.role = response.user.role;
+        $scope.user.email = response.user.email;
+        $scope.emailChanged();
+      },
+      function(error) {
+        console.log('error from cotroller');
+        console.log(error);
+      })
+  };
+
+
+  // $scope.$watch(
+  //   function() {
+  //     return CurrentUserProfile.getUserUsername();
+  //   },
+  //   function(newValue, oldValue) {
+  //     if(newValue !== '') {
+  //       username: ,
+  //       password: null,
+  //       role: 'developer'
+  //     }
+  //   },
+  //   true
+  // );
+
   $scope.hasError = false;
   $scope.passwordHasSpaces = false;
   $scope.emailValid = false;
@@ -87,6 +123,27 @@ angular.module('publicApp')
     $scope.showLoading = true;
 
     ServerCommunication.registerUser($scope.user)
+    .then(
+      function(response) {
+        console.log('success from controller');
+        console.log(response);
+        CurrentUserProfile.loginUser(response.user.username);
+        $location.path('/offer-list');
+      },
+      function(error) {
+        console.log('error from cotroller');
+        console.log(error);
+        $scope.hasError = true;
+      }
+    );
+  };
+
+  // Call the applet api function to signUp user.
+  $scope.updateUserButtonClicked = function() {
+
+    $scope.showLoading = true;
+
+    ServerCommunication.updateUser($scope.user)
     .then(
       function(response) {
         console.log('success from controller');

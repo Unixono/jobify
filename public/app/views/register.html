@@ -11,7 +11,7 @@
         <span class="label label-warning" ng-show="!emailValid">Not Valid</span>
       </div>
       <div class="form-group">
-        <input type="text" name="username" class="form-control" ng-model="user.username" placeholder="User Name" required />
+        <input type="text" name="username" class="form-control" ng-disabled="updateUser" ng-model="user.username" placeholder="User Name" required />
         <span class="label label-success" ng-show="form.username.$invalid === false">OK</span>
         <span class="label label-warning" ng-show="form.username.$invalid === true">Not Valid</span>
       </div>
@@ -46,14 +46,21 @@
         <p id="signup-credentials-error" class="form-error">{{ errorText }}</p>
       </div>
       <div class="form-row submit-btn" ng-init="termsAccepted = false">
-        <button id="signup-submit-form" class="btn btn-primary" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked()">
+        <button id="signup-submit-form" class="btn btn-primary" ng-show="!updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked()">
           Sing up
+        </button>
+        <button id="update-submit-form" class="btn btn-primary" ng-show="updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="updateUserButtonClicked()">
+          Update
         </button>
       </div>
     </form>
-    <div class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert" ng-show="hasError">
+    <div ng-show= "updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
       <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
       <strong>Error</strong> regitering user, please try again
+    </div>
+    <div ng-show="!updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
+      <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
+      <strong>Error</strong> updating user, please try again
     </div>
     <div class="alert alert-dismissible alert-info" ng-show="showLoading && !hasError">
       <!-- <img src="images/update.gif" alt="" /> -->

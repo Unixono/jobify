@@ -33,6 +33,14 @@ angular.module('publicApp')
       return currentUser.getUserUsername();
     };
 
+    this.getUser = function () {
+      // If user still does not exist.
+      if(!currentUser) {
+        return '';
+      }
+      return currentUser;
+    };
+
     this.logoutCurrentUser = function() {
       console.log('logout user from service');
       currentUser = null;

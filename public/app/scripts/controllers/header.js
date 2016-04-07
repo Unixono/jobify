@@ -11,6 +11,11 @@ angular.module('publicApp')
   .controller('HeaderCtrl', function ($scope, $location, ServerCommunication, CurrentUserProfile) {
     $scope.userName = CurrentUserProfile.getUserUsername() || '';
 
+    $scope.settings = function () {
+      // set user option
+      $location.path('/register');
+    }
+
     $scope.logoutUser = function() {
       ServerCommunication.logoutUser()
       .then(
