@@ -23,7 +23,6 @@ angular.module('publicApp')
           console.log('success from controller');
           // console.log(response);
           CurrentUserProfile.logoutCurrentUser();
-          $scope.userName= '';
           $location.path('/');
         },
         function(error) {
@@ -47,10 +46,7 @@ angular.module('publicApp')
         return CurrentUserProfile.getUserUsername();
       },
       function(newValue, oldValue) {
-        if(newValue) {
           $scope.userName = newValue;
-        }
       },
       true);
-
   });
