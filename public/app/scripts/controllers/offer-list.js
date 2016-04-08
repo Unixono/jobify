@@ -14,8 +14,8 @@ angular.module('publicApp')
 
     ServerCommunication.getJobsList().then(
       function(response) {
-        console.log('success from controller');
-        console.log(response);
+        // console.log('success from controller');
+        // console.log(response);
         $scope.jobsList = response.jobs;
       },
       function(error) {

@@ -18,13 +18,13 @@ angular.module('publicApp')
   };
   $scope.updateUser = false;
 
-  if (CurrentUserProfile.getUserUsername() != '') {
+  if (CurrentUserProfile.getUserUsername() !== '') {
     $scope.updateUser = true;
     ServerCommunication.getLoggedUser()
     .then(
       function(response) {
-        console.log('success from controller');
-        console.log(response);
+        // console.log('success from controller');
+        // console.log(response);
         $scope.user.username = response.user.username;
         $scope.user.password = response.user.password;
         $scope.user.role = response.user.role;
@@ -34,23 +34,8 @@ angular.module('publicApp')
       function(error) {
         console.log('error from cotroller');
         console.log(error);
-      })
-  };
-
-
-  // $scope.$watch(
-  //   function() {
-  //     return CurrentUserProfile.getUserUsername();
-  //   },
-  //   function(newValue, oldValue) {
-  //     if(newValue !== '') {
-  //       username: ,
-  //       password: null,
-  //       role: 'developer'
-  //     }
-  //   },
-  //   true
-  // );
+      });
+  }
 
   $scope.hasError = false;
   $scope.passwordHasSpaces = false;
@@ -79,7 +64,7 @@ angular.module('publicApp')
       $scope.retypePasswordAdvice = "";
     }
     $scope.errorText = "";
-  }
+  };
 
   $scope.passwordMatches = function( password, retypePassword ) {
     if(password === undefined || retypePassword === undefined) {
@@ -110,9 +95,7 @@ angular.module('publicApp')
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (re.test($scope.user.email)) {
       $scope.emailValid = true;
-      // $scope.emailInvalid = false;
     } else {
-      // $scope.emailInvalid = true;
       $scope.emailValid = false;
     }
   };
@@ -125,8 +108,8 @@ angular.module('publicApp')
     ServerCommunication.registerUser($scope.user)
     .then(
       function(response) {
-        console.log('success from controller');
-        console.log(response);
+        // console.log('success from controller');
+        // console.log(response);
         CurrentUserProfile.loginUser(response.user.username);
         $location.path('/offer-list');
       },
@@ -146,8 +129,8 @@ angular.module('publicApp')
     ServerCommunication.updateUser($scope.user)
     .then(
       function(response) {
-        console.log('success from controller');
-        console.log(response);
+        // console.log('success from controller');
+        // console.log(response);
         CurrentUserProfile.loginUser(response.user.username);
         $location.path('/offer-list');
       },
@@ -163,7 +146,7 @@ angular.module('publicApp')
     ServerCommunication.removeUser($scope.user)
     .then(
       function(response) {
-        console.log('success from controller');
+        // console.log('success from controller');
         // console.log(response);
         CurrentUserProfile.logoutCurrentUser();
         $location.path('/');
@@ -175,6 +158,5 @@ angular.module('publicApp')
       }
     );
   };
-
 });
 

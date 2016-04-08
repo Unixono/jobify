@@ -8,7 +8,7 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-.controller('OfferCtrl', function ($scope, $location, CurrentUserProfile) {
+.controller('OfferCtrl', function ($scope, $location, CurrentUserProfile, ServerCommunication) {
 
   $scope.job = {
     developers: [],
@@ -33,13 +33,13 @@ angular.module('publicApp')
 
   $scope.goToList = function() {
     $location.path('/offer-list');
-  }
+  };
 
   $scope.method = 'form';
 
   $scope.getJob = function(job) {
     return CurrentUserProfile.getJob() === job;
-  }
+  };
 
   $scope.signUpButtonClicked = function() {
 
@@ -48,8 +48,8 @@ angular.module('publicApp')
     ServerCommunication.registerUser($scope.user)
     .then(
       function(response) {
-        console.log('success from controller');
-        console.log(response);
+        // console.log('success from controller');
+        // console.log(response);
         CurrentUserProfile.loginUser(response.user.username);
         $location.path('/offer-list');
       },

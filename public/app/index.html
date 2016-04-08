@@ -27,35 +27,14 @@
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
-
-            <!-- <button type="button" class="navbar&#45;toggle collapsed" data&#45;toggle="collapse" data&#45;target="#js&#45;navbar&#45;collapse"> -->
-            <!--   <span class="sr&#45;only">Toggle navigation</span> -->
-            <!--   <span class="icon&#45;bar"></span> -->
-            <!--   <span class="icon&#45;bar"></span> -->
-            <!--   <span class="icon&#45;bar"></span> -->
-            <!-- </button> -->
-
             <a class="navbar-brand" ng-click="goHome()" href="">Jobify</a>
           </div>
-
-          <!-- <div class="collapse navbar&#45;collapse" id="js&#45;navbar&#45;collapse"> -->
-          <!--  -->
-          <!--   <ul class="nav navbar&#45;nav"> -->
-          <!--     <li class="active"><a href="#/">Home</a></li> -->
-          <!--     <li><a ng&#45;href="#/about">About</a></li> -->
-          <!--     <li><a ng&#45;href="#/">Contact</a></li> -->
-          <!--   </ul> -->
-          <!-- </div> -->
 
           <ul class="nav navbar-nav navbar-right">
             <!-- <li><a href="javascript:void(0)">Link</a></li> -->
             <li class="dropdown" ng-show="userName != ''">
             <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <!-- <li><a href="javascript:void(0)">Action</a></li> -->
-                <!-- <li><a href="javascript:void(0)">Another action</a></li> -->
-                <!-- <li><a href="javascript:void(0)">Something else here</a></li> -->
-                <!-- <li class="divider"></li> -->
                 <li><a ng-click="settings()" href="">Settings</a></li>
                 <li><a ng-click="logoutUser()" href="">Log out</a></li>
               </ul>

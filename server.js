@@ -60,10 +60,10 @@ require('./app/passport.js')(passport);
 
 
 function isLoggedIn(req, res, next) {
-  console.log('isAuthenticated() in middleware');
-  console.log(req.isAuthenticated());
-  console.log(req.session);
-  console.log('Session Expiry '+req.session.cookie.expires);
+  // console.log('isAuthenticated() in middleware');
+  // console.log(req.isAuthenticated());
+  // console.log(req.session);
+  // console.log('Session Expiry '+req.session.cookie.expires);
   // if user is authenticated in the session, carry on 
   if (req.isAuthenticated())
     return next();
@@ -81,7 +81,7 @@ app.get('/offer-list', isLoggedIn, function(req, res, next) {
   // console.log(req.isAuthenticated());
   // console.log('Session Expiry '+req.session.cookie.expires);
   // if(req.isAuthenticated()) {
-  console.log('in offer-list');
+  // console.log('in offer-list');
   // console.log(req);
   res.json({
     'jobs':[{
@@ -109,13 +109,13 @@ app.get('/offer-list', isLoggedIn, function(req, res, next) {
 });
 
 app.get('/getuser', isLoggedIn, function(req, res, next) {
-    console.log('in getuser');
+    // console.log('in getuser');
     res.status(200).json({status: 'Get User Successfull!', user: req.user});
 });
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local-login', function(err, user, info) {
-    console.log('in login route!');
+    // console.log('in login route!');
     // console.log(req);
     // console.log(err);
     // console.log(user);
@@ -130,15 +130,15 @@ app.post('/login', function(req, res, next) {
     }
 
     req.login(user, function(err) {
-      console.log('inside login function');
+      // console.log('inside login function');
       if(err) {
         return res.status(500).json({error: 'Could not log in user'});
       }
 
-      console.log('isAuthenticated from login route');
-      console.log(req.isAuthenticated());
-      console.log(req.user);
-      console.log(req.session);
+      // console.log('isAuthenticated from login route');
+      // console.log(req.isAuthenticated());
+      // console.log(req.user);
+      // console.log(req.session);
       res.status(200).json({status: 'Login successful!', user: user});
     });
 
@@ -147,7 +147,7 @@ app.post('/login', function(req, res, next) {
 
 app.post('/logout', function(req, res){
   passport.authenticate('local-logout', function(err, user, info) {
-    console.log('in logout route!');
+    // console.log('in logout route!');
     // console.log(req);
     // console.log(err);
     // console.log(user);
@@ -162,7 +162,7 @@ app.post('/logout', function(req, res){
 
 app.post('/signup', function(req, res, next) {
   passport.authenticate('local-signup', function(err, user, info) {
-    console.log('in signup route');
+    // console.log('in signup route');
     // console.log(err);
     // console.log(user);
     // console.log(info);
@@ -175,15 +175,15 @@ app.post('/signup', function(req, res, next) {
     }
 
     req.login(user, function(err) {
-      console.log('inside login function');
+      // console.log('inside login function');
       if(err) {
         return res.status(500).json({error: 'Could not log in user'});
       }
 
-      console.log('isAuthenticated from login route');
-      console.log(req.isAuthenticated());
-      console.log(req.user);
-      console.log(req.session);
+      // console.log('isAuthenticated from login route');
+      // console.log(req.isAuthenticated());
+      // console.log(req.user);
+      // console.log(req.session);
       res.status(200).json({succes : true, status: 'Login successful!', user: user});
     });
     // return res.status(200).json({ success : true, message : 'authentication succeeded', user : user  });
@@ -192,7 +192,7 @@ app.post('/signup', function(req, res, next) {
 
 app.put('/updateuser', function(req, res, next) {
   passport.authenticate('local-updateuser', function(err, user, info) {
-    console.log('in updateuser route');
+    // console.log('in updateuser route');
     // console.log(err);
     // console.log(user);
     // console.log(info);
@@ -205,15 +205,15 @@ app.put('/updateuser', function(req, res, next) {
     }
 
     req.login(user, function(err) {
-      console.log('inside login function');
+      // console.log('inside login function');
       if(err) {
         return res.status(500).json({error: 'Could not log in user'});
       }
 
-      console.log('isAuthenticated from login route');
-      console.log(req.isAuthenticated());
-      console.log(req.user);
-      console.log(req.session);
+      // console.log('isAuthenticated from login route');
+      // console.log(req.isAuthenticated());
+      // console.log(req.user);
+      // console.log(req.session);
       res.status(200).json({succes : true, status: 'Login successful!', user: user});
     });
     // return res.status(200).json({ success : true, message : 'authentication succeeded', user : user  });
@@ -222,7 +222,7 @@ app.put('/updateuser', function(req, res, next) {
 
 app.put('/removeuser', function(req, res, next) {
   passport.authenticate('local-removeuser', function(err, user, info) {
-    console.log('in removeuser route');
+    // console.log('in removeuser route');
     // console.log(err);
     // console.log(user);
     // console.log(info);

@@ -6,15 +6,15 @@ var User = require('../models/user');
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
-    console.log('serializeUser');
-    console.log(user);
-    console.log(user._id);
+    // console.log('serializeUser');
+    // console.log(user);
+    // console.log(user._id);
     done(null, user._id);
   });
 
   passport.deserializeUser(function(id, done) {
-    console.log('deserializeUser');
-    console.log(id);
+    // console.log('deserializeUser');
+    // console.log(id);
     User.findById(id, function(err, user) {
       done(err, user);
     });
@@ -61,10 +61,10 @@ module.exports = function(passport) {
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
-      console.log('SINGUP USER...');
-      console.log(err);
-      console.log(user);
-      console.log(req.body);
+      // console.log('SINGUP USER...');
+      // console.log(err);
+      // console.log(user);
+      // console.log(req.body);
       // if there are any errors, return the error
       if(err) {
         console.log('error');
@@ -99,7 +99,6 @@ module.exports = function(passport) {
           return done(null, newUser);
         });
       }
-
     });
   }
   ));
@@ -109,10 +108,10 @@ module.exports = function(passport) {
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
-      console.log('SINGUP USER...');
-      console.log(err);
-      console.log(user);
-      console.log(req.body);
+      // console.log('SINGUP USER...');
+      // console.log(err);
+      // console.log(user);
+      // console.log(req.body);
       // if there are any errors, return the error
       if(err) {
         console.log('error');
@@ -150,10 +149,10 @@ module.exports = function(passport) {
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
-      console.log('SINGUP USER...');
-      console.log(err);
-      console.log(user);
-      console.log(req.body);
+      // console.log('SINGUP USER...');
+      // console.log(err);
+      // console.log(user);
+      // console.log(req.body);
       // if there are any errors, return the error
       if(err) {
         console.log('error');
