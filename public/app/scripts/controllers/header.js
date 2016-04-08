@@ -14,7 +14,7 @@ angular.module('publicApp')
     $scope.settings = function () {
       // set user option
       $location.path('/register');
-    }
+    };
 
     $scope.logoutUser = function() {
       ServerCommunication.logoutUser()
@@ -33,7 +33,7 @@ angular.module('publicApp')
     };
 
     $scope.goHome = function () {
-      if ($scope.userName == '') {
+      if ($scope.userName === '') {
         $location.path('/');
       }
       else {

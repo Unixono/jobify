@@ -20,8 +20,8 @@ angular.module('publicApp')
       ServerCommunication.loginUser($scope.user)
       .then(
         function(response) {
-          console.log('success from controller');
-          console.log(response);
+          // console.log('success from controller');
+          // console.log(response);
           CurrentUserProfile.loginUser(response.user.username);
           $location.path('/offer-list');
         },
@@ -32,17 +32,9 @@ angular.module('publicApp')
           $scope.hasError = error.error.message;
         }
       );
-
-      // if($scope.user.name && $scope.user.password) {
-      //   console.log($scope.user);
-      // }
-      // else {
-      //   console.log('Error');
-      // }
     };
 
     $scope.registerUser = function() {
       $location.path('/register');
     };
-
   });
