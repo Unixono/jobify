@@ -220,6 +220,25 @@ app.put('/updateuser', function(req, res, next) {
   })(req, res, next);
 });
 
+app.put('/removeuser', function(req, res, next) {
+  passport.authenticate('local-removeuser', function(err, user, info) {
+    console.log('in removeuser route');
+    // console.log(err);
+    // console.log(user);
+    // console.log(info);
+    if (err) {
+      return next(err); // will generate a 500 error
+    }
+    // Generate a JSON response reflecting authentication status
+    if (! user) {
+      return res.status(500).json({ success : false, message : 'authentication failed'  });
+    }
+
+    req.logout();
+    res.status(200).json({status: 'Logout successful!', user: null});
+  })(req, res, next);
+});
+
 var port = 3000;
 app.listen(port);
 console.log('Running on port ' + port);

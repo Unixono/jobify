@@ -145,4 +145,39 @@ module.exports = function(passport) {
     });
   }
   ));
+
+  passport.use('local-removeuser', new LocalStrategy({
+    passReqToCallback: true
+  }, function(req, username, password, done) {
+    User.findOne({ 'username' :  username }, function(err, user) {
+      console.log('SINGUP USER...');
+      console.log(err);
+      console.log(user);
+      console.log(req.body);
+      // if there are any errors, return the error
+      if(err) {
+        console.log('error');
+        console.log(err);
+        return done(err);
+      }
+      // check to see if theres already a user with that email
+      if(!user) {
+        console.log('error');
+        console.log(err);
+        return done(null, false);
+      }
+      else {
+        // if there is a user
+
+        // save the user
+        user.remove(function(err) {
+          if (err) {
+            throw err;
+          }
+          return done(null, user);
+        });
+      }
+    });
+  }
+  ));
 };

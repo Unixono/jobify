@@ -158,5 +158,26 @@ angular.module('publicApp')
       }
     );
   };
+
+  $scope.removeUserButtonClicked = function() {
+
+    $scope.showLoading = true;
+
+    ServerCommunication.removeUser($scope.user)
+    .then(
+      function(response) {
+        console.log('success from controller');
+        console.log(response);
+        CurrentUserProfile.logoutCurrentUser();
+        $scope.userName= '';
+        $location.path('/');
+      },
+      function(error) {
+        console.log('error from cotroller');
+        console.log(error);
+        $scope.hasError = true;
+      }
+    );
+  };
 });
 

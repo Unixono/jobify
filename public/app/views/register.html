@@ -52,6 +52,9 @@
         <button id="update-submit-form" class="btn btn-primary" ng-show="updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="updateUserButtonClicked()">
           Update
         </button>
+        <button id="remove-submit-form" class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="removeUserButtonClicked()">
+          Remove
+        </button>
       </div>
     </form>
     <div ng-show= "updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
