@@ -14,7 +14,7 @@ db.once('open', function (callback) {
 });
 
 // Import the user model.
-// var User = require('./models/user');
+var User = require('./models/user');
 
 app.use(bodyParser.json());
 
@@ -75,6 +75,19 @@ function isLoggedIn(req, res, next) {
 
 
 // Routes
+
+app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
+  // console.log('isAuthenticated()');
+  // console.log(req.isAuthenticated());
+  // console.log(req);
+  User.find({role: 'developer'}, function (err, devs) {
+    if(err) {
+      return done(err);
+    }
+    console.log(devs);
+    res.status(200).json({status: 'Get devs Successfull!', devs : devs});
+  });
+});
 
 app.get('/offer-list', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');

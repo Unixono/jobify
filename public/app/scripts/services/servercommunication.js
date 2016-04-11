@@ -100,7 +100,7 @@ angular.module('publicApp')
       var defer = $q.defer();
 
       // Call to the logout method on sever.
-      console.log('log out');
+      // console.log('log out');
       $http.post(serverUrl + '/logout').success(function(response) {
         // console.log('success');
         // console.log(response);
@@ -123,6 +123,24 @@ angular.module('publicApp')
         // console.log('success');
         // console.log(response);
         defer.resolve('ok');
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
+    this.getDevelopers = function() {
+      var defer = $q.defer();
+
+      // Call to the getDeveloperList method on sever.
+      console.log('get developers');
+      $http.get(serverUrl + '/getdeveloperlist').success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response.devs);
       })
       .error(function(err) {
         console.log('error');
