@@ -16,6 +16,16 @@ angular.module('publicApp')
     password: null,
     role: 'developer'
   };
+
+  $scope.goHome = function () {
+    if (CurrentUserProfile.getUserUsername() === '') {
+      $location.path('/');
+    }
+    else {
+      $location.path('/offer-list');
+    }
+  };
+
   $scope.updateUser = false;
 
   if (CurrentUserProfile.getUserUsername() !== '') {
