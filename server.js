@@ -107,33 +107,15 @@ app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
 app.get('/offer-list', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());
-  // console.log('Session Expiry '+req.session.cookie.expires);
-  // if(req.isAuthenticated()) {
-  // console.log('in offer-list');
   // console.log(req);
-  res.json({
-    'jobs':[{
-      'developer': 'Lea',
-      'company': 'Google',
-      'position': 'Front-end developer',
-      'dateAdded': 1288323623006,
-      'apply': false
-    }, {
-      'developer': 'Lea',
-      'company': 'SpiderOak',
-      'position': 'AngularJS developer',
-      'dateAdded': 1288323623006,
-      'apply': true
-    }, {
-      'developer': 'Lea',
-      'company': 'Facebook',
-      'position': 'Front-end developer',
-      'dateAdded': 1288323623006,
-      'apply': false
-    }]
+
+  Offer.find({}, function (err, offers) {
+    if(err) {
+      return done(err);
+    }
+    // console.log(offers);
+    res.status(200).json({status: 'Get offers Successfull!', offers : offers});
   });
-  // }
-  // res.status(401).json({error: 'Unauthotized'});
 });
 
 app.get('/getuser', isLoggedIn, function(req, res, next) {

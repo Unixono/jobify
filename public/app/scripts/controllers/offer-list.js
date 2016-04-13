@@ -16,7 +16,7 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
-        $scope.jobsList = response.jobs;
+        $scope.jobsList = response.offers;
       },
       function(error) {
         console.log('error from controller');
@@ -24,8 +24,9 @@ angular.module('publicApp')
         $location.path('/');
       });
 
-      $scope.showJob = function() {
-        CurrentUserProfile.setJob('old');
+      $scope.showJob = function(id) {
+        CurrentUserProfile.setJob(id);
+        console.log (CurrentUserProfile.getJob());
         $location.path('/offer');
       };
 

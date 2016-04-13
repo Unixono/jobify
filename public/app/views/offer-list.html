@@ -41,11 +41,10 @@
     <tr ng-repeat="job in jobsList | filter: filterOption">
       <td ng-bind="job.company"></td>
       <td ng-bind="job.position"></td>
-      <td>{{job.dateAdded | date:'dd-MM-yy'}}</td>
-      <td ng-bind="job.apply | applied"></td>
+      <td>{{job.creationDate | date:'dd-MM-yy'}}</td>
+      <td ng-bind="job.status"></td>
       <td>
-        <i class="mdi-navigation-chevron-right" style="cursor: pointer;" ng-click="showJob()"></i>
-        <!-- <button class="btn btn&#45;default" style="width: 100%" ng&#45;click="showJob()">Show</button> -->
+        <i class="mdi-navigation-chevron-right" style="cursor: pointer;" ng-click="showJob(job._id)"></i>
       </td>
     </tr>
     </tbody>

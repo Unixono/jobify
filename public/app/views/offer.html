@@ -29,9 +29,9 @@
       <div class="form-group">
         <input type="text" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" data-toggle="modal" data-target="#modal-scrapp">Scrapp page</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-url">Page link</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-method">Apply method</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Page link</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-method">Apply method</button>
         <span class="label label-success" ng-show="form.jobposition.$invalid === false && getJob('new')"  >OK</span>
         <span class="label label-warning" ng-show="form.jobposition.$invalid === true && getJob('new')" >Not Valid</span>
       </div>
@@ -69,18 +69,18 @@
         <div class="panel-body">
           <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block">Manager Notes</span>
-          <textarea class="form-control" rows="3" id="textArea2" ng-show="getJob('old')" ng-model="job.developerNotes"></textarea>
+          <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
           <span class="help-block" ng-show="getJob('old')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="getJob('old')" ng-model=job.applicationResult></textarea>
-          <span class="help-block" ng-show="getJob('old')">Application result</span>
+          <textarea class="form-control" rows="3" id="textArea3" ng-show="!getJob('new')" ng-model=job.applicationResult></textarea>
+          <span class="help-block" ng-show="!getJob('new')">Application result</span>
         </div>
       </div>
       <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-click="saveClicked()">Save</button>
       <button class="btn btn-info btn-raised" ng-show="resolved" >Resolve</button>
       <button class="btn btn-info btn-raised" ng-show="getJob('new')">Save and New</button>
-      <button class="btn btn-success btn-raised" ng-show="getJob('old')">Applyed</button>
-      <button class="btn btn-danger btn-raised" ng-show="getJob('old')">Rejected</button>
-      <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="getJob('old')">Remove</button>
+      <button class="btn btn-success btn-raised" ng-show="!getJob('new')">Applyed</button>
+      <button class="btn btn-danger btn-raised" ng-show="!getJob('new')">Rejected</button>
+      <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')">Remove</button>
       <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
     </form>
   </div>
