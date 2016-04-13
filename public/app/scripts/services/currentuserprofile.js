@@ -42,7 +42,7 @@ angular.module('publicApp')
     };
 
     this.logoutCurrentUser = function() {
-      console.log('logout user from service');
+      // console.log('logout user from service');
       currentUser = null;
     };
 

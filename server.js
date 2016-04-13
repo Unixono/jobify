@@ -15,6 +15,7 @@ db.once('open', function (callback) {
 
 // Import the user model.
 var User = require('./models/user');
+var Offer = require('./models/offer');
 
 app.use(bodyParser.json());
 
@@ -76,6 +77,20 @@ function isLoggedIn(req, res, next) {
 
 // Routes
 
+app.put('/saveoffer', isLoggedIn, function(req, res, next) {
+  // console.log('isAuthenticated()');
+  // console.log(req.isAuthenticated());
+  // console.log(req.body);
+  var offer = new Offer(req.body);
+  offer.save(function (err, saved) {
+    if(err) {
+      return done(err);
+    }
+    console.log(saved);
+    res.status(200).json({status: 'Offer saved Successfull!', saved: saved});
+  });
+});
+
 app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());
@@ -84,7 +99,7 @@ app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
     if(err) {
       return done(err);
     }
-    console.log(devs);
+    // console.log(devs);
     res.status(200).json({status: 'Get devs Successfull!', devs : devs});
   });
 });

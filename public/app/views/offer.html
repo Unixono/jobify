@@ -27,7 +27,7 @@
         <span class="label label-warning" ng-show="form.jobposition.$invalid === true">Not Valid</span>
       </div>
       <div class="form-group">
-        <input type="url" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
+        <input type="text" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" data-toggle="modal" data-target="#modal-scrapp">Scrapp page</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-url">Page link</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('old')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
@@ -41,25 +41,25 @@
         </div>
         <div class="panel-body">
           <div class="btn-toolbar">
-            <a class="btn btn-sm btn-raised" ng-click="varAux = jsRequired; jsRequired = (!jsDesired && !jsRequired); jsDesired = (varAux && !jsDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = jsRequired; jsRequired = (!jsDesired && !jsRequired); jsDesired = (varAux && !jsDesired); addSelectedSkill('js', jsRequired, jsDesired);" 
               ng-class="{'btn-info': jsDesired, 'btn-primary': jsRequired}" href>JS</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = angularRequired; angularRequired = (!angularDesired && !angularRequired); angularDesired = (varAux && !angularDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = angularRequired; angularRequired = (!angularDesired && !angularRequired); angularDesired = (varAux && !angularDesired); addSelectedSkill('angular', angularRequired, angularDesired);" 
               ng-class="{'btn-info': angularDesired, 'btn-primary': angularRequired}" href>Angular</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = reactRequired; reactRequired = (!reactDesired && !reactRequired); reactDesired = (varAux && !reactDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = reactRequired; reactRequired = (!reactDesired && !reactRequired); reactDesired = (varAux && !reactDesired); addSelectedSkill('react', reactRequired, reactDesired);" 
               ng-class="{'btn-info': reactDesired, 'btn-primary': reactRequired}" href>React</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = nodeRequired; nodeRequired = (!nodeDesired && !nodeRequired); nodeDesired = (varAux && !nodeDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = nodeRequired; nodeRequired = (!nodeDesired && !nodeRequired); nodeDesired = (varAux && !nodeDesired); addSelectedSkill('node', nodeRequired, nodeDesired);" 
               ng-class="{'btn-info': nodeDesired, 'btn-primary': nodeRequired}" href>Node</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = meanRequired; meanRequired = (!meanDesired && !meanRequired); meanDesired = (varAux && !meanDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = meanRequired; meanRequired = (!meanDesired && !meanRequired); meanDesired = (varAux && !meanDesired); addSelectedSkill('mean', meanRequired, meanDesired);" 
               ng-class="{'btn-info': meanDesired, 'btn-primary': meanRequired}" href>Mean</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = pythonRequired; pythonRequired = (!pythonDesired && !pythonRequired); pythonDesired = (varAux && !pythonDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = pythonRequired; pythonRequired = (!pythonDesired && !pythonRequired); pythonDesired = (varAux && !pythonDesired); addSelectedSkill('python', pythonRequired, pythonDesired);" 
               ng-class="{'btn-info': pythonDesired, 'btn-primary': pythonRequired}" href>Python</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = djangoRequired; djangoRequired = (!djangoDesired && !djangoRequired); djangoDesired = (varAux && !djangoDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = djangoRequired; djangoRequired = (!djangoDesired && !djangoRequired); djangoDesired = (varAux && !djangoDesired); addSelectedSkill('django', djangoRequired, djangoDesired);" 
               ng-class="{'btn-info': djangoDesired, 'btn-primary': djangoRequired}" href>Django</a>
-            <a class="btn btn-sm btn-raised" ng-click="varAux = cssRequired; cssRequired = (!cssDesired && !cssRequired); cssDesired = (varAux && !cssDesired);" 
+            <a class="btn btn-sm btn-raised" ng-click="varAux = cssRequired; cssRequired = (!cssDesired && !cssRequired); cssDesired = (varAux && !cssDesired); addSelectedSkill('css', cssRequired, cssDesired);" 
               ng-class="{'btn-info': cssDesired, 'btn-primary': cssRequired}" href>Css</a>
           </div>
-          <input type="text" name="otherSkillsReq" class="form-control" ng-model="otherSkillsRequired" placeholder="Other skills required (separated with ',')" required />
-          <input type="text" name="otherSkillsDes" class="form-control" ng-model="otherSkillsDesired" placeholder="Other skills desired (separated with ',')" required />
+          <input type="text" name="otherSkillsReq" class="form-control" ng-model="job.otherSkillsRequired" placeholder="Other skills required (separated with ',')" required />
+          <input type="text" name="otherSkillsDes" class="form-control" ng-model="job.otherSkillsDesired" placeholder="Other skills desired (separated with ',')" required />
         </div>
       </div>
       <div class="panel panel-primary">
@@ -75,7 +75,7 @@
           <span class="help-block" ng-show="getJob('old')">Application result</span>
         </div>
       </div>
-      <button class="btn btn-success btn-raised" ng-show="getJob('new')" >Save</button>
+      <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-click="saveClicked()">Save</button>
       <button class="btn btn-info btn-raised" ng-show="resolved" >Resolve</button>
       <button class="btn btn-info btn-raised" ng-show="getJob('new')">Save and New</button>
       <button class="btn btn-success btn-raised" ng-show="getJob('old')">Applyed</button>
@@ -94,7 +94,7 @@
         <h4 class="modal-title">Page link</h4>
       </div>
       <div class="modal-body">
-        <textarea class="form-control" rows="1" ng-model="job.url"></textarea>
+        <input type="text" name="joburl" class="form-control" ng-model="job.url" required />
         <span class="help-block">Advice url</span>
       </div>
       <div class="modal-footer">
@@ -114,17 +114,17 @@
       <div class="modal-body">
         <div class="radio radio-primary">
           <label>
-            <input id="method-option1" type="radio" ng-model="method" value="form">
+            <input id="method-option1" type="radio" ng-model="job.applicationMethod" value="form">
             Form
           </label>
         </div>
         <div class="radio radio-primary">
           <label>
-            <input id="method-option2"  type="radio" ng-model="method" ng-click="" value="email">
+            <input id="method-option2"  type="radio" ng-model="job.applicationMethod" ng-click="" value="email">
             Email
           </label>
         </div>
-        <textarea id="emailInput" ng-disabled="method==='form'" class="form-control" rows="1" ng-model="emailText"></textarea>
+        <textarea id="emailInput" ng-disabled="method==='form'" class="form-control" rows="1" ng-model="job.applicationEmail"></textarea>
         <span class="help-block">email</span>
       </div>
       <div class="modal-footer">
@@ -142,7 +142,7 @@
         <h4 class="modal-title">Cover Letter</h4>
       </div>
       <div class="modal-body">
-        <textarea class="form-control" rows="7" ng-model="letterText"></textarea>
+        <textarea class="form-control" rows="7" ng-model="job.coverLetter"></textarea>
         <span class="help-block">Please Paste the letter used for presentation</span>
       </div>
       <div class="modal-footer">
@@ -160,7 +160,7 @@
         <h4 class="modal-title">Scrapp Page</h4>
       </div>
       <div class="modal-body">
-        <textarea class="form-control" rows="7" ng-model="scrappText"></textarea>
+        <textarea class="form-control" rows="7" ng-model="job.adviceToScrapp"></textarea>
         <span class="help-block">Please Paste the advice text to scrapp</span>
       </div>
       <div class="modal-footer">

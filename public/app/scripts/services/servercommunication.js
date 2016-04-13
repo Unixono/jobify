@@ -136,10 +136,10 @@ angular.module('publicApp')
       var defer = $q.defer();
 
       // Call to the getDeveloperList method on sever.
-      console.log('get developers');
+      // console.log('get developers');
       $http.get(serverUrl + '/getdeveloperlist').success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response.devs);
       })
       .error(function(err) {
@@ -149,4 +149,21 @@ angular.module('publicApp')
       });
       return defer.promise;
     };
+
+    this.saveOffer = function(offer) {
+      var defer = $q.defer();
+      console.log(offer);
+      $http.put(serverUrl + '/saveoffer', offer ).success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
   });

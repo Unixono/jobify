@@ -33,7 +33,7 @@ angular.module('publicApp')
     };
 
     $scope.goHome = function () {
-      if ($scope.userName === '') {
+      if (CurrentUserProfile.getUserUsername() === '') {
         $location.path('/');
       }
       else {
