@@ -152,6 +152,7 @@ angular.module('publicApp')
 
     this.saveOffer = function(offer) {
       var defer = $q.defer();
+      offer.creationDate = Date.now();
       console.log(offer);
       $http.put(serverUrl + '/saveoffer', offer ).success(function(response) {
         console.log('success');

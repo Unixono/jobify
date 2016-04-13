@@ -86,7 +86,7 @@ app.put('/saveoffer', isLoggedIn, function(req, res, next) {
     if(err) {
       return done(err);
     }
-    console.log(saved);
+    // console.log(saved);
     res.status(200).json({status: 'Offer saved Successfull!', saved: saved});
   });
 });

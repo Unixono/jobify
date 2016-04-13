@@ -16,7 +16,9 @@ var offerSchema = mongoose.Schema({
   applicationMethod: String, //values: form or the email
   applicationEmail: String, //values: form or the email
   coverLetter: String,
-  adviceToScrapp: String
+  adviceToScrapp: String,
+  creationDate: Date,
+  applyRejectDate: Date
 });
 
 module.exports = mongoose.model('Offer', offerSchema);
