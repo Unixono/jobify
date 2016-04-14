@@ -14,10 +14,10 @@ angular.module('publicApp')
 
     this.loginUser = function(user) {
       var defer = $q.defer();
-      console.log(user);
+      // console.log(user);
       $http.post(serverUrl + '/login', user ).success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {
@@ -32,8 +32,8 @@ angular.module('publicApp')
     this.getLoggedUser = function() {
       var defer = $q.defer();
       $http.get(serverUrl + '/getuser').success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {
@@ -47,10 +47,10 @@ angular.module('publicApp')
 
     this.registerUser = function(user) {
       var defer = $q.defer();
-      console.log(user);
+      // console.log(user);
       $http.post(serverUrl + '/signup', user ).success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {
@@ -64,10 +64,10 @@ angular.module('publicApp')
 
     this.updateUser = function(user) {
       var defer = $q.defer();
-      console.log(user);
+      // console.log(user);
       $http.put(serverUrl + '/updateuser', user ).success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {
@@ -83,8 +83,25 @@ angular.module('publicApp')
       var defer = $q.defer();
 
       $http.get(serverUrl + '/offer-list').success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+
+      return defer.promise;
+    };
+
+    this.getJob = function(id) {
+      var defer = $q.defer();
+      // console.log(id);
+      $http.get(serverUrl + '/offer/'+ id ).success(function(response) {
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {
@@ -100,9 +117,9 @@ angular.module('publicApp')
       var defer = $q.defer();
 
       // Call to the logout method on sever.
-      console.log('log out');
+      // console.log('log out');
       $http.post(serverUrl + '/logout').success(function(response) {
-        console.log('success');
+        // console.log('success');
         // console.log(response);
         defer.resolve('ok');
       })
@@ -118,9 +135,9 @@ angular.module('publicApp')
       var defer = $q.defer();
 
       // Call to the logout method on sever.
-      console.log('remove user');
+      // console.log('remove user');
       $http.put(serverUrl + '/removeuser', user ).success(function(response) {
-        console.log('success');
+        // console.log('success');
         // console.log(response);
         defer.resolve('ok');
       })
@@ -131,4 +148,40 @@ angular.module('publicApp')
       });
       return defer.promise;
     };
+
+    this.getDevelopers = function() {
+      var defer = $q.defer();
+
+      // Call to the getDeveloperList method on sever.
+      // console.log('get developers');
+      $http.get(serverUrl + '/getdeveloperlist').success(function(response) {
+        // console.log('success');
+        // console.log(response);
+        defer.resolve(response.devs);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
+    this.saveOffer = function(offer) {
+      var defer = $q.defer();
+      offer.creationDate = Date.now();
+      // console.log(offer);
+      $http.put(serverUrl + '/saveoffer', offer ).success(function(response) {
+        // console.log('success');
+        // console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
   });

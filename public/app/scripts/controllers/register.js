@@ -16,6 +16,16 @@ angular.module('publicApp')
     password: null,
     role: 'developer'
   };
+
+  $scope.goHome = function () {
+    if (CurrentUserProfile.getUserUsername() === '') {
+      $location.path('/');
+    }
+    else {
+      $location.path('/offer-list');
+    }
+  };
+
   $scope.updateUser = false;
 
   if (CurrentUserProfile.getUserUsername() !== '') {
@@ -91,7 +101,7 @@ angular.module('publicApp')
   };
 
   $scope.emailChanged = function() {
-    console.log('email change');
+    // console.log('email change');
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (re.test($scope.user.email)) {
       $scope.emailValid = true;

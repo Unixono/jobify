@@ -45,15 +45,18 @@
       <div class="form-group">
         <p id="signup-credentials-error" class="form-error">{{ errorText }}</p>
       </div>
-      <div class="form-row submit-btn" ng-init="termsAccepted = false">
+      <div class="form-row submit-btn" ng-init="termsAccepted = false" style="text-align: right;">
         <button id="signup-submit-form" class="btn btn-primary" ng-show="!updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked()">
           Sing up
         </button>
         <button id="update-submit-form" class="btn btn-primary" ng-show="updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="updateUserButtonClicked()">
           Update
         </button>
-        <button id="remove-submit-form" class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="removeUserButtonClicked()">
-          Remove
+        <button class="btn btn-xs pull-left btn-raised" ng-click="goHome()" style="width:140px">
+          Cancel
+        </button>
+        <button id="remove-submit-form" class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="updateUser" ng-disabled="form.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="removeUserButtonClicked()" style="width:140px">
+          Remove User
         </button>
       </div>
     </form>

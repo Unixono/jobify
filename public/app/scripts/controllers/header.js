@@ -20,7 +20,7 @@ angular.module('publicApp')
       ServerCommunication.logoutUser()
       .then(
         function(response) {
-          console.log('success from controller');
+          // console.log('success from controller');
           // console.log(response);
           CurrentUserProfile.logoutCurrentUser();
           $location.path('/');
@@ -33,7 +33,7 @@ angular.module('publicApp')
     };
 
     $scope.goHome = function () {
-      if ($scope.userName === '') {
+      if (CurrentUserProfile.getUserUsername() === '') {
         $location.path('/');
       }
       else {
