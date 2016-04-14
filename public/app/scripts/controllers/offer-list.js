@@ -26,7 +26,7 @@ angular.module('publicApp')
 
       $scope.showJob = function(id) {
         CurrentUserProfile.setJob(id);
-        console.log (CurrentUserProfile.getJob());
+        // console.log (CurrentUserProfile.getJob());
         $location.path('/offer');
       };
 

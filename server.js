@@ -84,7 +84,7 @@ app.put('/saveoffer', isLoggedIn, function(req, res, next) {
   var offer = new Offer(req.body);
   offer.save(function (err, saved) {
     if(err) {
-      return done(err);
+      return err;
     }
     // console.log(saved);
     res.status(200).json({status: 'Offer saved Successfull!', saved: saved});
@@ -97,7 +97,7 @@ app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
   // console.log(req);
   User.find({role: 'developer'}, function (err, devs) {
     if(err) {
-      return done(err);
+      return err;
     }
     // console.log(devs);
     res.status(200).json({status: 'Get devs Successfull!', devs : devs});
@@ -111,10 +111,24 @@ app.get('/offer-list', isLoggedIn, function(req, res, next) {
 
   Offer.find({}, function (err, offers) {
     if(err) {
-      return done(err);
+      return err;
     }
     // console.log(offers);
     res.status(200).json({status: 'Get offers Successfull!', offers : offers});
+  });
+});
+
+app.get('/offer/:id', isLoggedIn, function(req, res, next) {
+  // console.log('isAuthenticated()');
+  // console.log(req.isAuthenticated());
+  // console.log(req.params.id);
+
+  Offer.findById(req.params.id, function (err, offer) {
+    if(err) {
+      return err;
+    }
+    // console.log(offer);
+    res.status(200).json({status: 'Get offer Successfull!', job : offer});
   });
 });
 

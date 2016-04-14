@@ -10,6 +10,20 @@
 angular.module('publicApp')
 .controller('OfferCtrl', function ($scope, $location, CurrentUserProfile, ServerCommunication) {
 
+  //Call server to get dev list
+  function getDeveloperList() {
+
+    ServerCommunication.getDevelopers()
+    .then(
+      function (response) {
+        // console.log('success getDevelopers from controller');
+        // console.log(response);
+        $scope.developerList = response;
+      });
+  }
+  getDeveloperList();
+
+  // Define and load the Job
   $scope.job = {
     developers: [],
     company: null,
@@ -29,18 +43,34 @@ angular.module('publicApp')
     adviceToScrapp: null
   };
 
-  //Call server to get dev list
-  function getDeveloperList() {
-
-    ServerCommunication.getDevelopers()
+  if (CurrentUserProfile.getJob() !== 'new') {
+    // console.log(CurrentUserProfile.getJob());
+    ServerCommunication.getJob(CurrentUserProfile.getJob())
     .then(
       function (response) {
-        // console.log('success getDevelopers from controller');
+        // console.log('success getJob from controller');
         // console.log(response);
-        $scope.developerList = response;
+        $scope.job = response.job;
+        updateDevs();
+        updateSkills();
       });
   }
-  getDeveloperList();
+
+  // Update html components
+  function updateDevs () {
+    for (var i = 0; i < $scope.job.developers.length; i++ ) {
+      $scope["required"+$scope.job.developers[i]] = true;
+    }
+  }
+
+  function updateSkills () {
+    for (var i = 0; i < $scope.job.skillsRequired.length; i++ ) {
+      $scope[$scope.job.skillsRequired[i]+"Required"] = true;
+    }
+    for (i = 0; i < $scope.job.skillsDesired.length; i++ ) {
+      $scope[$scope.job.skillsDesired[i]+"Desired"] = true;
+    }
+  }
 
   // selectedDevs
   $scope.addSelectedDev = function(user, add) {
@@ -100,14 +130,14 @@ angular.module('publicApp')
       $scope.job.status = 'new';
     }
 
-    console.log('Resultado:');
-    console.log($scope.job);
+    // console.log('Resultado:');
+    // console.log($scope.job);
 
     ServerCommunication.saveOffer($scope.job)
     .then(
       function(response) {
-        console.log('success from controller');
-        console.log(response);
+        // console.log('success from controller');
+        // console.log(response);
         $location.path('/offer-list');
       },
       function(error) {
