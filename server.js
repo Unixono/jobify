@@ -91,6 +91,33 @@ app.put('/saveoffer', isLoggedIn, function(req, res, next) {
   });
 });
 
+app.put('/updateoffer', isLoggedIn, function(req, res, next) {
+  // console.log('isAuthenticated()');
+  // console.log(req.isAuthenticated());
+  // console.log(req.body);
+  var offer = new Offer(req.body);
+  var offer = new Offer(req.body);
+  Offer.findOneAndUpdate(query, update, options, function(err, offer) {
+    if (err) {
+      return err;
+    }
+  });
+    console.log(offer);
+    res.status(200).json({status: 'Offer updated Successfull!'});
+});
+
+app.put('/removeOffer', isLoggedIn, function(req, res, next) {
+  // console.log('isAuthenticated()');
+  // console.log(req.isAuthenticated());
+  // console.log(req.body);
+  Offer.findByIdAndRemove(req.body, function (err,offer){
+    if(err) {
+      return err;
+    }
+  });
+  res.status(200).json({status: 'Offer removed Successfull!'});
+});
+
 app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());

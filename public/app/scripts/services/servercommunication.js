@@ -184,4 +184,36 @@ angular.module('publicApp')
       return defer.promise;
     };
 
+    this.updateOffer = function(offer, id) {
+      var defer = $q.defer();
+      console.log(id);
+      console.log(offer);
+      $http.put(serverUrl + '/updateoffer', offer ).success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
+    this.removeOffer = function(id) {
+      var defer = $q.defer();
+      console.log(id);
+      $http.put(serverUrl + '/removeoffer', id ).success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
   });
