@@ -16,9 +16,10 @@ angular.module('publicApp')
     ServerCommunication.getDevelopers()
     .then(
       function (response) {
-        // console.log('success getDevelopers from controller');
-        // console.log(response);
+        console.log('success getDevelopers from controller');
+        console.log(response);
         $scope.developerList = response;
+        resetDevs();
       });
   }
   getDeveloperList();
@@ -43,7 +44,7 @@ angular.module('publicApp')
       coverLetter: null,
       adviceToScrapp: null
     };
-  };
+  }
   resetJob();
 
   if (CurrentUserProfile.getJob() !== 'new') {
@@ -62,20 +63,18 @@ angular.module('publicApp')
   // Update html components
   function updateDevs () {
     for (var i = 0; i < $scope.job.developers.length; i++ ) {
-      $scope["required"+$scope.job.developers[i]] = true;
+      for (var j = 0; j < $scope.developerList.length; j++) {
+        if ($scope.job.developers[i] === $scope.developerList[j].username) {
+          $scope.developerList[j].required = true;
+        }
+      }
     }
   }
 
+
   function resetDevs () {
     for (var i = 0; i < $scope.developerList.length; i++ ) {
-      console.log($scope.developerList[i].username);
-      console.log("required"+$scope.developerList[i].username);
-      console.log($scope["requiredale"]);
-      console.log($scope.requiredale);
-      
-      console.log($scope["required"+$scope.developerList[i].username]);
-      $scope["required"+$scope.developerList[i].username] = false;
-      console.log($scope["required"+$scope.developerList[i].username]);
+      $scope.developerList[i].required = false;
     }
   }
 
@@ -89,34 +88,37 @@ angular.module('publicApp')
   }
 
   function resetSkills () {
-    $scope["jsDesired"] = false;
-    $scope["jsRequired"] = false;
-    $scope["angularDesired"] = false;
-    $scope["angularRequired"] = false;
-    $scope["reactDesired"] = false;
-    $scope["reactRequired"] = false;
-    $scope["nodeDesired"] = false;
-    $scope["nodeRequired"] = false;
-    $scope["meanDesired"] = false;
-    $scope["meanRequired"] = false;
-    $scope["pythonDesired"] = false;
-    $scope["pythonRequired"] = false;
-    $scope["djangoDesired"] = false;
-    $scope["djangoRequired"] = false;
-    $scope["cssDesired"] = false;
-    $scope["cssRequired"] = false;
+    $scope.jsDesired = false;
+    $scope.jsRequired = false;
+    $scope.angularDesired = false;
+    $scope.angularRequired = false;
+    $scope.reactDesired = false;
+    $scope.reactRequired = false;
+    $scope.nodeDesired = false;
+    $scope.nodeRequired = false;
+    $scope.meanDesired = false;
+    $scope.meanRequired = false;
+    $scope.pythonDesired = false;
+    $scope.pythonRequired = false;
+    $scope.djangoDesired = false;
+    $scope.djangoRequired = false;
+    $scope.cssDesired = false;
+    $scope.cssRequired = false;
   }
 
   // selectedDevs
-  $scope.addSelectedDev = function(user, add) {
+  $scope.addSelectedDev = function(dev) {
 
-    if (add) {
-      $scope.job.developers.push(user);
+    dev.required = !dev.required;
+
+    if (dev.required) {
+      $scope.job.developers.push(dev.username);
     }
     else {
-      $scope.job.developers.splice($scope.job.developers.indexOf(user),1);
+      $scope.job.developers.splice($scope.job.developers.indexOf(dev.username),1);
     }
-    // console.log(user);
+    // console.log(dev);
+    // console.log($scope.developerList);
     // console.log($scope.job);
   };
 
@@ -185,37 +187,31 @@ angular.module('publicApp')
 
     $scope.showLoading = true;
 
-    console.log('Resultado:');
-    console.log($scope.job);
-    resetJob();
-    console.log($scope.job);
-    console.log($scope.developerList);
-    resetDevs();
-    console.log($scope.developerList);
-    resetSkills();
-
-    // $scope.job.status = 'new';
-    //
     // console.log('Resultado:');
     // console.log($scope.job);
-    //
-    // ServerCommunication.saveOffer($scope.job)
-    // .then(
-    //   function(response) {
-    //     // console.log('success from controller');
-    //     // console.log(response);
-    //     CurrentUserProfile.setJob('new');
-    //     resetJob();
-    //     resetDevs();
-    //     resetSkills();
-    //     $location.path('/offer');
-    //   },
-    //   function(error) {
-    //     console.log('error from cotroller');
-    //     console.log(error);
-    //     $scope.hasError = true;
-    //   }
-    // );
+
+    $scope.job.status = 'new';
+
+    console.log('Resultado:');
+    console.log($scope.job);
+
+    ServerCommunication.saveOffer($scope.job)
+    .then(
+      function(response) {
+        // console.log('success from controller');
+        // console.log(response);
+        CurrentUserProfile.setJob('new');
+        resetJob();
+        resetDevs();
+        resetSkills();
+        $location.path('/offer');
+      },
+      function(error) {
+        console.log('error from cotroller');
+        console.log(error);
+        $scope.hasError = true;
+      }
+    );
   };
 
   $scope.resolveClicked = function() {

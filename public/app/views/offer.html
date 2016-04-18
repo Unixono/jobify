@@ -9,7 +9,7 @@
         </div>
         <div class="panel-body">
           <div class="btn-toolbar" >
-            <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList" ng-click="$scope.required{{dev.username}} = !$scope.required{{dev.username}}; addSelectedDev(dev.username, $scope.required{{dev.username}});" ng-class="{'btn-info': $scope.required{{dev.username}}}" href>
+            <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList" ng-click="addSelectedDev(dev);" ng-class="{'btn-info': dev.required}" href>
               {{dev.username}}
             </a>
           </div>
