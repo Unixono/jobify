@@ -95,22 +95,49 @@ app.put('/updateoffer', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());
   // console.log(req.body);
-  var offer = new Offer(req.body);
-  var offer = new Offer(req.body);
-  Offer.findOneAndUpdate(query, update, options, function(err, offer) {
-    if (err) {
+
+
+  Offer.findById(req.body.id, function (err, offer) {
+    if(err) {
       return err;
     }
-  });
+
+    console.log('offer1');
+    console.log(offer);
+    offer.developers = req.body.offer.developers;
+    offer.company = req.body.offer.company;
+    offer.position = req.body.offer.position;
+    offer.url = req.body.offer.url;
+    offer.skillsRequired = req.body.offer.skillsRequired;
+    offer.skillsDesired = req.body.offer.skillsDesired;
+    offer.otherSkillsRequired = req.body.offer.otherSkillsRequired;
+    offer.otherSkillsDesired = req.body.offer.otherSkillsDesired;
+    offer.developerNotes = req.body.offer.developerNotes;
+    offer.managerNotes = req.body.offer.managerNotes;
+    offer.applicationResult = req.body.offer.applicationResult;
+    offer.status = req.body.offer.status;
+    offer.applicationMethod = req.body.offer.applicationMethod;
+    offer.applicationEmail = req.body.offer.applicationEmail;
+    offer.coverLetter = req.body.offer.coverLetter;
+    offer.adviceToScrapp = req.body.offer.adviceToScrapp;
+    offer.creationDate = req.body.offer.creationDate;
+    offer.applyRejectDate = req.body.offer.applyRejectDate;
+
+    offer.save (function (err) {
+      if (err) {
+        return err;
+      }
+    });
     console.log(offer);
     res.status(200).json({status: 'Offer updated Successfull!'});
+  });
 });
 
-app.put('/removeOffer', isLoggedIn, function(req, res, next) {
+app.put('/removeoffer/:id', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());
   // console.log(req.body);
-  Offer.findByIdAndRemove(req.body, function (err,offer){
+  Offer.findByIdAndRemove(req.params.id, function (err,offer){
     if(err) {
       return err;
     }

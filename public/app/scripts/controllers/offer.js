@@ -16,8 +16,8 @@ angular.module('publicApp')
     ServerCommunication.getDevelopers()
     .then(
       function (response) {
-        console.log('success getDevelopers from controller');
-        console.log(response);
+        // console.log('success getDevelopers from controller');
+        // console.log(response);
         $scope.developerList = response;
         resetDevs();
       });
@@ -42,7 +42,9 @@ angular.module('publicApp')
       applicationMethod: null, //values: form or the email
       applicationEmail: null, //values: form or the email
       coverLetter: null,
-      adviceToScrapp: null
+      adviceToScrapp: null,
+      creationDate: null,
+      applyRejectDate: null
     };
   }
   resetJob();
@@ -164,6 +166,7 @@ angular.module('publicApp')
     $scope.showLoading = true;
 
     $scope.job.status = 'new';
+    $scope.job.creationDate = Date.now();
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -191,9 +194,10 @@ angular.module('publicApp')
     // console.log($scope.job);
 
     $scope.job.status = 'new';
+    $scope.job.creationDate = Date.now();
 
-    console.log('Resultado:');
-    console.log($scope.job);
+    // console.log('Resultado:');
+    // console.log($scope.job);
 
     ServerCommunication.saveOffer($scope.job)
     .then(
@@ -243,6 +247,7 @@ angular.module('publicApp')
     $scope.showLoading = true;
 
     $scope.job.status = 'applied';
+    $scope.job.applyRejectDate = Date.now();
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -267,6 +272,7 @@ angular.module('publicApp')
     $scope.showLoading = true;
 
     $scope.job.status = 'rejected';
+    $scope.job.applyRejectDate = Date.now();
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -315,7 +321,7 @@ angular.module('publicApp')
     // console.log('Resultado:');
     // console.log($scope.job);
 
-    ServerCommunication.updateOffer(CurrentUserProfile.getJob())
+    ServerCommunication.removeOffer(CurrentUserProfile.getJob())
     .then(
       function(response) {
         // console.log('success from controller');

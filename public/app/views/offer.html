@@ -71,8 +71,8 @@
           <span class="help-block">Manager Notes</span>
           <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
           <span class="help-block" ng-show="!getJob('new')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied'" ng-model=job.applicationResult></textarea>
-          <span class="help-block" ng-show="job.status === 'applied'">Application result</span>
+          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
+          <span class="help-block" ng-show="job.status === 'applied'||job.status === 'resolved'">Application result</span>
         </div>
       </div>
       <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-click="saveClicked()">Save</button>
@@ -82,6 +82,7 @@
       <button class="btn btn-danger btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="rejectClicked()">Reject</button>
       <button class="btn btn-info btn-xs pull-bottom btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="updateClicked()">Update</button>
       <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')"ng-click="removeClicked()">Remove</button>
+      <label  ng-show="job.status != null" style="color:gray; font-size: 12px; text-align: center;">Offer status: {{job.status}}</label>
       <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
     </form>
   </div>
