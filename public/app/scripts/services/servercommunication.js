@@ -169,7 +169,7 @@ angular.module('publicApp')
 
     this.saveOffer = function(offer) {
       var defer = $q.defer();
-      offer.creationDate = Date.now();
+      // offer.creationDate = Date.now();
       // console.log(offer);
       $http.put(serverUrl + '/saveoffer', offer ).success(function(response) {
         // console.log('success');
@@ -184,4 +184,40 @@ angular.module('publicApp')
       return defer.promise;
     };
 
+    this.updateOffer = function(offer, id) {
+      var defer = $q.defer();
+      // console.log(id);
+      // console.log(offer);
+      var params = {
+        offer : offer,
+        id : id
+      };
+      $http.put(serverUrl + '/updateoffer', params ).success(function(response) {
+        // console.log('success');
+        // console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
+    this.removeOffer = function(id) {
+      var defer = $q.defer();
+      console.log(id);
+      $http.put(serverUrl + '/removeoffer/'+id ).success(function(response) {
+        console.log('success');
+        console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
   });

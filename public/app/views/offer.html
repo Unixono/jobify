@@ -9,7 +9,7 @@
         </div>
         <div class="panel-body">
           <div class="btn-toolbar" >
-            <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList" ng-click="required{{dev.username}} = !required{{dev.username}}; addSelectedDev(dev.username, required{{dev.username}});" ng-class="{'btn-info': required{{dev.username}}}" href>
+            <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList" ng-click="addSelectedDev(dev);" ng-class="{'btn-info': dev.required}" href>
               {{dev.username}}
             </a>
           </div>
@@ -70,17 +70,19 @@
           <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block">Manager Notes</span>
           <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
-          <span class="help-block" ng-show="getJob('old')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="!getJob('new')" ng-model=job.applicationResult></textarea>
-          <span class="help-block" ng-show="!getJob('new')">Application result</span>
+          <span class="help-block" ng-show="!getJob('new')">Developer Notes</span>
+          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
+          <span class="help-block" ng-show="job.status === 'applied'||job.status === 'resolved'">Application result</span>
         </div>
       </div>
       <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-click="saveClicked()">Save</button>
-      <button class="btn btn-info btn-raised" ng-show="resolved" >Resolve</button>
-      <button class="btn btn-info btn-raised" ng-show="getJob('new')">Save and New</button>
-      <button class="btn btn-success btn-raised" ng-show="!getJob('new')">Applyed</button>
-      <button class="btn btn-danger btn-raised" ng-show="!getJob('new')">Rejected</button>
-      <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')">Remove</button>
+      <button class="btn btn-info btn-raised" ng-show="job.status === 'applied'" ng-click="resolveClicked()">Resolve</button>
+      <button class="btn btn-info btn-raised" ng-show="getJob('new')"ng-click="saveNewClicked()">Save and New</button>
+      <button class="btn btn-success btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="applyClicked()">Apply</button>
+      <button class="btn btn-danger btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="rejectClicked()">Reject</button>
+      <button class="btn btn-info btn-xs pull-bottom btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="updateClicked()">Update</button>
+      <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')"ng-click="removeClicked()">Remove</button>
+      <label  ng-show="job.status != null" style="color:gray; font-size: 12px; text-align: center;">Offer status: {{job.status}}</label>
       <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
     </form>
   </div>
@@ -98,7 +100,6 @@
         <span class="help-block">Advice url</span>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Save</button>
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -128,7 +129,6 @@
         <span class="help-block">email</span>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Save</button>
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -146,7 +146,6 @@
         <span class="help-block">Please Paste the letter used for presentation</span>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Scrappe</button>
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
