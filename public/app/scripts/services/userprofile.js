@@ -22,7 +22,6 @@ angular.module('publicApp')
     UserProfile.prototype.setUserProfileData = function(profileData) {
       if(arguments.length === 0) {
         throw 'Missing parameters for setUserProfileData function.';
-        return;
       }
 
       this.email = profileData.email || null;
