@@ -79,10 +79,11 @@ angular.module('publicApp')
       return defer.promise;
     };
 
-    this.getJobsList = function() {
+    this.getJobsList = function(filter) {
       var defer = $q.defer();
 
-      $http.get(serverUrl + '/offer-list').success(function(response) {
+      // console.log(filter);
+      $http.post(serverUrl + '/offer-list', filter).success(function(response) {
         // console.log('success');
         // console.log(response);
         defer.resolve(response);

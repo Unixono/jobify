@@ -158,12 +158,25 @@ app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
   });
 });
 
-app.get('/offer-list', isLoggedIn, function(req, res, next) {
+app.post('/offer-list', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());
-  // console.log(req);
+  // console.log(req.body);
 
-  Offer.find({}, function (err, offers) {
+  var filter = {
+    developers: { $in: req.body.developers },
+    status: { $in: req.body.status }
+  };
+
+  if (req.body.company !== '') {
+    filter.company = req.body.company;
+  }
+
+  if (req.body.position !== '') {
+    filter.position = req.body.position;
+  }
+
+  Offer.find(filter, function (err, offers) {
     if(err) {
       return err;
     }

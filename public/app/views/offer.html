@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="form-group">
         <input type="text" name="companyname" class="form-control" ng-model="job.company" placeholder="Company Name" required />
         <span class="label label-success" ng-show="form.companyname.$invalid === false">OK</span>
@@ -67,12 +67,12 @@
           <h3 class="panel-title">Notes</h3>
         </div>
         <div class="panel-body">
-          <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block">Manager Notes</span>
-          <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
+          <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block" ng-show="!getJob('new')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
+          <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
           <span class="help-block" ng-show="job.status === 'applied'||job.status === 'resolved'">Application result</span>
+          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
         </div>
       </div>
       <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-click="saveClicked()">Save</button>
@@ -96,8 +96,8 @@
         <h4 class="modal-title">Page link</h4>
       </div>
       <div class="modal-body">
-        <input type="text" name="joburl" class="form-control" ng-model="job.url" required />
         <span class="help-block">Advice url</span>
+        <input type="text" name="joburl" class="form-control" ng-model="job.url" required />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
@@ -125,8 +125,8 @@
             Email
           </label>
         </div>
-        <textarea id="emailInput" ng-disabled="method==='form'" class="form-control" rows="1" ng-model="job.applicationEmail"></textarea>
         <span class="help-block">email</span>
+        <textarea id="emailInput" ng-disabled="job.applicationMethod === 'form'" class="form-control" rows="1" ng-model="job.applicationEmail"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
@@ -142,8 +142,8 @@
         <h4 class="modal-title">Cover Letter</h4>
       </div>
       <div class="modal-body">
-        <textarea class="form-control" rows="7" ng-model="job.coverLetter"></textarea>
         <span class="help-block">Please Paste the letter used for presentation</span>
+        <textarea class="form-control" rows="7" ng-model="job.coverLetter"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
@@ -159,8 +159,8 @@
         <h4 class="modal-title">Scrapp Page</h4>
       </div>
       <div class="modal-body">
-        <textarea class="form-control" rows="7" ng-model="job.adviceToScrapp"></textarea>
         <span class="help-block">Please Paste the advice text to scrapp</span>
+        <textarea class="form-control" rows="7" ng-model="job.adviceToScrapp"></textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-raised btn-sm btn-primary" data-dismiss="modal" ng-click="">Scrapp</button>
