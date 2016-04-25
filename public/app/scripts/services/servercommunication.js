@@ -82,10 +82,10 @@ angular.module('publicApp')
     this.getJobsList = function(filter) {
       var defer = $q.defer();
 
-      console.log(filter);
+      // console.log(filter);
       $http.post(serverUrl + '/offer-list', filter).success(function(response) {
-        console.log('success');
-        console.log(response);
+        // console.log('success');
+        // console.log(response);
         defer.resolve(response);
       })
       .error(function(err) {

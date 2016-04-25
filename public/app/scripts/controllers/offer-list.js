@@ -62,13 +62,13 @@ angular.module('publicApp')
         $scope.filterOption.status.push('resolved');
       }
 
-      console.log($scope.filterOption);
+      // console.log($scope.filterOption);
 
       ServerCommunication.getJobsList($scope.filterOption)
       .then(
         function(response) {
-          console.log('success from controller');
-          console.log(response.offers);
+          // console.log('success from controller');
+          // console.log(response.offers);
           $scope.jobsList = response.offers;
         },
         function(error) {
