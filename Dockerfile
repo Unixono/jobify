@@ -1,29 +1,18 @@
-FROM node
+FROM node:onbuild
 
-MAINTAINER Alejandro Carnero, carneroalejandro@gmail.com
+MAINTAINER Alejandro Carnero <carneroalejandro@gmail.com>
 
-WORKDIR /home/mean
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# Install Mean.JS Prerequisites
-RUN npm install -g grunt-cli
-RUN npm install -g bower
-
-# Install Mean.JS packages
-ADD package.json /home/mean/package.json
+# Install app dependencies
+COPY package.json /usr/src/app/
 RUN npm install
 
-# Manually trigger bower. Why doesnt this work via npm install?
-ADD .bowerrc /home/mean/.bowerrc
-ADD bower.json /home/mean/bower.json
-RUN bower install --config.interactive=false --allow-root
+# Bundle app source
+COPY . /usr/src/app
 
-# Make everything available for start
-ADD . /home/mean
+EXPOSE 3000
+CMD [ "node", "server"  ]
 
-# currently only works for development
-ENV NODE_ENV development
-
-# Port 3000 for server
-# Port 35729 for livereload
-EXPOSE 3000 35729
-CMD ["grunt"]

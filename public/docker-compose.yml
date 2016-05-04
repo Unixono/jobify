@@ -1,0 +1,12 @@
+web:
+  build: .
+  ports:
+   - "9000:80"
+  volumes:
+   - ./app:/home/jobify
+  environment: 
+   NODE_ENV: development
+db:
+  image: mongo:latest
+  ports: 
+   - "27017:27017"
