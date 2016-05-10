@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 // Mongoose config.
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://jobify');
 mongoose.connect('mongodb://0.0.0.0/jobify');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -102,8 +103,8 @@ app.put('/updateoffer', isLoggedIn, function(req, res, next) {
       return err;
     }
 
-    console.log('offer1');
-    console.log(offer);
+    // console.log('offer1');
+    // console.log(offer);
     offer.developers = req.body.offer.developers;
     offer.company = req.body.offer.company;
     offer.position = req.body.offer.position;
@@ -128,7 +129,7 @@ app.put('/updateoffer', isLoggedIn, function(req, res, next) {
         return err;
       }
     });
-    console.log(offer);
+    // console.log(offer);
     res.status(200).json({status: 'Offer updated Successfull!'});
   });
 });
@@ -169,11 +170,11 @@ app.post('/offer-list', isLoggedIn, function(req, res, next) {
   };
 
   if (req.body.company !== '') {
-    filter.company = req.body.company;
+    filter.company = {'$regex': req.body.company, '$options': 'i'};
   }
 
   if (req.body.position !== '') {
-    filter.position = req.body.position;
+    filter.position = {'$regex': req.body.position, '$options': 'i'};
   }
 
   Offer.find(filter, function (err, offers) {

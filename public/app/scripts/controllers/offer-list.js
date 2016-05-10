@@ -44,7 +44,6 @@ angular.module('publicApp')
       }
     }
 
-
     $scope.updateJobList = function () {
       $scope.jobsList = [];
       $scope.filterOption.status = [];
@@ -105,4 +104,14 @@ angular.module('publicApp')
       CurrentUserProfile.setJob('new');
       $location.path('/offer');
     };
+
+    //column order
+    $scope.predicate = 'job.company';
+    $scope.reverse = true;
+
+    $scope.order = function(predicate) {
+      $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+      $scope.predicate = predicate;
+    };
+
   });
