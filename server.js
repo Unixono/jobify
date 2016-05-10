@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 // Mongoose config.
 var mongoose = require('mongoose');
+// mongoose.connect('mongodb://jobify');
 mongoose.connect('mongodb://0.0.0.0/jobify');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

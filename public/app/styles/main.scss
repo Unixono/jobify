@@ -102,6 +102,10 @@ loading {
     }
 }
 
+.table {
+  table-layout: fixed;
+}
+
 tr > td {
     // td {
         vertical-align: middle !important; 
@@ -110,4 +114,11 @@ tr > td {
 
 .vertical-middle {
     vertical-align: middle;
+}
+
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
 }
