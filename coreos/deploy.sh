@@ -12,7 +12,7 @@ git checkout HEAD Dockerfile
 git checkout HEAD server.js
 git checkout HEAD app
 git checkout HEAD models
-git checkout HEAD LICENCE
+git checkout HEAD LICENSE
 git checkout HEAD package.json
 git checkout HEAD README.md
 echo .
