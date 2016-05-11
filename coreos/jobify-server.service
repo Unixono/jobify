@@ -6,7 +6,6 @@ After=jobify-mongo.service
 [Service]
 ExecStartPre=-/usr/bin/docker stop server
 ExecStartPre=-/usr/bin/docker rm server
-ExecStartPre=-/usr/bin/docker build -t alenet8879/jobify-server server
-ExecStart=/usr/bin/docker run --name server -p 3000:3000 --link mongodb:jobify alenet8879/jobify-server
+ExecStart=/usr/bin/docker run --name server -p 3000:3000 --link mongodb:jobify jobify-server
 ExecStop=-/usr/bin/docker stop server
 ExecStopPost=-/usr/bin/docker rm server

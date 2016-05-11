@@ -10,8 +10,8 @@
 angular.module('publicApp')
   .service('ServerCommunication', function ($http, $q) {
 
-    var serverUrl = 'http://0.0.0.0:3000';
-    // var serverUrl = 'http://server:3000';
+    // var serverUrl = 'http://0.0.0.0:3000';
+    var serverUrl = 'http://server:3000';
 
     this.loginUser = function(user) {
       var defer = $q.defer();
