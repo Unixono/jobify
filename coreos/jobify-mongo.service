@@ -1,0 +1,13 @@
+[Unit]
+Description= Jobify mongo
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker stop mongodb
+ExecStartPre=-/usr/bin/docker rm mongodb
+ExecStartPre=-/usr/bin/docker pull -t mongo
+ExecStartPre=-/usr/bin/docker build -t mongo
+ExecStart=/usr/bin/docker run --name mongodb mongo
+ExecStop=/usr/bin/docker stop mongodb
+ExecStopPost=/usr/bin/docker rm mongodb
