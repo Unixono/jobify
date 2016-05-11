@@ -4,6 +4,7 @@ clear
 echo clear and fetch the repo
 # cd ../..
 git clone -n -b release https://github.com/Unixono/jobify.git --depth 1
+git fetch origin
 echo .
 echo bring the server files up
 mv jobify server
