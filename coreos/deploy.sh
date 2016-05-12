@@ -2,13 +2,13 @@
 
 clear
 echo clear and fetch the repo
-# cd ../..
 git clone -n -b release https://github.com/Unixono/jobify.git --depth 1
-git fetch origin
 echo .
 echo bring the server files up
 mv jobify server
 cd server
+#to fetch the repo
+git fetch origin
 git checkout HEAD Dockerfile
 git checkout HEAD server.js
 git checkout HEAD app
@@ -38,5 +38,7 @@ docker build -t jobify-client client
 echo .
 echo run coreos units
 fleetctl start jobify-mongo.service
+sleep 5
 fleetctl start jobify-server.service
+sleep 5
 fleetctl start jobify-client.service
