@@ -11,9 +11,9 @@ angular.module('publicApp')
   .service('ServerCommunication', function ($http, $q) {
 
     // server url
-    // var serverUrl = 'http://107.170.21.118:3000';
+    var serverUrl = 'http://107.170.21.118:3000';
     // coreos url
-    var serverUrl = 'http://172.17.8.101:3000';
+    // var serverUrl = 'http://172.17.8.101:3000';
     // local url
     // var serverUrl = 'http://0.0.0.0:3000';
 

@@ -7,8 +7,6 @@ echo .
 echo bring the server files up
 mv jobify server
 cd server
-#to fetch the repo
-git fetch origin
 git checkout HEAD Dockerfile
 git checkout HEAD server.js
 git checkout HEAD app
@@ -29,6 +27,9 @@ git checkout HEAD coreos/jobify-client.service
 mv coreos/* ../
 rm coreos -r
 cd ..
+echo .
+echo build server image
+docker build -t mongo
 echo .
 echo build server image
 docker build -t jobify-server server

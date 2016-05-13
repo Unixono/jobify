@@ -4,8 +4,8 @@ Requires=jobify-server.service
 After=jobify-server.service
 
 [Service]
-ExecStartPre=-/usr/bin/docker stop client
-ExecStartPre=-/usr/bin/docker rm client
-ExecStart=/usr/bin/docker run -p 8080:80 --name client jobify-client /usr/sbin/apache2ctl -D FOREGROUND
-ExecStop=-/usr/bin/docker stop client
-ExecStopPost=-/usr/bin/docker rm client
+ExecStartPre=-/usr/bin/docker stop jobify-client
+ExecStartPre=-/usr/bin/docker rm jobify-client
+ExecStart=/usr/bin/docker run -p 8080:80 --name jobify-client jobify-client /usr/sbin/apache2ctl -D FOREGROUND
+ExecStop=-/usr/bin/docker stop jobify-client
+ExecStopPost=-/usr/bin/docker rm jobify-client

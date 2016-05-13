@@ -4,8 +4,8 @@ Requires=jobify-mongo.service
 After=jobify-mongo.service
 
 [Service]
-ExecStartPre=-/usr/bin/docker stop server
-ExecStartPre=-/usr/bin/docker rm server
-ExecStart=/usr/bin/docker run --name server -p 3000:3000 --link mongodb:jobify jobify-server
-ExecStop=-/usr/bin/docker stop server
-ExecStopPost=-/usr/bin/docker rm server
+ExecStartPre=-/usr/bin/docker stop jobify-server
+ExecStartPre=-/usr/bin/docker rm jobify-server
+ExecStart=/usr/bin/docker run --name jobify-server -p 3000:3000 --link jobify-mongodb:jobify jobify-server
+ExecStop=-/usr/bin/docker stop jobify-server
+ExecStopPost=-/usr/bin/docker rm jobify-server
