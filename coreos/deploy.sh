@@ -29,7 +29,7 @@ rm coreos -r
 cd ..
 echo .
 echo build server image
-docker build -t mongo
+docker pull mongo
 echo .
 echo build server image
 docker build -t jobify-server server
