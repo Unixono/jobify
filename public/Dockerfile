@@ -4,4 +4,4 @@ MAINTAINER Alejandro Carnero <carneroalejandro@gmail.com>
 
 COPY dist /var/www/
 
-EXPOSE 9000
+EXPOSE 8080

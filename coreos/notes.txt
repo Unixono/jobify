@@ -1,0 +1,49 @@
+mongo:
+docker run --name mongodb -d mongo  
+docker run --name mongodb -p 27017:27017  mongo 
+
+server:
+docker build -t jobify-server server
+docker run --name server -d -p 3000:3000 --link mongodb:jobify jobify-server
+docker run --name server -p 3000:3000 --link mongodb:jobify jobify-server
+
+client:
+docker build -t jobify-client client
+docker run --name client -d -p 9000:9000 jobify-client
+docker run -p 9000:80 --name client jobify-client /usr/sbin/apache2ctl -D FOREGROUND
+
+Vagrant:
+git clone https://github.com/coreos/coreos-vagrant.git
+cd coreos-vagrant
+cp config.rb.sample config.rb
+cp user-data.sample user-data
+modificar Vagrantfile, user-data, config.rb
+
+vagrant up
+vagrant ssh -- -A
+
+Coreos:
+copiar/crear los archivos de servicio:
+vim jobify-mongo.service
+vim jobify-server.service 
+vim jobify-client.service
+
+Start unit:
+fleetctl start jobify-mongo.service
+fleetctl start jobify-server.service
+fleetctl start jobify-client.service
+
+List units
+fleetctl list-units
+
+Reestart docker:
+sudo systemctl restart docker.service
+
+see logs:
+fleetctl journal jobify-server.service
+
+see full logs:
+journalctl -u jobify-client.service
+
+destroy units:
+fleetctl destroy jobify-mongo.service jobify-client.service jobify-server.service  
