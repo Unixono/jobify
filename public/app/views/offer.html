@@ -2,7 +2,7 @@
 
   <div id="signup-form-div" class="center-block">
 
-    <form ng-class="{'has-error': hasError}" novalidate>
+    <form name="offerForm"  ng-class="{'has-error': hasError}" novalidate>
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">Assigned developers</h3>
@@ -13,27 +13,27 @@
               {{dev.username}}
             </a>
           </div>
+          <span class="label label-success" ng-show="job.developers.length > 0">OK</span>
+          <span class="label label-warning" ng-show="job.developers.length === 0">Required</span>
         </div>
       </div>
 
       <div class="form-group">
         <input type="text" name="companyname" class="form-control" ng-model="job.company" placeholder="Company Name" required />
-        <span class="label label-success" ng-show="form.companyname.$invalid === false">OK</span>
-        <span class="label label-warning" ng-show="form.companyname.$invalid === true">Not Valid</span>
+        <span class="label label-success" ng-show="offerForm.companyname.$invalid === false">OK</span>
+        <span class="label label-warning" ng-show="offerForm.companyname.$invalid === true">Required</span>
       </div>
       <div class="form-group">
-        <input type="text" name="jobposition" class="form-control" ng-model="job.position" placeholder="Job Position" required />
-        <span class="label label-success" ng-show="form.jobposition.$invalid === false">OK</span>
-        <span class="label label-warning" ng-show="form.jobposition.$invalid === true">Not Valid</span>
+        <input type="text" class="form-control" ng-model="job.position" placeholder="Job Position"/>
       </div>
       <div class="form-group">
         <input type="text" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
+        <span class="label label-success" ng-show="offerForm.joburl.$invalid === false && getJob('new')">OK</span>
+        <span class="label label-warning" ng-show="offerForm.joburl.$invalid === true && getJob('new')">Required</span>
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" data-toggle="modal" data-target="#modal-scrapp">Scrapp page</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Page link</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-method">Apply method</button>
-        <span class="label label-success" ng-show="form.jobposition.$invalid === false && getJob('new')"  >OK</span>
-        <span class="label label-warning" ng-show="form.jobposition.$invalid === true && getJob('new')" >Not Valid</span>
       </div>
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -58,8 +58,8 @@
             <a class="btn btn-sm btn-raised" ng-click="varAux = cssRequired; cssRequired = (!cssDesired && !cssRequired); cssDesired = (varAux && !cssDesired); addSelectedSkill('css', cssRequired, cssDesired);" 
               ng-class="{'btn-info': cssDesired, 'btn-primary': cssRequired}" href>Css</a>
           </div>
-          <input type="text" name="otherSkillsReq" class="form-control" ng-model="job.otherSkillsRequired" placeholder="Other skills required (separated with ',')" required />
-          <input type="text" name="otherSkillsDes" class="form-control" ng-model="job.otherSkillsDesired" placeholder="Other skills desired (separated with ',')" required />
+          <input type="text" name="otherSkillsReq" class="form-control" ng-model="job.otherSkillsRequired" placeholder="Other skills required (separated with ',')"/>
+          <input type="text" name="otherSkillsDes" class="form-control" ng-model="job.otherSkillsDesired" placeholder="Other skills desired (separated with ',')"/>
         </div>
       </div>
       <div class="panel panel-primary">
@@ -75,12 +75,12 @@
           <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
         </div>
       </div>
-      <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-click="saveClicked()">Save</button>
-      <button class="btn btn-info btn-raised" ng-show="job.status === 'applied'" ng-click="resolveClicked()">Resolve</button>
-      <button class="btn btn-info btn-raised" ng-show="getJob('new')"ng-click="saveNewClicked()">Save and New</button>
-      <button class="btn btn-success btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="applyClicked()">Apply</button>
-      <button class="btn btn-danger btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="rejectClicked()">Reject</button>
-      <button class="btn btn-info btn-xs pull-bottom btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-click="updateClicked()">Update</button>
+      <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveClicked()">Save</button>
+      <button class="btn btn-info btn-raised" ng-show="job.status === 'applied'" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="resolveClicked()">Resolve</button>
+      <button class="btn btn-info btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveNewClicked()">Save and New</button>
+      <button class="btn btn-success btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="applyClicked()">Apply</button>
+      <button class="btn btn-danger btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="rejectClicked()">Reject</button>
+      <button class="btn btn-info btn-xs pull-bottom btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="updateClicked()">Update</button>
       <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')"ng-click="removeClicked()">Remove</button>
       <label  ng-show="job.status != null" style="color:gray; font-size: 12px; text-align: center;">Offer status: {{job.status}}</label>
       <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
@@ -97,7 +97,7 @@
       </div>
       <div class="modal-body">
         <span class="help-block">Advice url</span>
-        <input type="text" name="joburl" class="form-control" ng-model="job.url" required />
+        <input type="text" class="form-control" ng-model="job.url"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-raised btn-sm btn-default" data-dismiss="modal">Close</button>
