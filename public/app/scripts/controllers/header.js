@@ -48,5 +48,22 @@ angular.module('publicApp')
       function(newValue, oldValue) {
           $scope.userName = newValue;
       },
-      true);
+      true
+    );
+
+    $scope.registerUser = function() {
+      ServerCommunication.logoutUser()
+      .then(
+        function(response) {
+          // console.log('success from controller');
+          // console.log(response);
+          CurrentUserProfile.logoutCurrentUser();
+          $location.path('/register');
+        },
+        function(error) {
+          console.log(error);
+          $location.path('/');
+        }
+      );
+    };
   });
