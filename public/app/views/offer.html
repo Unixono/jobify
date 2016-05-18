@@ -19,14 +19,6 @@
       </div>
 
       <div class="form-group">
-        <input type="text" name="companyname" class="form-control" ng-model="job.company" placeholder="Company Name" required />
-        <span class="label label-success" ng-show="offerForm.companyname.$invalid === false">OK</span>
-        <span class="label label-warning" ng-show="offerForm.companyname.$invalid === true">Required</span>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="job.position" placeholder="Job Position"/>
-      </div>
-      <div class="form-group">
         <input type="text" name="joburl" class="form-control" ng-show="getJob('new')" ng-model="job.url" placeholder="Site Url" required />
         <span class="label label-success" ng-show="offerForm.joburl.$invalid === false && getJob('new')">OK</span>
         <span class="label label-warning" ng-show="offerForm.joburl.$invalid === true && getJob('new')">Required</span>
@@ -34,6 +26,14 @@
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Page link</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-method">Apply method</button>
+      </div>
+      <div class="form-group">
+        <input type="text" name="companyname" class="form-control" ng-model="job.company" placeholder="Company Name" required />
+        <span class="label label-success" ng-show="offerForm.companyname.$invalid === false">OK</span>
+        <span class="label label-warning" ng-show="offerForm.companyname.$invalid === true">Required</span>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="job.position" placeholder="Job Position"/>
       </div>
       <div class="panel panel-primary">
         <div class="panel-heading">
