@@ -23,7 +23,8 @@
         <span class="label label-success" ng-show="offerForm.joburl.$invalid === false && getJob('new')">OK</span>
         <span class="label label-warning" ng-show="offerForm.joburl.$invalid === true && getJob('new')">Required</span>
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" data-toggle="modal" data-target="#modal-scrapp">Scrapp page</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Page link</button>
+        <a class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" href="http://{{job.url}}" target="_blank">Open URL</a>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Edit link</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-method">Apply method</button>
       </div>
@@ -68,11 +69,11 @@
         </div>
         <div class="panel-body">
           <span class="help-block">Manager Notes</span>
-          <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
+          <textarea class="form-control" rows="2" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block" ng-show="!getJob('new')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
+          <textarea class="form-control" rows="2" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
           <span class="help-block" ng-show="job.status === 'applied'||job.status === 'resolved'">Application result</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
+          <textarea class="form-control" rows="2" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
         </div>
       </div>
       <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveClicked()">Save</button>
