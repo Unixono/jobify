@@ -13,8 +13,7 @@ angular.module('publicApp')
     $scope.filterOption = {
       developers: [],
       status: [],
-      company : '',
-      position : ''
+      company : ''
     };
 
     //Call server to get dev list

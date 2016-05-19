@@ -36,9 +36,6 @@
       <div class="panel-body">
         <input class="form-control" type="text" placeholder="Company name" ng-model="filterOption.company" ng-change="updateJobList()">
       </div>
-      <div class="panel-body">
-        <input class="form-control" type="text" placeholder="Position" ng-model="filterOption.position" ng-change="updateJobList()">
-      </div>
     </div>
   </div>
   <!-- </form> -->
@@ -47,7 +44,7 @@
 
     <thead>
       <th style="width: 32%;" ><a ng-click="order('job.company')"> Company <span class="sortorder" ng-show="predicate === 'job.company'" ng-class="{reverse:reverse}"/></a></th>
-      <th style="width: 32%;" ><a ng-click="order('job.position')"> Position <span class="sortorder" ng-show="predicate === 'job.position'" ng-class="{reverse:reverse}"/></a></th>
+      <th style="width: 32%;" ><a ng-click="order('job.url')"> URL <span class="sortorder" ng-show="predicate === 'job.url'" ng-class="{reverse:reverse}"/></a></th>
       <th style="width: 16%;" ><a ng-click="order('job.creationDate')"> Date <span class="sortorder" ng-show="predicate === 'job.creationDate'" ng-class="{reverse:reverse}"/></a></th>
       <th style="width: 16%;" ><a ng-click="order('job.status')"> Status <span class="sortorder" ng-show="predicate === 'job.status'" ng-class="{reverse:reverse}"/></a></th>
       <th style="width: 4%;" ></th>
@@ -55,7 +52,7 @@
     <tbody class="table-striped">
     <tr ng-repeat="job in jobsList | orderBy:predicate:reverse">
       <td ng-bind="job.company"></td>
-      <td ng-bind="job.position"></td>
+      <td><a href="http://{{job.url}}" target="_blank" ng-click="showJob(job._id)">{{job.url}}</td>
       <td>{{job.creationDate | date:'dd-MM-yy'}}</td>
       <td ng-bind="job.status"></td>
       <td>

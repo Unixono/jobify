@@ -34,7 +34,7 @@ angular.module('publicApp')
       );
     };
 
-    $scope.registerUser = function() {
-      $location.path('/register');
-    };
+    // $scope.registerUser = function() {
+    //   $location.path('/register');
+    // };
   });

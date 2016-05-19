@@ -173,9 +173,9 @@ app.post('/offer-list', isLoggedIn, function(req, res, next) {
     filter.company = {'$regex': req.body.company, '$options': 'i'};
   }
 
-  if (req.body.position !== '') {
-    filter.position = {'$regex': req.body.position, '$options': 'i'};
-  }
+  // if (req.body.position !== '') {
+    // filter.position = {'$regex': req.body.position, '$options': 'i'};
+  // }
 
   Offer.find(filter, function (err, offers) {
     if(err) {
