@@ -39,6 +39,7 @@ app.use(session({
   cookie: {
     httpOnly: false,
     secure:false,
+    ephemereal:false,
     maxAge: cookiesExpireTime
   }
 }));
