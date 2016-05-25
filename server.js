@@ -152,7 +152,8 @@ app.get('/getdeveloperlist', isLoggedIn, function(req, res, next) {
   // console.log('isAuthenticated()');
   // console.log(req.isAuthenticated());
   // console.log(req);
-  User.find({role: 'developer'}, function (err, devs) {
+  // User.find({role: 'developer'}, function (err, devs) {
+  User.find({}, function (err, devs) {
     if(err) {
       return err;
     }
