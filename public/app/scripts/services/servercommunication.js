@@ -46,6 +46,21 @@ angular.module('publicApp')
       return defer.promise;
     };
 
+    this.getUserFilter = function() {
+      var defer = $q.defer();
+      $http.get(serverUrl + '/getfilter').success(function(response) {
+        // console.log('success');
+        // console.log(response);
+        defer.resolve(response);
+      })
+      .error(function(err) {
+        console.log('error');
+        console.log(err);
+        defer.reject(err);
+      });
+      return defer.promise;
+    };
+
     this.registerUser = function(user) {
       var defer = $q.defer();
       // console.log(user);
@@ -82,7 +97,6 @@ angular.module('publicApp')
 
     this.getJobsList = function(filter) {
       var defer = $q.defer();
-
       // console.log(filter);
       $http.post(serverUrl + '/offer-list', filter).success(function(response) {
         // console.log('success');

@@ -15,7 +15,7 @@
       <div class="panel-body" style="padding-bottom: 0px;"  >
         <div class="btn-toolbar" style="display: flex; align-items: center;" >
           <h4 class="panel-title">Devs</h4>
-          <a class="btn btn-xs btn-raised" ng-repeat="dev in developerList" ng-click="addSelectedDev(dev);" ng-class="{'btn-info': dev.required}" href>
+          <a class="btn btn-xs btn-raised" ng-repeat="dev in developerList | orderBy:'username'" ng-click="addSelectedDev(dev); updateJobList()" ng-class="{'btn-info': dev.required}" href>
             {{dev.username}}
           </a>
         </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="panel-body" style="padding-top: 0px;" >
-        <input class="form-control" type="text" placeholder="Company name" ng-model="filterOption.company" ng-change="updateJobList()">
+        <input class="form-control" type="text" placeholder="Company name" ng-model="filterOption.company" ng-change="updateJobList()" ng-model-options="{debounce: 400}">
       </div>
     </div>
   </div>

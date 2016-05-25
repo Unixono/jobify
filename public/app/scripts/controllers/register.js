@@ -14,7 +14,8 @@ angular.module('publicApp')
     username: null,
     email: null,
     password: null,
-    role: 'developer'
+    role: 'developer',
+    filter: null
   };
 
   $scope.goHome = function () {
@@ -39,7 +40,11 @@ angular.module('publicApp')
         $scope.user.password = response.user.password;
         $scope.user.role = response.user.role;
         $scope.user.email = response.user.email;
-        $scope.emailChanged();
+        if ($scope.user.email) {
+          if ($scope.user.email !== '') {
+            $scope.emailChanged();
+          }
+        }
       },
       function(error) {
         console.log('error from cotroller');
@@ -169,4 +174,3 @@ angular.module('publicApp')
     );
   };
 });
-

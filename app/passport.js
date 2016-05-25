@@ -6,19 +6,14 @@ var User = require('../models/user');
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
-    console.log('serializeUser');
+    // console.log('serializeUser');
     // console.log(user);
     // console.log(user._id);
     done(null, user._id);
-    // done(null, {
-      // id: user["id"],
-      // userName: user["userName"],
-      // email: user["email"]
-    // });
   });
 
   passport.deserializeUser(function(id, done) {
-    console.log('deserializeUser');
+    // console.log('deserializeUser');
     // console.log(id);
     User.findById(id, function(err, user) {
       done(err, user);
@@ -26,7 +21,9 @@ module.exports = function(passport) {
   });
 
   // Login Strategy.
-  passport.use('local-login', new LocalStrategy(
+  passport.use('local-login', new LocalStrategy({
+    session: true
+  },
     function(username, password, done) {
       // Search for a user with thr given username and password.
       var searchUser = {'username': username};
@@ -63,6 +60,7 @@ module.exports = function(passport) {
   passport.use('local-signup', new LocalStrategy({
     // Set this option to true in oder to pass the req object
     // as the first argument of the strategy function.
+    session: true,
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
@@ -110,6 +108,7 @@ module.exports = function(passport) {
 
   // Updateuser Strategy
   passport.use('local-updateuser', new LocalStrategy({
+    session: true,
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
@@ -151,6 +150,7 @@ module.exports = function(passport) {
   ));
 
   passport.use('local-removeuser', new LocalStrategy({
+    session: true,
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {

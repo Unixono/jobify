@@ -18,29 +18,56 @@ angular.module('publicApp')
 
     //Call server to get dev list
     function getDeveloperList() {
-
       ServerCommunication.getDevelopers()
       .then(
         function (response) {
           // console.log('success getDevelopers from controller');
           // console.log(response);
           $scope.developerList = response;
+          console.log('2');
           initFilters();
         });
     }
+    console.log('1');
     getDeveloperList();
 
     function initFilters() {
-      $scope.statusNew = true;
-      $scope.statusApplied = true;
-      $scope.statusRejected = false;
-      $scope.statusResolved = false;
+      ServerCommunication.getUserFilter()
+      .then(
+        function (response) {
+          // console.log(response);
+          if (response.filter.length > 0) {
+            console.log('4');
+            console.log('entro al response');
+            $scope.statusNew = response.filter[0];
+            $scope.statusApplied = response.filter[1];
+            $scope.statusRejected = response.filter[2];
+            $scope.statusResolved = response.filter[3];
+            $scope.filterOption.company = response.filter[4];
 
-      for (var i = 0; i < $scope.developerList.length; i++ ) {
-        if (CurrentUserProfile.getUserUsername() === $scope.developerList[i].username) {
-          $scope.addSelectedDev($scope.developerList[i]);
-        }
-      }
+            for (var j = 0; j < $scope.developerList.length; j++ ) {
+              for (var k = 5; k < response.filter.length; k++ ) {
+                if ($scope.developerList[j].username === response.filter[k]) {
+                  $scope.addSelectedDev($scope.developerList[j]);
+                }
+              }
+            }
+            $scope.updateJobList();
+          } else {
+            console.log('NO entro al response');
+            $scope.statusNew = true;
+            $scope.statusApplied = true;
+            $scope.statusRejected = false;
+            $scope.statusResolved = false;
+            $scope.filterOption.company = '';
+
+            for (var i = 0; i < $scope.developerList.length; i++ ) {
+              if (CurrentUserProfile.getUserUsername() === $scope.developerList[i].username) {
+                $scope.addSelectedDev($scope.developerList[i]);
+              }
+            }
+          }
+        });
     }
 
     $scope.updateJobList = function () {
@@ -87,7 +114,7 @@ angular.module('publicApp')
       else {
         $scope.filterOption.developers.splice($scope.filterOption.developers.indexOf(dev.username),1);
       }
-      $scope.updateJobList();
+      // $scope.updateJobList();
       // console.log(dev);
       // console.log($scope.developerList);
       // console.log($scope.job);

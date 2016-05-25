@@ -31,11 +31,12 @@ var cookieParser = require('cookie-parser');
 app.use(cookieParser('jobifyKey'));
 
 // Passport requirements.
-var cookiesExpireTime = 1000 * 60 * 60 * 2; // 2 hours
+var cookiesExpireTime = 1000 * 60 * 60 * 24 * 7; // 2 hours
 app.use(session({
   secret: 'jobifyKey',
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
+  maxAge: cookiesExpireTime,
   cookie: {
     httpOnly: false,
     secure:false,
@@ -178,9 +179,30 @@ app.post('/offer-list', isLoggedIn, function(req, res, next) {
     // filter.position = {'$regex': req.body.position, '$options': 'i'};
   // }
 
-  Offer.find(filter, function (err, offers) {
+  // store filter
+  User.findOne(req.user._id, function (err, user) {
     if(err) {
       return err;
+    }
+    user.filter = [
+      (req.body.status.indexOf('new')>=0),
+      (req.body.status.indexOf('applied')>=0),
+      (req.body.status.indexOf('rejected')>=0),
+      (req.body.status.indexOf('resolved')>=0)
+    ];
+
+    user.filter.push(req.body.company);
+    user.filter = user.filter.concat(req.body.developers);
+    // console.log(user.filter);
+    user.save(function(err) {
+      if (err) {
+        throw err;
+      }
+    });
+  });
+  Offer.find(filter, function (err1, offers) {
+    if(err1) {
+      return err1;
     }
     // console.log(offers);
     res.status(200).json({status: 'Get offers Successfull!', offers : offers});
@@ -204,6 +226,17 @@ app.get('/offer/:id', isLoggedIn, function(req, res, next) {
 app.get('/getuser', isLoggedIn, function(req, res, next) {
     // console.log('in getuser');
     res.status(200).json({status: 'Get User Successfull!', user: req.user});
+});
+
+app.get('/getfilter', isLoggedIn, function(req, res, next) {
+    // console.log('in getUserFilter');
+    User.findOne(req.user._id, function (err, user) {
+    if(err) {
+      return err;
+    }
+    // console.log(user);
+    res.status(200).json({status: 'Get Filter Successfull!', filter: user.filter});
+    });
 });
 
 app.post('/login', function(req, res, next) {
