@@ -36,10 +36,10 @@
     "karma-chrome-launcher": "^0.2.2",
     "karma-jasmine": "*",
     "time-grunt": "^1.0.0",
-    "yo": "^1.4.8",
-    "jasmine-core": "^2.4.0"
+    "yo": "^1.4.8"
   },
   "engines": {
     "node": ">=0.10.0"
-  }
+  },
+  "dependencies": {}
 }

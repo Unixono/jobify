@@ -24,11 +24,9 @@ angular.module('publicApp')
           // console.log('success getDevelopers from controller');
           // console.log(response);
           $scope.developerList = response;
-          console.log('2');
           initFilters();
         });
     }
-    console.log('1');
     getDeveloperList();
 
     function initFilters() {
@@ -37,8 +35,6 @@ angular.module('publicApp')
         function (response) {
           // console.log(response);
           if (response.filter.length > 0) {
-            console.log('4');
-            console.log('entro al response');
             $scope.statusNew = response.filter[0];
             $scope.statusApplied = response.filter[1];
             $scope.statusRejected = response.filter[2];
@@ -54,7 +50,6 @@ angular.module('publicApp')
             }
             $scope.updateJobList();
           } else {
-            console.log('NO entro al response');
             $scope.statusNew = true;
             $scope.statusApplied = true;
             $scope.statusRejected = false;

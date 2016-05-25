@@ -28,15 +28,29 @@ var passport = require('passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
+// session persistence
+var MongoDBStore = require('connect-mongodb-session')(session);
+var store = new MongoDBStore({
+  uri: 'mongodb://0.0.0.0/jobify',
+  collection: 'mySessions'
+});
+// Catch errors 
+store.on('error', function(error) {
+  assert.ifError(error);
+  assert.ok(false);
+});
+
+
 app.use(cookieParser('jobifyKey'));
 
 // Passport requirements.
-var cookiesExpireTime = 1000 * 60 * 60 * 24 * 7; // 2 hours
+var cookiesExpireTime = 1000 * 60 * 60 * 24 * 7; // 7 days
 app.use(session({
   secret: 'jobifyKey',
   resave: false,
   saveUninitialized: false,
   maxAge: cookiesExpireTime,
+  store: store,
   cookie: {
     httpOnly: false,
     secure:false,

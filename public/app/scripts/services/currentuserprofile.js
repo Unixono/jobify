@@ -9,7 +9,31 @@
  */
 angular.module('publicApp')
   .service('CurrentUserProfile', function (UserProfile) {
-    var currentUser = null;
+
+    // User cookies handler
+    function getCookie(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)===' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length,c.length);
+        }
+      }
+      return "";
+    }
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    // Current user vars
+    var currentUser = getCookie('jobifyUser');
 
     var offerScreen = 'new';
 
@@ -21,29 +45,34 @@ angular.module('publicApp')
       return offerScreen;
     };
     this.loginUser = function(username) {
-      currentUser = new UserProfile(username);
+      setCookie('jobifyUser', username, 7);
+      currentUser = username;
+
+      // currentUser = new UserProfile(username);
     };
 
     this.getUserUsername = function() {
       // If user still does not exist.
-      if(!currentUser) {
-        return '';
-      }
-
-      return currentUser.getUserUsername();
+      // console.log(currentUser);
+      // if(!currentUser) {
+      //   return '';
+      // }
+      //
+      return currentUser;
     };
 
     this.getUser = function () {
       // If user still does not exist.
-      if(!currentUser) {
-        return '';
-      }
+      // if(!currentUser) {
+        // return '';
+      // }
       return currentUser;
     };
 
     this.logoutCurrentUser = function() {
       // console.log('logout user from service');
-      currentUser = null;
+      setCookie('jobifyUser', '', 7);
+      currentUser = '';
     };
 
   });
