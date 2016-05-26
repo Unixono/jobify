@@ -58,11 +58,9 @@
       </div>
     </form>
     <div ng-show= "updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
-      <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
       <strong>Error</strong> regitering user, please try again
     </div>
     <div ng-show="!updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
-      <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
       <strong>Error</strong> updating user, please try again
     </div>
     <div class="alert alert-dismissible alert-info" ng-show="showLoading && !hasError">

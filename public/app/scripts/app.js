@@ -63,10 +63,12 @@ angular
           $location.path('/');
         }
       } else {
-        if (CurrentUserProfile.getUserUsername()!=='') {
-        // console.log('DENY');
-          event.preventDefault();
-          $location.path('/offer-list');
+        if (cur_path === '/'){
+          if (CurrentUserProfile.getUserUsername()!=='') {
+            // console.log('DENY');
+            event.preventDefault();
+            $location.path('/offer-list');
+          }
         }
       }
     });

@@ -29,7 +29,8 @@ angular.module('publicApp')
 
   $scope.updateUser = false;
 
-  if (CurrentUserProfile.getUserUsername() !== '') {
+  // If current user exists, load settings
+  if (CurrentUserProfile.getRegister() === 'settings') {
     $scope.updateUser = true;
     ServerCommunication.getLoggedUser()
     .then(
@@ -52,6 +53,7 @@ angular.module('publicApp')
       });
   }
 
+  // Reset check fields
   $scope.hasError = false;
   $scope.passwordHasSpaces = false;
   $scope.emailValid = false;

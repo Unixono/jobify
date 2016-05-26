@@ -8,12 +8,14 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('HeaderCtrl', function ($scope, $location, ServerCommunication, CurrentUserProfile) {
+  .controller('HeaderCtrl', function ($scope, $location, $route, ServerCommunication, CurrentUserProfile) {
     console.log(CurrentUserProfile.getUserUsername());
     $scope.userName = CurrentUserProfile.getUserUsername();
 
     $scope.settings = function () {
       // set user option
+      CurrentUserProfile.setRegister('settings');
+      $route.reload();
       $location.path('/register');
     };
 
@@ -56,18 +58,8 @@ angular.module('publicApp')
     );
 
     $scope.registerUser = function() {
-      ServerCommunication.logoutUser()
-      .then(
-        function(response) {
-          // console.log('success from controller');
-          // console.log(response);
-          CurrentUserProfile.logoutCurrentUser();
-          $location.path('/register');
-        },
-        function(error) {
-          console.log(error);
-          $location.path('/');
-        }
-      );
+      CurrentUserProfile.setRegister('register');
+      $route.reload();
+      $location.path('/register');
     };
   });

@@ -10,7 +10,7 @@
 angular.module('publicApp')
   .service('CurrentUserProfile', function (UserProfile) {
 
-    // User cookies handler
+    // UserName cookies operations
     function getCookie(cname) {
       var name = cname + "=";
       var ca = document.cookie.split(';');
@@ -37,17 +37,29 @@ angular.module('publicApp')
 
     var offerScreen = 'new';
 
+    var registerScreen = 'register';
+
+    // Curren user screen status operations
     this.setJob = function (job) {
       offerScreen = job;
     };
- 
+
     this.getJob = function () {
       return offerScreen;
     };
+
+    this.setRegister = function (reg) {
+      registerScreen = reg;
+    };
+
+    this.getRegister = function () {
+      return registerScreen;
+    };
+
+    // Current user operations
     this.loginUser = function(username) {
       setCookie('jobifyUser', username, 7);
       currentUser = username;
-
       // currentUser = new UserProfile(username);
     };
 
