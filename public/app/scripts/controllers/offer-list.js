@@ -127,12 +127,13 @@ angular.module('publicApp')
     };
 
     //column order
-    $scope.predicate = 'job.company';
-    $scope.reverse = true;
+    $scope.predicate = CurrentUserProfile.getListPredicate();
+    $scope.reverse = CurrentUserProfile.getListOrder();
 
     $scope.order = function(predicate) {
       $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
       $scope.predicate = predicate;
+      CurrentUserProfile.setListPredicate($scope.predicate);
+      CurrentUserProfile.setListOrder($scope.reverse);
     };
-
   });

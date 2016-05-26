@@ -9,7 +9,7 @@
  */
 angular.module('publicApp')
   .controller('HeaderCtrl', function ($scope, $location, $route, ServerCommunication, CurrentUserProfile) {
-    console.log(CurrentUserProfile.getUserUsername());
+    // console.log(CurrentUserProfile.getUserUsername());
     $scope.userName = CurrentUserProfile.getUserUsername();
 
     $scope.settings = function () {

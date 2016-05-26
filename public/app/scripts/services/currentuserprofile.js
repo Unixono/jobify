@@ -39,6 +39,11 @@ angular.module('publicApp')
 
     var registerScreen = 'register';
 
+    var listOrder = !(getCookie('jobifyListOrder') === 'false' );
+
+    var listPredicate = getCookie('jobifyListPred');
+    if (listPredicate === '') { listPredicate = 'job.company'; }
+
     // Curren user screen status operations
     this.setJob = function (job) {
       offerScreen = job;
@@ -46,6 +51,24 @@ angular.module('publicApp')
 
     this.getJob = function () {
       return offerScreen;
+    };
+
+    this.setListOrder = function (order) {
+      setCookie('jobifyListOrder', order, 7);
+      listOrder = order;
+    };
+
+    this.getListOrder = function () {
+      return listOrder;
+    };
+
+    this.setListPredicate = function (predicate) {
+      setCookie('jobifyListPred', predicate, 7);
+      listPredicate = predicate;
+    };
+
+    this.getListPredicate = function () {
+      return listPredicate;
     };
 
     this.setRegister = function (reg) {
