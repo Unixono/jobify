@@ -14,7 +14,7 @@
       </div>
       <div class="panel-body" style="padding-bottom: 0px;"  >
         <div class="btn-toolbar" style="display: flex; align-items: center;" >
-          <h4 class="panel-title">Devs</h4>
+          <h4 class="panel-title">Users</h4>
           <a class="btn btn-xs btn-raised" ng-repeat="dev in developerList | orderBy:'username'" ng-click="addSelectedDev(dev); updateJobList()" ng-class="{'btn-info': dev.required}" href>
             {{dev.username}}
           </a>
