@@ -39,9 +39,6 @@
         <span class="label label-warning" ng-show="passwordMatches(user.password, user.cpassword) === false || form.re-password.$invalid" >Not Valid</span>
         <span class="label label-warning" class="message">{{ retypePasswordAdvice }}</span>
       </div>
-      <div class="form-group">
-        <p id="signup-credentials-error" class="form-error">{{ errorText }}</p>
-      </div>
       <div class="form-row submit-btn" ng-init="termsAccepted = false" style="text-align: right;">
         <button id="signup-submit-form" class="btn btn-primary" ng-show="!updateUser" ng-disabled="registerForm.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked()">
           Sing up
@@ -57,12 +54,12 @@
         </button>
       </div>
     </form>
-    <div ng-show= "updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
-      <strong>Error</strong> regitering user, please try again
+    <div ng-show= "hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
+      <strong>Error</strong> {{errorText}}
     </div>
-    <div ng-show="!updateUser && hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
-      <strong>Error</strong> updating user, please try again
-    </div>
+    <!-- <div ng&#45;show="!updateUser &#38;&#38; hasError" class="alert alert&#45;danger alert&#45;dismissible" style="margin&#45;top: 35px; text&#45;align: center;" role="alert"> -->
+    <!--   <strong>Error</strong> updating user, please try again -->
+    <!-- </div> -->
     <div class="alert alert-dismissible alert-info" ng-show="showLoading && !hasError">
       <h5 class="loading">Please wait</h5>
     </div>

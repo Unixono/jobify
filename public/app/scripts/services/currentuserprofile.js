@@ -8,7 +8,7 @@
  * Service in the publicApp.
  */
 angular.module('publicApp')
-  .service('CurrentUserProfile', function (UserProfile) {
+  .service('CurrentUserProfile', function () {
 
     // UserName cookies operations
     function getCookie(cname) {

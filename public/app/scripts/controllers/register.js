@@ -28,6 +28,7 @@ angular.module('publicApp')
   };
 
   $scope.updateUser = false;
+  $scope.errorText = 'registering user, please try again';
 
   // If current user exists, load settings
   if (CurrentUserProfile.getRegister() === 'settings') {
@@ -80,7 +81,6 @@ angular.module('publicApp')
     else {
       $scope.retypePasswordAdvice = "";
     }
-    $scope.errorText = "";
   };
 
   $scope.passwordMatches = function( password, retypePassword ) {
@@ -104,7 +104,6 @@ angular.module('publicApp')
     else {
       $scope.retypePasswordAdvice = "";
     }
-    $scope.errorText = "";
   };
 
   $scope.emailChanged = function() {
@@ -133,7 +132,9 @@ angular.module('publicApp')
       function(error) {
         console.log('error from cotroller');
         console.log(error);
+        $scope.errorText = error.message;
         $scope.hasError = true;
+
       }
     );
   };
