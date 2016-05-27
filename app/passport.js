@@ -78,7 +78,7 @@ module.exports = function(passport) {
       if(user) {
         console.log('error');
         console.log(err);
-        return done(null, false, 'That email is already taken');
+        return done(null, false, 'That user name is already taken');
         // return done(null, false);
       }
       else {

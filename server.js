@@ -305,14 +305,14 @@ app.post('/signup', function(req, res, next) {
   passport.authenticate('local-signup', function(err, user, info) {
     // console.log('in signup route');
     // console.log(err);
-    console.log(user);
-    console.log(info);
+    // console.log(user);
+    // console.log(info);
     if (err) {
       return next(err); // will generate a 500 error
     }
     // Generate a JSON response reflecting authentication status
     if (! user) {
-      return res.status(500).json({ success : false, message : info  });
+      return res.status(409).json({ success : false, message : info  });
     }
 
     req.login(user, function(err) {
