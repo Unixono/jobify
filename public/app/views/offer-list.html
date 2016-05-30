@@ -1,44 +1,36 @@
 <section>
-  <!-- <a ng&#45;init="showSearchForm = false;" ng&#45;click="showSearchForm = !showSearchForm;" class="pull&#45;right"><i class="mdi&#45;action&#45;search vertical&#45;middle"></i>Filter<i class="mdi&#45;navigation&#45;chevron&#45;right vertical&#45;middle"></i></a> -->
   <h4 class="pull-left" style="margin-top: 0px;" ng-hide="showSearchForm">Available Jobs</h4>
-  <!-- <h4 class="pull&#45;left" style="margin&#45;top: 0px;" ng&#45;show="showSearchForm">Filter Options</h4> -->
   <p ng-init="showSearchForm = false;" ng-click="showSearchForm = true;" class="pull-right" ng-hide="showSearchForm"><i class="mdi-content-filter-list vertical-middle"></i></p>
   <p ng-click="showSearchForm = false;" class="pull-right" ng-show="showSearchForm"><i class="mdi-content-clear" style="color: white; padding: 7px;" ></i></p>
 
 
-  <!-- <form ng&#45;show="showSearchForm"> -->
   <div ng-show="showSearchForm">
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Filter options </h3>
       </div>
-      <div class="panel-body">
-        <h3 class="panel-title">Developers</h3>
-      </div>
-      <div class="panel-body">
-        <div class="btn-toolbar" >
-          <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList" ng-click="addSelectedDev(dev);" ng-class="{'btn-info': dev.required}" href>
+      <div class="panel-body" style="padding-bottom: 0px;"  >
+        <div class="btn-toolbar" style="display: flex; align-items: center;" >
+          <h4 class="panel-title">Users</h4>
+          <a class="btn btn-xs btn-raised" ng-repeat="dev in developerList | orderBy:'username'" ng-click="addSelectedDev(dev); updateJobList()" ng-class="{'btn-info': dev.required}" href>
             {{dev.username}}
           </a>
         </div>
       </div>
-      <div class="panel-body">
-        <h3 class="panel-title">Status</h3>
-      </div>
-      <div class="panel-body">
-        <div class="btn-toolbar">
-          <a class="btn btn-sm btn-raised" ng-click="statusNew = !statusNew; updateJobList()" ng-class="{'btn-info': statusNew}" href>New</a>
-          <a class="btn btn-sm btn-raised" ng-click="statusApplied = !statusApplied; updateJobList()" ng-class="{'btn-info': statusApplied}" href>Applied</a>
-          <a class="btn btn-sm btn-raised" ng-click="statusRejected = !statusRejected; updateJobList()" ng-class="{'btn-info': statusRejected}" href>Rejected</a>
-          <a class="btn btn-sm btn-raised" ng-click="statusResolved = !statusResolved; updateJobList()" ng-class="{'btn-info': statusResolved}" href>Resolved</a>
+      <div class="panel-body" style="padding-top: 0px; padding-bottom: 0px;" >
+        <div class="btn-toolbar" style="display: flex; align-items: center;" >
+          <h4 class="panel-title">Status</h4>
+          <a class="btn btn-xs btn-raised" ng-click="statusNew = !statusNew; updateJobList()" ng-class="{'btn-info': statusNew}" href>New</a>
+          <a class="btn btn-xs btn-raised" ng-click="statusApplied = !statusApplied; updateJobList()" ng-class="{'btn-info': statusApplied}" href>Applied</a>
+          <a class="btn btn-xs btn-raised" ng-click="statusRejected = !statusRejected; updateJobList()" ng-class="{'btn-info': statusRejected}" href>Rejected</a>
+          <a class="btn btn-xs btn-raised" ng-click="statusResolved = !statusResolved; updateJobList()" ng-class="{'btn-info': statusResolved}" href>Resolved</a>
         </div>
       </div>
-      <div class="panel-body">
-        <input class="form-control" type="text" placeholder="Company name" ng-model="filterOption.company" ng-change="updateJobList()">
+      <div class="panel-body" style="padding-top: 0px;" >
+        <input class="form-control" type="text" placeholder="Company name" ng-model="filterOption.company" ng-change="updateJobList()" ng-model-options="{debounce: 400}">
       </div>
     </div>
   </div>
-  <!-- </form> -->
 
   <table class="table">
 
@@ -65,5 +57,12 @@
     <div class="container">
       <button class="btn btn-fab btn-raised btn-material-red ripple-effect" style="float: right; margin-right: 15px;" ng-click="newJob()"><i class="mdi-content-add"></i></button>
     </div>
+  </div>
+
+  <div ng-show= "hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
+    <strong>Error</strong> {{errorText}}
+  </div>
+  <div class="alert-info2" ng-show="showLoading && !hasError">
+    <h5 class="loading">Please wait ...</h5>
   </div>
 </section>

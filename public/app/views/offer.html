@@ -1,15 +1,13 @@
 <section>
-
   <div id="signup-form-div" class="center-block">
-
     <form name="offerForm"  ng-class="{'has-error': hasError}" novalidate>
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Assigned developers</h3>
+          <h3 class="panel-title">Assigned users</h3>
         </div>
         <div class="panel-body">
           <div class="btn-toolbar" >
-            <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList" ng-click="addSelectedDev(dev);" ng-class="{'btn-info': dev.required}" href>
+            <a class="btn btn-sm btn-raised" ng-repeat="dev in developerList | orderBy:'username'" ng-click="addSelectedDev(dev);" ng-class="{'btn-info': dev.required}" href>
               {{dev.username}}
             </a>
           </div>
@@ -23,7 +21,8 @@
         <span class="label label-success" ng-show="offerForm.joburl.$invalid === false && getJob('new')">OK</span>
         <span class="label label-warning" ng-show="offerForm.joburl.$invalid === true && getJob('new')">Required</span>
         <button class="btn btn-raised btn-xs btn-info" ng-show="getJob('new')" data-toggle="modal" data-target="#modal-scrapp">Scrapp page</button>
-        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Page link</button>
+        <a class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" href="http://{{job.url}}" target="_blank">Open URL</a>
+        <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-url">Edit link</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-letter">Cover Letter</button>
         <button class="btn btn-raised btn-xs btn-info" ng-show="!getJob('new')" data-toggle="modal" data-target="#modal-method">Apply method</button>
       </div>
@@ -68,22 +67,30 @@
         </div>
         <div class="panel-body">
           <span class="help-block">Manager Notes</span>
-          <textarea class="form-control" rows="3" id="textArea1" ng-model="job.managerNotes"></textarea>
+          <textarea class="form-control" rows="2" id="textArea1" ng-model="job.managerNotes"></textarea>
           <span class="help-block" ng-show="!getJob('new')">Developer Notes</span>
-          <textarea class="form-control" rows="3" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
+          <textarea class="form-control" rows="2" id="textArea2" ng-show="!getJob('new')" ng-model="job.developerNotes"></textarea>
           <span class="help-block" ng-show="job.status === 'applied'||job.status === 'resolved'">Application result</span>
-          <textarea class="form-control" rows="3" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
+          <textarea class="form-control" rows="2" id="textArea3" ng-show="job.status === 'applied' || job.status === 'resolved'" ng-model=job.applicationResult></textarea>
         </div>
       </div>
-      <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveClicked()">Save</button>
-      <button class="btn btn-info btn-raised" ng-show="job.status === 'applied'" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="resolveClicked()">Resolve</button>
-      <button class="btn btn-info btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveNewClicked()">Save and New</button>
-      <button class="btn btn-success btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="applyClicked()">Apply</button>
-      <button class="btn btn-danger btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="rejectClicked()">Reject</button>
-      <button class="btn btn-info btn-xs pull-bottom btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="updateClicked()">Update</button>
-      <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')"ng-click="removeClicked()">Remove</button>
-      <label  ng-show="job.status != null" style="color:gray; font-size: 12px; text-align: center;">Offer status: {{job.status}}</label>
-      <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
+      <div ng-show="!showLoading">
+        <button class="btn btn-success btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveClicked()">Save</button>
+        <button class="btn btn-info btn-raised" ng-show="job.status === 'applied'" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="resolveClicked()">Resolve</button>
+        <button class="btn btn-info btn-raised" ng-show="getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="saveNewClicked()">Save and New</button>
+        <button class="btn btn-success btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="applyClicked()">Apply</button>
+        <button class="btn btn-danger btn-raised" ng-show="(job.status === 'new')&&(!getJob('new'))" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="rejectClicked()">Reject</button>
+        <button class="btn btn-info btn-xs pull-bottom btn-raised" ng-show="!getJob('new')" ng-disabled="offerForm.$invalid || job.developers.length === 0" ng-click="updateClicked()">Update</button>
+        <button class="btn btn-danger btn-xs pull-bottom btn-raised" ng-show="!getJob('new')" ng-click="removeClicked()">Remove</button>
+        <label  ng-show="job.status != null" style="color:gray; font-size: 12px; text-align: center;">Offer status: {{job.status}}</label>
+        <button class="btn btn-default pull-right btn-raised" ng-click="goToList()">Go Back</button>
+      </div>
+      <div ng-show= "hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
+        <strong>Error</strong> {{errorText}}
+      </div>
+      <div class="alert-info2" ng-show="showLoading && !hasError">
+        <h5 class="loading">Please wait ...</h5>
+      </div>
     </form>
   </div>
 </section>

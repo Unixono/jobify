@@ -8,16 +8,23 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-.controller('OfferCtrl', function ($scope, $location, CurrentUserProfile, ServerCommunication) {
+.controller('OfferCtrl', function ($scope, $rootScope, $location, CurrentUserProfile, ServerCommunication) {
+
+  // rootscope variables for loading and error
+  $rootScope.errorText = 'on server, please reload the page';
+  $rootScope.hasError = false;
+  $rootScope.showLoading = false;
 
   //Call server to get dev list
   function getDeveloperList() {
+    $rootScope.showLoading = true;
 
     ServerCommunication.getDevelopers()
     .then(
       function (response) {
         // console.log('success getDevelopers from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
         $scope.developerList = response;
         resetDevs();
       });
@@ -51,9 +58,11 @@ angular.module('publicApp')
 
   if (CurrentUserProfile.getJob() !== 'new') {
     // console.log(CurrentUserProfile.getJob());
+    $rootScope.showLoading = true;
     ServerCommunication.getJob(CurrentUserProfile.getJob())
     .then(
       function (response) {
+        $rootScope.showLoading = false;
         // console.log('success getJob from controller');
         // console.log(response);
         $scope.job = response.job;
@@ -162,8 +171,7 @@ angular.module('publicApp')
   };
 
   $scope.saveClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     $scope.job.status = 'new';
     $scope.job.creationDate = Date.now();
@@ -176,19 +184,23 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on save the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.saveNewClicked = function() {
 
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -204,6 +216,8 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         CurrentUserProfile.setJob('new');
         resetJob();
         resetDevs();
@@ -211,16 +225,17 @@ angular.module('publicApp')
         $location.path('/offer');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on save the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.resolveClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     $scope.job.status = 'resolved';
 
@@ -232,19 +247,22 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on resolve the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.applyClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     $scope.job.status = 'applied';
     $scope.job.applyRejectDate = Date.now();
@@ -257,19 +275,22 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on apply the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.rejectClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     $scope.job.status = 'rejected';
     $scope.job.applyRejectDate = Date.now();
@@ -282,19 +303,22 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on reject the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.updateClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -304,19 +328,22 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on update the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.removeClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -326,12 +353,16 @@ angular.module('publicApp')
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on remove the offer, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };

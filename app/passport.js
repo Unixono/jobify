@@ -21,7 +21,9 @@ module.exports = function(passport) {
   });
 
   // Login Strategy.
-  passport.use('local-login', new LocalStrategy(
+  passport.use('local-login', new LocalStrategy({
+    session: true
+  },
     function(username, password, done) {
       // Search for a user with thr given username and password.
       var searchUser = {'username': username};
@@ -58,6 +60,7 @@ module.exports = function(passport) {
   passport.use('local-signup', new LocalStrategy({
     // Set this option to true in oder to pass the req object
     // as the first argument of the strategy function.
+    session: true,
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
@@ -75,8 +78,8 @@ module.exports = function(passport) {
       if(user) {
         console.log('error');
         console.log(err);
-        // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-        return done(null, false);
+        return done(null, false, 'That user name is already taken');
+        // return done(null, false);
       }
       else {
         // if there is no user with that email
@@ -105,6 +108,7 @@ module.exports = function(passport) {
 
   // Updateuser Strategy
   passport.use('local-updateuser', new LocalStrategy({
+    session: true,
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {
@@ -146,6 +150,7 @@ module.exports = function(passport) {
   ));
 
   passport.use('local-removeuser', new LocalStrategy({
+    session: true,
     passReqToCallback: true
   }, function(req, username, password, done) {
     User.findOne({ 'username' :  username }, function(err, user) {

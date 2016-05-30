@@ -1,28 +1,27 @@
 <section>
 <div class="jumbotron">
-  <h1>Jobify</h1>
+  <h1 style="display: flex; align-items: center; margin-left: auto; width: 180px; margin-right: auto;">J<img src="/images/job.png" style="height: 44px; width: 44px; margin-top: 10px; margin-left: -6px; margin-right: 3px; margin-bottom: -7px;"/>bify</h1>
   <p>A job-tracking tool</p>
 </div>
 
 <div class="home-content center-block">
 
-  <form ng-class="{'has-error': hasError}">
+  <form >
     <div class="form-group">
-      <input type="text" class="form-control" ng-model="user.username" ng-change="hasError = false;" placeholder="Username" />
+      <input type="text" class="form-control" ng-model="user.username" placeholder="Username" />
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" ng-model="user.password" ng-change="hasError = false;" placeholder="Password" />
+      <input type="password" class="form-control" ng-model="user.password" placeholder="Password" />
     </div>
-    <!-- <button type="submit" class="btn btn&#45;default">Submit</button> -->
     <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
     <br />
     <!-- <a class="btn&#45;link pull&#45;right" ng&#45;click="registerUser()">Register</a> -->
   </form>
 
-  <div class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert" ng-show="hasError!=''">
-    <!-- <button type="button" class="close" ng&#45;click="hasError = false;"><span aria&#45;hidden="true">&#38;times;</span></button> -->
-    {{hasError}}
+  <div ng-show="hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
+    <strong>Error</strong> {{errorText}}
   </div>
-
-</div>
+  <div class="alert-info2" ng-show="showLoading && !hasError">
+    <h5 class="loading">Please wait ...</h5>
+  </div>
 </section>
