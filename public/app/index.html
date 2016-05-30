@@ -27,15 +27,20 @@
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" ng-click="goHome()" href="">Jobify</a>
+            <a class="navbar-brand" ng-click="goHome()" href="" style="display:flex;">
+              J<img src="/images/job.png" style="height: 14px;width: 14px; margin-top: 10px; margin-left: -2px; margin-right: 1px;"/>bify</a>
           </div>
 
-          <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="javascript:void(0)">Link</a></li> -->
+          <div ng-show="showLoading" class="nav navbar-nav" style="position: absolute; width: 100%; left: 0; text-align: center; margin: 0 auto; margin-top: 16px;">
+            <span>Please wait ...</span>
+          </div>
+
+          <ul ng-show="!showLoading"  class="nav navbar-nav navbar-right" ng-cloak>
             <li class="dropdown" ng-show="userName != ''">
             <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">{{userName}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a ng-click="settings()" href="">Settings</a></li>
+                <li><a ng-click="registerUser()" href="">Register</li>
                 <li><a ng-click="logoutUser()" href="">Log out</a></li>
               </ul>
             </li>
