@@ -8,9 +8,14 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('HeaderCtrl', function ($scope, $location, $route, ServerCommunication, CurrentUserProfile) {
+  .controller('HeaderCtrl', function ($scope, $rootScope, $location, $route, ServerCommunication, CurrentUserProfile) {
     // console.log(CurrentUserProfile.getUserUsername());
     $scope.userName = CurrentUserProfile.getUserUsername();
+
+    // rootscope variables for loading and error
+    $rootScope.errorText = 'on server, please reload the page';
+    $rootScope.hasError = false;
+    $rootScope.showLoading = false;
 
     $scope.settings = function () {
       // set user option
@@ -20,16 +25,22 @@ angular.module('publicApp')
     };
 
     $scope.logoutUser = function() {
+      $rootScope.showLoading = true;
       ServerCommunication.logoutUser()
       .then(
         function(response) {
           // console.log('success from controller');
           // console.log(response);
+          $rootScope.showLoading = false;
+          $rootScope.hasError = false;
           CurrentUserProfile.logoutCurrentUser();
           $location.path('/');
         },
         function(error) {
-          console.log(error);
+          // console.log(error);
+          $rootScope.showLoading = false;
+          $rootScope.hasError = true;
+          $rootScope.errorText = 'when logout user, please reload the page';
           $location.path('/');
         }
       );

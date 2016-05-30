@@ -8,7 +8,15 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-.controller('RegisterCtrl', function ($scope, $window, $location, ServerCommunication, CurrentUserProfile) {
+.controller('RegisterCtrl', function ($scope, $rootScope,  $window, $location, ServerCommunication, CurrentUserProfile) {
+
+  // Reset check fields
+  $scope.passwordHasSpaces = false;
+  $scope.emailValid = false;
+  $scope.updateUser = false;
+  $rootScope.errorText = 'on server, please reload the page';
+  $rootScope.hasError = false;
+  $rootScope.showLoading = false;
 
   $scope.user = {
     username: null,
@@ -27,11 +35,10 @@ angular.module('publicApp')
     }
   };
 
-  $scope.updateUser = false;
-  $scope.errorText = 'registering user, please try again';
 
   // If current user exists, load settings
   if (CurrentUserProfile.getRegister() === 'settings') {
+    $rootScope.showLoading = true;
     $scope.updateUser = true;
     ServerCommunication.getLoggedUser()
     .then(
@@ -47,19 +54,17 @@ angular.module('publicApp')
             $scope.emailChanged();
           }
         }
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'on import user, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       });
   }
-
-  // Reset check fields
-  $scope.hasError = false;
-  $scope.passwordHasSpaces = false;
-  $scope.emailValid = false;
-  $scope.showLoading = false;
-
 
   // Show the password complexity using a progress bar.
   $scope.passwordComplexity = 0;
@@ -118,61 +123,70 @@ angular.module('publicApp')
 
   // Call the applet api function to signUp user.
   $scope.signUpButtonClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     ServerCommunication.registerUser($scope.user)
     .then(
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         CurrentUserProfile.loginUser(response.user.username);
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.errorText = error.message;
-        $scope.hasError = true;
-
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = error.message;
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   // Call the applet api function to signUp user.
   $scope.updateUserButtonClicked = function() {
-
-    $scope.showLoading = true;
+    $rootScope.showLoading = true;
 
     ServerCommunication.updateUser($scope.user)
     .then(
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         CurrentUserProfile.loginUser(response.user.username);
         $location.path('/offer-list');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = error.message;
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };
 
   $scope.removeUserButtonClicked = function() {
+    $rootScope.showLoading = true;
     ServerCommunication.removeUser($scope.user)
     .then(
       function(response) {
         // console.log('success from controller');
         // console.log(response);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
         CurrentUserProfile.logoutCurrentUser();
         $location.path('/');
       },
       function(error) {
-        console.log('error from cotroller');
-        console.log(error);
-        $scope.hasError = true;
+        // console.log('error from cotroller');
+        // console.log(error);
+        $rootScope.errorText = 'removing user, please try again';
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
       }
     );
   };

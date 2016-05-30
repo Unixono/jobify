@@ -1,12 +1,9 @@
 <section>
-  <!-- <a ng&#45;init="showSearchForm = false;" ng&#45;click="showSearchForm = !showSearchForm;" class="pull&#45;right"><i class="mdi&#45;action&#45;search vertical&#45;middle"></i>Filter<i class="mdi&#45;navigation&#45;chevron&#45;right vertical&#45;middle"></i></a> -->
   <h4 class="pull-left" style="margin-top: 0px;" ng-hide="showSearchForm">Available Jobs</h4>
-  <!-- <h4 class="pull&#45;left" style="margin&#45;top: 0px;" ng&#45;show="showSearchForm">Filter Options</h4> -->
   <p ng-init="showSearchForm = false;" ng-click="showSearchForm = true;" class="pull-right" ng-hide="showSearchForm"><i class="mdi-content-filter-list vertical-middle"></i></p>
   <p ng-click="showSearchForm = false;" class="pull-right" ng-show="showSearchForm"><i class="mdi-content-clear" style="color: white; padding: 7px;" ></i></p>
 
 
-  <!-- <form ng&#45;show="showSearchForm"> -->
   <div ng-show="showSearchForm">
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -34,7 +31,6 @@
       </div>
     </div>
   </div>
-  <!-- </form> -->
 
   <table class="table">
 
@@ -61,5 +57,12 @@
     <div class="container">
       <button class="btn btn-fab btn-raised btn-material-red ripple-effect" style="float: right; margin-right: 15px;" ng-click="newJob()"><i class="mdi-content-add"></i></button>
     </div>
+  </div>
+
+  <div ng-show= "hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
+    <strong>Error</strong> {{errorText}}
+  </div>
+  <div class="alert-info2" ng-show="showLoading && !hasError">
+    <h5 class="loading">Please wait ...</h5>
   </div>
 </section>

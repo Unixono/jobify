@@ -8,33 +8,40 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('MainCtrl', function ($scope, $location, ServerCommunication, CurrentUserProfile) {
-    $scope.user = {
-      username: null,
-      password: null
-    };
+.controller('MainCtrl', function ($scope, $rootScope, $location, ServerCommunication, CurrentUserProfile) {
+  $scope.user = {
+    username: null,
+    password: null
+  };
 
-    $scope.hasError = "";
+  // rootscope variables for loading and error
+  $rootScope.errorText = 'on server, please reload the page';
+  $rootScope.hasError = false;
+  $rootScope.showLoading = false;
 
-    $scope.login = function() {
-      ServerCommunication.loginUser($scope.user)
-      .then(
-        function(response) {
-          // console.log('success from controller');
-          // console.log(response);
-          CurrentUserProfile.loginUser(response.user.username);
-          $location.path('/offer-list');
-        },
-        function(error) {
-          console.log('error from controller');
-          console.log(error);
-          $scope.user.password = '';
-          $scope.hasError = error.error.message;
-        }
-      );
-    };
+  $scope.login = function() {
+    $rootScope.showLoading = true;
+    ServerCommunication.loginUser($scope.user)
+    .then(
+      function(response) {
+        // console.log('success from controller');
+        CurrentUserProfile.loginUser(response.user.username);
+        $rootScope.showLoading = false;
+        $rootScope.hasError = false;
+        $location.path('/offer-list');
+      },
+      function(error) {
+        // console.log('error from controller');
+        // console.log(error);
+        $scope.user.password = '';
+        $rootScope.errorText = error.error.message;
+        $rootScope.showLoading = false;
+        $rootScope.hasError = true;
+      }
+    );
+  };
 
-    // $scope.registerUser = function() {
-    //   $location.path('/register');
-    // };
-  });
+  // $scope.registerUser = function() {
+  //   $location.path('/register');
+  // };
+});

@@ -56,7 +56,7 @@ angular
   .run(function ($rootScope, $location, CurrentUserProfile) {
     $rootScope.$on('$routeChangeStart', function (event) {
       var cur_path = $location.path();
-      if (cur_path != '' && cur_path != '/'){
+      if (cur_path !== '' && cur_path !== '/'){
         if (CurrentUserProfile.getUserUsername()==='') {
           // console.log('DENY');
           event.preventDefault();

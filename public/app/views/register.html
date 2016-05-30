@@ -1,7 +1,7 @@
 <section>
 
   <div id="signup-form-div" class="home-content center-block">
-    <form name="registerForm" ng-class="{'has-error': hasError}" novalidate>
+    <form name="registerForm" novalidate>
       <div class="form-group">
         <input type="email" name="email" class="form-control" ng-model="user.email" ng-change="emailChanged()" placeholder="User e-mail" required />
         <span class="label label-success" ng-show="emailValid">OK</span>
@@ -39,7 +39,7 @@
         <span class="label label-warning" ng-show="passwordMatches(user.password, user.cpassword) === false || form.re-password.$invalid" >Not Valid</span>
         <span class="label label-warning" class="message">{{ retypePasswordAdvice }}</span>
       </div>
-      <div class="form-row submit-btn" ng-init="termsAccepted = false" style="text-align: right;">
+      <div ng-show="!showLoading" class="form-row submit-btn" ng-init="termsAccepted = false" style="text-align: right;">
         <button id="signup-submit-form" class="btn btn-primary" ng-show="!updateUser" ng-disabled="registerForm.$invalid || !passwordMatches(user.password, user.cpassword) || passwordHasSpaces" ng-click="signUpButtonClicked()">
           Sing up
         </button>
@@ -57,11 +57,8 @@
     <div ng-show= "hasError" class="alert alert-danger alert-dismissible" style="margin-top: 35px; text-align: center;" role="alert">
       <strong>Error</strong> {{errorText}}
     </div>
-    <!-- <div ng&#45;show="!updateUser &#38;&#38; hasError" class="alert alert&#45;danger alert&#45;dismissible" style="margin&#45;top: 35px; text&#45;align: center;" role="alert"> -->
-    <!--   <strong>Error</strong> updating user, please try again -->
-    <!-- </div> -->
-    <div class="alert alert-dismissible alert-info" ng-show="showLoading && !hasError">
-      <h5 class="loading">Please wait</h5>
+    <div class="alert-info2" ng-show="showLoading && !hasError">
+      <h5 class="loading">Please wait ...</h5>
     </div>
   </div>
 </section>

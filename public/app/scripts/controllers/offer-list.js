@@ -8,7 +8,12 @@
  * Controller of the publicApp
  */
 angular.module('publicApp')
-  .controller('OfferListCtrl', function ($scope, $location, ServerCommunication, CurrentUserProfile) {
+  .controller('OfferListCtrl', function ($scope, $rootScope, $location, ServerCommunication, CurrentUserProfile) {
+
+    // rootscope variables for loading and error
+    $rootScope.errorText = 'on server, please reload the page';
+    $rootScope.hasError = false;
+    $rootScope.showLoading = false;
 
     $scope.filterOption = {
       developers: [],
@@ -18,6 +23,7 @@ angular.module('publicApp')
 
     //Call server to get dev list
     function getDeveloperList() {
+      $rootScope.showLoading = true;
       ServerCommunication.getDevelopers()
       .then(
         function (response) {
@@ -30,6 +36,7 @@ angular.module('publicApp')
     getDeveloperList();
 
     function initFilters() {
+      $rootScope.showLoading = true;
       ServerCommunication.getUserFilter()
       .then(
         function (response) {
@@ -62,10 +69,13 @@ angular.module('publicApp')
               }
             }
           }
+          $rootScope.showLoading = false;
         });
     }
 
     $scope.updateJobList = function () {
+      $rootScope.showLoading = true;
+
       $scope.jobsList = [];
       $scope.filterOption.status = [];
 
@@ -89,11 +99,16 @@ angular.module('publicApp')
         function(response) {
           // console.log('success from controller');
           // console.log(response.offers);
+          $rootScope.showLoading = false;
+          $rootScope.hasError = false;
           $scope.jobsList = response.offers;
         },
         function(error) {
-          console.log('error from controller');
-          console.log(error);
+          // console.log('error from controller');
+          // console.log(error);
+          $rootScope.errorText = 'reading data, please reload the page';
+          $rootScope.showLoading = false;
+          $rootScope.hasError = true;
           $location.path('/');
         });
     };
