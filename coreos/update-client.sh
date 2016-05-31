@@ -6,6 +6,7 @@ echo .
 echo bring the client files up
 rm client -rf
 cd jobify
+git checkout HEAD public/Dockerfile
 git checkout HEAD public/dist
 mv public ../client
 echo .
