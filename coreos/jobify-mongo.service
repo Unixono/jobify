@@ -4,6 +4,8 @@ Requires=docker.service
 After=docker.service
 
 [Service]
+Restart=always
+RestartSec=10s
 ExecStartPre=-/usr/bin/docker stop jobify-mongodb
 ExecStartPre=-/usr/bin/docker rm jobify-mongodb
 ExecStart=/usr/bin/docker run --rm --name jobify-mongodb mongo
