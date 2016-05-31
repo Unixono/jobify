@@ -29,16 +29,16 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
 // session persistence
-var MongoDBStore = require('connect-mongodb-session')(session);
-var store = new MongoDBStore({
-  uri: 'mongodb://0.0.0.0/jobify',
-  collection: 'mySessions'
-});
+// var MongoDBStore = require('connect-mongodb-session')(session);
+// var store = new MongoDBStore({
+  // uri: 'mongodb://0.0.0.0/jobify',
+  // collection: 'mySessions'
+// });
 // Catch errors 
-store.on('error', function(error) {
-  assert.ifError(error);
-  assert.ok(false);
-});
+// store.on('error', function(error) {
+  // assert.ifError(error);
+  // assert.ok(false);
+// });
 
 
 app.use(cookieParser('jobifyKey'));
@@ -50,7 +50,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   maxAge: cookiesExpireTime,
-  store: store,
+  // store: store,
   cookie: {
     httpOnly: false,
     secure:false,
