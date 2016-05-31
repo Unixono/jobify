@@ -19,7 +19,8 @@ git checkout HEAD public/dist
 mv public ../client
 echo .
 echo bring the coreos files up
-git checkout HEAD coreos/update.sh
+git checkout HEAD coreos/update-client.sh
+git checkout HEAD coreos/server-client.sh
 git checkout HEAD coreos/jobify-mongo.service
 git checkout HEAD coreos/jobify-server.service
 git checkout HEAD coreos/jobify-client.service
