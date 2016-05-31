@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 echo clear and fetch the repo
-git fetch -n -b release https://github.com/Unixono/jobify.git --depth 1
+git clone -n -b release https://github.com/Unixono/jobify.git --depth 1
 echo .
 echo bring the server files up
 rm server -rf
