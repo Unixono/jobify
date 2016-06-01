@@ -66,8 +66,11 @@ angular.module('publicApp')
         // console.log('success getJob from controller');
         // console.log(response);
         $scope.job = response.job;
+        console.log('pre update devs');
         updateDevs();
+        console.log('pre update skills');
         updateSkills();
+        console.log($scope.job);
       });
   }
 
