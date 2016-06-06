@@ -76,9 +76,16 @@ angular.module('publicApp')
 
   // Update html components
   function updateDevs () {
+    console.log('start devs load');
     for (var i = 0; i < $scope.job.developers.length; i++ ) {
+      console.log('1 for ');
+      console.log($scope.job.developers[i]);
       for (var j = 0; j < $scope.developerList.length; j++) {
+        console.log('2 for ');
+        console.log($scope.developerList[j]);
+
         if ($scope.job.developers[i] === $scope.developerList[j].username) {
+          console.log('======');
           $scope.developerList[j].required = true;
         }
       }
