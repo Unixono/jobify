@@ -177,7 +177,7 @@ angular.module('publicApp')
   $scope.method = 'form';
 
   function checkUrl(url) {
-    if ((url.indexOf('https://') > -1) || (url.indexOf('http://'))) {
+    if (!(url.indexOf('https://') > -1) && !(url.indexOf('http://') > -1)) {
       return ('http://' + url);
     }
     return url;
