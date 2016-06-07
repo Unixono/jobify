@@ -50,7 +50,12 @@ angular.module('publicApp')
 
   // Define and load the Job
   function resetJob (full) {
+    if (!full) {
+      var devList = $scope.job.developers
+    }
+
     $scope.job = {
+      developers: [],
       company: null,
       position: null,
       url: null,
@@ -69,12 +74,12 @@ angular.module('publicApp')
       creationDate: null,
       applyRejectDate: null
     };
-    if (full) {
-      $scope.job = {
-        developers: []
-      }
-    };
+
+    if (!full) {
+      $scope.job.developers = devList;
+    }
   }
+
   resetJob(true);
 
 
