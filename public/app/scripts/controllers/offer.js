@@ -49,9 +49,8 @@ angular.module('publicApp')
   getDeveloperList();
 
   // Define and load the Job
-  function resetJob () {
+  function resetJob (full) {
     $scope.job = {
-      developers: [],
       company: null,
       position: null,
       url: null,
@@ -70,8 +69,13 @@ angular.module('publicApp')
       creationDate: null,
       applyRejectDate: null
     };
+    if (full) {
+      $scope.job = {
+        developers: []
+      }
+    };
   }
-  resetJob();
+  resetJob(true);
 
 
   // Update html components
@@ -238,8 +242,8 @@ angular.module('publicApp')
         $rootScope.showLoading = false;
         $rootScope.hasError = false;
         CurrentUserProfile.setJob('new');
-        resetJob();
-        resetDevs();
+        resetJob(false);
+        // resetDevs();
         resetSkills();
         $location.path('/offer');
       },
