@@ -44,7 +44,7 @@
     <tbody class="table-striped">
     <tr ng-repeat="job in jobsList | orderBy:predicate:reverse">
       <td ng-bind="job.company"></td>
-      <td><a href="http://{{job.url}}" target="_blank" ng-click="showJob(job._id)">{{job.url | limitTo: 20  }}{{job.url.length > 20 ? '...' : ''}}</td>
+      <td><a href="{{job.url}}" target="_blank" ng-click="showJob(job._id)">{{job.url | limitTo: 20  }}{{job.url.length > 20 ? '...' : ''}}</td>
       <td>{{job.creationDate | date:'dd-MM-yy'}}</td>
       <td ng-bind="job.status"></td>
       <td>

@@ -176,6 +176,13 @@ angular.module('publicApp')
 
   $scope.method = 'form';
 
+  checkUrl = function(url) {
+    if ((url.indexOf('https://') > -1) || (url.indexOf('http://'))) {
+      return ('http://' + url);
+    }
+    return url;
+  };
+
   $scope.getJob = function(job) {
     return CurrentUserProfile.getJob() === job;
   };
@@ -185,6 +192,7 @@ angular.module('publicApp')
 
     $scope.job.status = 'new';
     $scope.job.creationDate = Date.now();
+    $scopr.job.url = checkUrl($scope.job.url);
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -217,6 +225,7 @@ angular.module('publicApp')
 
     $scope.job.status = 'new';
     $scope.job.creationDate = Date.now();
+    $scopr.job.url = checkUrl($scope.job.url);
 
     // console.log('Resultado:');
     // console.log($scope.job);
@@ -332,6 +341,7 @@ angular.module('publicApp')
 
     // console.log('Resultado:');
     // console.log($scope.job);
+    $scopr.job.url = checkUrl($scope.job.url);
 
     ServerCommunication.updateOffer($scope.job, CurrentUserProfile.getJob())
     .then(
