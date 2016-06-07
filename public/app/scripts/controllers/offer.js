@@ -176,12 +176,12 @@ angular.module('publicApp')
 
   $scope.method = 'form';
 
-  checkUrl = function(url) {
+  function checkUrl(url) {
     if ((url.indexOf('https://') > -1) || (url.indexOf('http://'))) {
       return ('http://' + url);
     }
     return url;
-  };
+  }
 
   $scope.getJob = function(job) {
     return CurrentUserProfile.getJob() === job;
