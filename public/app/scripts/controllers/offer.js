@@ -26,7 +26,24 @@ angular.module('publicApp')
         // console.log(response);
         $rootScope.showLoading = false;
         $scope.developerList = response;
-        resetDevs();
+        if (CurrentUserProfile.getJob() !== 'new') {
+          // console.log(CurrentUserProfile.getJob());
+          $rootScope.showLoading = true;
+          ServerCommunication.getJob(CurrentUserProfile.getJob())
+          .then(
+            function (response) {
+              $rootScope.showLoading = false;
+              // console.log('success getJob from controller');
+              // console.log(response);
+              $scope.job = response.job;
+              // console.log('pre update devs');
+              updateDevs();
+              // console.log('pre update skills');
+              updateSkills();
+              // console.log($scope.job);
+            });
+        }
+        // resetDevs();
       });
   }
   getDeveloperList();
@@ -56,36 +73,19 @@ angular.module('publicApp')
   }
   resetJob();
 
-  if (CurrentUserProfile.getJob() !== 'new') {
-    // console.log(CurrentUserProfile.getJob());
-    $rootScope.showLoading = true;
-    ServerCommunication.getJob(CurrentUserProfile.getJob())
-    .then(
-      function (response) {
-        $rootScope.showLoading = false;
-        // console.log('success getJob from controller');
-        // console.log(response);
-        $scope.job = response.job;
-        console.log('pre update devs');
-        updateDevs();
-        console.log('pre update skills');
-        updateSkills();
-        console.log($scope.job);
-      });
-  }
 
   // Update html components
   function updateDevs () {
-    console.log('start devs load');
+    // console.log('start devs load');
     for (var i = 0; i < $scope.job.developers.length; i++ ) {
-      console.log('1 for ');
-      console.log($scope.job.developers[i]);
+      // console.log('1 for ');
+      // console.log($scope.job.developers[i]);
       for (var j = 0; j < $scope.developerList.length; j++) {
-        console.log('2 for ');
-        console.log($scope.developerList[j]);
+        // console.log('2 for ');
+        // console.log($scope.developerList[j]);
 
         if ($scope.job.developers[i] === $scope.developerList[j].username) {
-          console.log('======');
+          // console.log('======');
           $scope.developerList[j].required = true;
         }
       }
